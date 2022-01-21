@@ -23,14 +23,21 @@ class _HomePageState extends State<HomePage> {
         child: Container(
           height: _size.height,
           width: _size.width,
-          decoration: BoxDecoration(
-            color: primaryColor,
-          ),
-          child: Column(
-            children: [
-              costumHeader(_size),
-              costumBody(_size),
-            ],
+          decoration: const BoxDecoration(
+              image: DecorationImage(
+            image: AssetImage("assets/images/bg2.jpg"),
+            fit: BoxFit.cover,
+          )),
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white.withOpacity(.5),
+            ),
+            child: Column(
+              children: [
+                costumHeader(_size),
+                costumBody(_size),
+              ],
+            ),
           ),
         ),
       ),
@@ -40,15 +47,9 @@ class _HomePageState extends State<HomePage> {
   Widget costumBody(Size _size) {
     return Expanded(
       child: Container(
-        padding: const EdgeInsets.only(top: 20.0),
         width: _size.width,
-        decoration: const BoxDecoration(
-          borderRadius: BorderRadius.vertical(
-            top: Radius.circular(40.0),
-          ),
-          color: Colors.white,
-        ),
         child: SingleChildScrollView(
+          padding: const EdgeInsets.only(top: 20.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -132,50 +133,95 @@ class _HomePageState extends State<HomePage> {
 
   Widget costumHeader(Size _size) {
     return Container(
-      height: 70,
+      height: 60.0,
       width: _size.width,
-      padding: const EdgeInsets.symmetric(horizontal: 15.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          RichText(
-            text: TextSpan(
-              children: <TextSpan>[
-                TextSpan(
-                  text: 'Cercle ',
-                  style: GoogleFonts.mulish(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w900,
-                    fontSize: 25.0,
-                  ),
+      margin: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(15.0),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(.3),
+            blurRadius: 10.0,
+            offset: const Offset(0, 10.0),
+          )
+        ],
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 10.0,
+          vertical: 8.0,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Row(
+              children: [
+                SvgPicture.asset(
+                  "assets/svg/circle-svgrepo-com.svg",
+                  height: 20.0,
+                  width: 20.0,
                 ),
-                TextSpan(
-                  text: 'Royal',
-                  style: GoogleFonts.mulish(
-                    fontWeight: FontWeight.w500,
-                    color: accentColor,
-                    letterSpacing: 1.0,
-                    fontStyle: FontStyle.italic,
-                    fontSize: 16.0,
+                const SizedBox(
+                  width: 8.0,
+                ),
+                RichText(
+                  text: TextSpan(
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: 'Cercle ',
+                        style: GoogleFonts.lato(
+                          color: Colors.black87,
+                          fontWeight: FontWeight.w900,
+                          fontSize: 25.0,
+                        ),
+                      ),
+                      TextSpan(
+                        text: 'Royal',
+                        style: GoogleFonts.lato(
+                          fontWeight: FontWeight.w500,
+                          color: accentColor,
+                          letterSpacing: 1.0,
+                          fontStyle: FontStyle.italic,
+                          fontSize: 16.0,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
             ),
-          ),
-          Container(
-            height: 50.0,
-            width: 50.0,
-            child: Center(
-              child: SvgPicture.asset(
-                "assets/svg/notification-svgrepo-com.svg",
-                color: Colors.white,
-                height: 30.0,
-                width: 30.0,
+            Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    primaryColor,
+                    Colors.blue,
+                  ],
+                ),
+                borderRadius: BorderRadius.circular(10.0),
+                boxShadow: [
+                  BoxShadow(
+                    blurRadius: 10.0,
+                    color: Colors.black.withOpacity(.1),
+                    offset: const Offset(0, 10.0),
+                  )
+                ],
               ),
-            ),
-          )
-        ],
+              height: 40.0,
+              width: 40.0,
+              child: Center(
+                child: SvgPicture.asset(
+                  "assets/svg/notification-svgrepo-com.svg",
+                  color: Colors.white,
+                  height: 25.0,
+                  width: 25.0,
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

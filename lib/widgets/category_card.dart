@@ -16,12 +16,12 @@ class CategoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(right: 8.0),
+      margin: const EdgeInsets.only(right: 10.0),
       height: 100.0,
       width: 80.0,
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(20.0),
+        borderRadius: BorderRadius.circular(15.0),
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(.2),
@@ -31,10 +31,10 @@ class CategoryCard extends StatelessWidget {
         ],
       ),
       child: Material(
-        borderRadius: BorderRadius.circular(20.0),
+        borderRadius: BorderRadius.circular(15.0),
         color: Colors.transparent,
         child: InkWell(
-          borderRadius: BorderRadius.circular(20.0),
+          borderRadius: BorderRadius.circular(15.0),
           onTap: () {},
           child: Padding(
             padding: const EdgeInsets.all(5.0),
@@ -46,16 +46,22 @@ class CategoryCard extends StatelessWidget {
                   padding: const EdgeInsets.all(10.0),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    border: Border.all(
-                      width: 1.0,
-                      color: Colors.grey[200],
+                    gradient: LinearGradient(
+                      colors: [
+                        Colors
+                            .primaries[
+                                Random().nextInt(Colors.primaries.length)]
+                            .shade900,
+                        Colors
+                            .primaries[
+                                Random().nextInt(Colors.primaries.length)]
+                            .shade900,
+                      ],
                     ),
                   ),
                   child: SvgPicture.asset(
                     data.icon,
-                    color: Colors
-                        .primaries[Random().nextInt(Colors.primaries.length)]
-                        .shade900,
+                    color: Colors.white,
                     height: 25.0,
                     width: 25.0,
                   ),

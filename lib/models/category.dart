@@ -17,7 +17,7 @@ List<Category> categories = [
       icon: "assets/svg/hairdryer-beauty-svgrepo-com.svg",
       title: "Beauté & parfums"),
   Category(
-    icon: "assets/svg/hotel-svgrepo-com.svg",
+    icon: "assets/svg/sport-svgrepo-com.svg",
     title: "Sport & loisirs",
   ),
 ];
