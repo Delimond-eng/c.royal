@@ -36,7 +36,7 @@ class _PrivilegePageState extends State<PrivilegePage> {
             child: Column(
               children: [
                 const AppHeader(
-                  title: "Privilèges",
+                  title: "Avantages",
                 ),
                 costumBody(_size),
               ],

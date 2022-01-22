@@ -105,7 +105,7 @@ class _AppBottomNavigationState extends State<AppBottomNavigation> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Text("Privilèges"),
+              const Text("Avantages"),
               if (widget.selectedIndex == 1) ...[
                 const SizedBox(
                   height: 2.0,
