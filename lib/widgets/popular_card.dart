@@ -9,7 +9,7 @@ class PopularCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 230.0,
+      height: 200.0,
       width: 150.0,
       margin: const EdgeInsets.only(right: 10.0),
       decoration: BoxDecoration(
@@ -28,7 +28,7 @@ class PopularCard extends StatelessWidget {
           Stack(
             children: [
               Container(
-                height: 120.0,
+                height: 100.0,
                 width: 150.0,
                 decoration: BoxDecoration(
                   image: const DecorationImage(
@@ -80,7 +80,7 @@ class PopularCard extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(
-                    height: 15.0,
+                    height: 10.0,
                   ),
                   Text(
                     "15% de remise sur l'addition",
