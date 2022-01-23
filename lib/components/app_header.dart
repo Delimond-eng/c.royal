@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart';
 import 'package:c_royal/settings/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -6,10 +7,12 @@ import 'package:google_fonts/google_fonts.dart';
 class AppHeader extends StatelessWidget {
   final String title;
   final bool isHome;
+  final Function onOpenNotificateDrawer;
   const AppHeader({
     Key key,
     this.title,
     this.isHome = false,
+    this.onOpenNotificateDrawer,
   }) : super(key: key);
 
   @override
@@ -85,31 +88,49 @@ class AppHeader extends StatelessWidget {
                 ]
               ],
             ),
-            Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    primaryColor,
-                    Colors.blue,
+            Badge(
+              position: BadgePosition.topStart(),
+              elevation: 0,
+              badgeContent: Text(
+                "0",
+                style: GoogleFonts.lato(
+                  color: Colors.white,
+                ),
+              ),
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      primaryColor,
+                      Colors.blue,
+                    ],
+                  ),
+                  borderRadius: BorderRadius.circular(10.0),
+                  boxShadow: [
+                    BoxShadow(
+                      blurRadius: 10.0,
+                      color: Colors.black.withOpacity(.1),
+                      offset: const Offset(0, 10.0),
+                    )
                   ],
                 ),
-                borderRadius: BorderRadius.circular(10.0),
-                boxShadow: [
-                  BoxShadow(
-                    blurRadius: 10.0,
-                    color: Colors.black.withOpacity(.1),
-                    offset: const Offset(0, 10.0),
-                  )
-                ],
-              ),
-              height: 40.0,
-              width: 40.0,
-              child: Center(
-                child: SvgPicture.asset(
-                  "assets/svg/notification-svgrepo-com.svg",
-                  color: Colors.white,
-                  height: 25.0,
-                  width: 25.0,
+                height: 40.0,
+                width: 40.0,
+                child: Material(
+                  color: Colors.transparent,
+                  borderRadius: BorderRadius.circular(10.0),
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(10.0),
+                    onTap: onOpenNotificateDrawer,
+                    child: Center(
+                      child: SvgPicture.asset(
+                        "assets/svg/notification-svgrepo-com.svg",
+                        color: Colors.white,
+                        height: 25.0,
+                        width: 25.0,
+                      ),
+                    ),
+                  ),
                 ),
               ),
             )

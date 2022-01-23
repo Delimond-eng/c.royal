@@ -1,5 +1,7 @@
 import 'package:c_royal/components/app_header.dart';
+import 'package:c_royal/components/notification_drawer.dart';
 import 'package:c_royal/models/category.dart';
+import 'package:c_royal/settings/style.dart';
 import 'package:c_royal/widgets/category_card.dart';
 import 'package:c_royal/widgets/popular_card.dart';
 import 'package:c_royal/widgets/post_card.dart';
@@ -14,10 +16,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  var scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     var _size = MediaQuery.of(context).size;
     return Scaffold(
+      key: scaffoldKey,
       body: SafeArea(
         child: Container(
           height: _size.height,
@@ -34,8 +38,11 @@ class _HomePageState extends State<HomePage> {
             ),
             child: Column(
               children: [
-                const AppHeader(
+                AppHeader(
                   isHome: true,
+                  onOpenNotificateDrawer: () {
+                    scaffoldKey.currentState.openEndDrawer();
+                  },
                 ),
                 costumBody(_size),
               ],
@@ -43,6 +50,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
+      endDrawer: const NotificationDrawer(),
     );
   }
 

@@ -1,11 +1,9 @@
 import 'package:c_royal/components/app_header.dart';
+import 'package:c_royal/components/notification_drawer.dart';
 import 'package:c_royal/models/category.dart';
-import 'package:c_royal/settings/style.dart';
 import 'package:c_royal/widgets/category_card.dart';
 import 'package:c_royal/widgets/privilege_card.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class PrivilegePage extends StatefulWidget {
   const PrivilegePage({Key key}) : super(key: key);
@@ -15,10 +13,12 @@ class PrivilegePage extends StatefulWidget {
 }
 
 class _PrivilegePageState extends State<PrivilegePage> {
+  var scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     var _size = MediaQuery.of(context).size;
     return Scaffold(
+      key: scaffoldKey,
       body: SafeArea(
         child: Container(
           height: _size.height,
@@ -35,8 +35,10 @@ class _PrivilegePageState extends State<PrivilegePage> {
             ),
             child: Column(
               children: [
-                const AppHeader(
+                AppHeader(
                   title: "Avantages",
+                  onOpenNotificateDrawer: () =>
+                      scaffoldKey.currentState.openEndDrawer(),
                 ),
                 costumBody(_size),
               ],
@@ -44,6 +46,7 @@ class _PrivilegePageState extends State<PrivilegePage> {
           ),
         ),
       ),
+      endDrawer: const NotificationDrawer(),
     );
   }
 
