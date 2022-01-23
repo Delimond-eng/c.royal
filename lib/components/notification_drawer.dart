@@ -10,6 +10,7 @@ class NotificationDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: const EdgeInsets.only(left: 20.0),
       decoration: BoxDecoration(
         color: primaryColor,
       ),
@@ -20,12 +21,14 @@ class NotificationDrawer extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.fromLTRB(
-                15.0,
-                25.0,
-                25.0,
+                0,
+                10.0,
+                20.0,
                 20.0,
               ),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
                     height: 40.0,
@@ -76,8 +79,8 @@ class NotificationDrawer extends StatelessWidget {
             Expanded(
               child: Container(
                 child: SingleChildScrollView(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   physics: const BouncingScrollPhysics(),
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: Column(
                     children: [
                       for (int i = 0; i < 10; i++) ...[

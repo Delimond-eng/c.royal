@@ -60,17 +60,18 @@ class AppHeader extends StatelessWidget {
                           style: GoogleFonts.lato(
                             color: primaryColor,
                             fontWeight: FontWeight.w900,
+                            fontStyle: FontStyle.italic,
                             fontSize: 25.0,
                           ),
                         ),
                         TextSpan(
                           text: 'Royal',
                           style: GoogleFonts.lato(
-                            fontWeight: FontWeight.w500,
+                            fontWeight: FontWeight.w600,
                             color: accentColor,
                             letterSpacing: 1.0,
                             fontStyle: FontStyle.italic,
-                            fontSize: 16.0,
+                            fontSize: 18.0,
                           ),
                         ),
                       ],
