@@ -58,9 +58,7 @@ class _HomePageState extends State<HomePage> {
     return Expanded(
       child: Container(
         width: _size.width,
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.only(top: 20.0),
-          child: Column(
+        child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -80,77 +78,88 @@ class _HomePageState extends State<HomePage> {
                   }).toList(),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: Text(
-                  "Recommandations",
-                  style: GoogleFonts.lato(
-                    color: Colors.black87,
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.w800,
+              Expanded(
+                child: Container(
+                  child: SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: Text(
+                            "Recommandations",
+                            style: GoogleFonts.lato(
+                              color: Colors.black87,
+                              fontSize: 20.0,
+                              fontWeight: FontWeight.w800,
+                            ),
+                          ),
+                        ),
+                        SingleChildScrollView(
+                          padding: const EdgeInsets.only(
+                            left: 15.0,
+                            right: 15.0,
+                            bottom: 18.0,
+                          ),
+                          scrollDirection: Axis.horizontal,
+                          physics: const BouncingScrollPhysics(),
+                          child: Row(
+                            children: [
+                              for (int i = 0; i < 4; i++) ...[
+                                const PostNewCard(),
+                              ]
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: Text(
+                            "Les plus populaires",
+                            style: GoogleFonts.lato(
+                              color: Colors.black87,
+                              fontSize: 20.0,
+                              fontWeight: FontWeight.w800,
+                            ),
+                          ),
+                        ),
+                        SingleChildScrollView(
+                          padding: const EdgeInsets.only(
+                            left: 15.0,
+                            right: 15.0,
+                            bottom: 18.0,
+                          ),
+                          scrollDirection: Axis.horizontal,
+                          physics: const BouncingScrollPhysics(),
+                          child: Row(
+                            children: [
+                              for (int i = 0; i < 4; i++) ...[
+                                const PopularCard(),
+                              ]
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: Text(
+                            "Tous les points de vente",
+                            style: GoogleFonts.lato(
+                              color: Colors.black87,
+                              fontSize: 20.0,
+                              fontWeight: FontWeight.w800,
+                            ),
+                          ),
+                        ),
+                        for (int i = 0; i < 8; i++) ...[
+                          const ShopCard(),
+                        ]
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              SingleChildScrollView(
-                padding: const EdgeInsets.only(
-                  left: 15.0,
-                  right: 15.0,
-                  bottom: 18.0,
-                ),
-                scrollDirection: Axis.horizontal,
-                physics: const BouncingScrollPhysics(),
-                child: Row(
-                  children: [
-                    for (int i = 0; i < 4; i++) ...[
-                      const PostNewCard(),
-                    ]
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: Text(
-                  "Les plus populaires",
-                  style: GoogleFonts.lato(
-                    color: Colors.black87,
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.w800,
-                  ),
-                ),
-              ),
-              SingleChildScrollView(
-                padding: const EdgeInsets.only(
-                  left: 15.0,
-                  right: 15.0,
-                  bottom: 18.0,
-                ),
-                scrollDirection: Axis.horizontal,
-                physics: const BouncingScrollPhysics(),
-                child: Row(
-                  children: [
-                    for (int i = 0; i < 4; i++) ...[
-                      const PopularCard(),
-                    ]
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: Text(
-                  "Tous les points de vente",
-                  style: GoogleFonts.lato(
-                    color: Colors.black87,
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.w800,
-                  ),
-                ),
-              ),
-              for (int i = 0; i < 8; i++) ...[
-                const ShopCard(),
-              ]
-            ],
-          ),
-        ),
+              )
+            ]),
       ),
     );
   }

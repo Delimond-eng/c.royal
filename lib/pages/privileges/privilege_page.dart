@@ -59,7 +59,11 @@ class _PrivilegePageState extends State<PrivilegePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SingleChildScrollView(
-              padding: const EdgeInsets.all(15.0),
+              padding: const EdgeInsets.only(
+                left: 15.0,
+                right: 15.0,
+                bottom: 10.0,
+              ),
               scrollDirection: Axis.horizontal,
               physics: const BouncingScrollPhysics(),
               child: Row(
