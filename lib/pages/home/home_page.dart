@@ -4,6 +4,7 @@ import 'package:c_royal/models/category.dart';
 import 'package:c_royal/widgets/category_card.dart';
 import 'package:c_royal/widgets/popular_card.dart';
 import 'package:c_royal/widgets/post_card.dart';
+import 'package:c_royal/widgets/shop_card.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -144,6 +145,9 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               ),
+              for (int i = 0; i < 8; i++) ...[
+                const ShopCard(),
+              ]
             ],
           ),
         ),
