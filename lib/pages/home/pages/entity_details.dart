@@ -16,6 +16,18 @@ class _EntityDetailsState extends State<EntityDetails> {
   @override
   Widget build(BuildContext context) {
     var _size = MediaQuery.of(context).size;
+    List<Widget> steps = [
+      Container(
+        child: const Center(
+          child: Text("First step"),
+        ),
+      ),
+      Container(
+        child: const Center(
+          child: Text("Second step"),
+        ),
+      ),
+    ];
     return Scaffold(
       body: Container(
         height: _size.height,
@@ -24,152 +36,154 @@ class _EntityDetailsState extends State<EntityDetails> {
           child: Stack(
             children: [
               detailsHead(_size, context),
-              Container(
-                height: _size.height,
-                margin: const EdgeInsets.fromLTRB(0.0, 230.0, 0.0, 0.0),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(30.0),
-                ),
-                padding: const EdgeInsets.only(
-                  right: 5.0,
-                  left: 5.0,
-                ),
-                width: _size.width,
-                child: Stack(
-                  overflow: Overflow.visible,
-                  children: [
-                    Container(
-                      child: SingleChildScrollView(
-                        physics: const BouncingScrollPhysics(),
-                        padding: const EdgeInsets.only(top: 60.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Column(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 5.0),
-                                  child: CustomExpandable(
-                                    title: "Points de vente",
-                                    icon: "assets/svg/store-svgrepo-com.svg",
-                                    child: Container(
-                                      height: 400.0,
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 5.0,
-                                    vertical: 10.0,
-                                  ),
-                                  child: CustomExpandable(
-                                    icon: "assets/svg/delivery-svgrepo-com.svg",
-                                    title: "Remises",
-                                    hasExpanded: true,
-                                    child: Container(
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 10.0),
-                                        child: Column(
-                                          children: [
-                                            for (int i = 0; i < 6; i++) ...[
-                                              const RemiseCard()
-                                            ]
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                )
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      top: -25.0,
-                      right: 10.0,
-                      left: 10.0,
-                      child: Container(
-                        height: 60.0,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(30.0),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(.2),
-                              blurRadius: 12.0,
-                              offset: const Offset(0, 12.0),
-                            )
-                          ],
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 10.0),
-                              child: Text(
-                                'à 4 km de votre position actuelle',
-                                style: GoogleFonts.mulish(
-                                  color: secondaryColor,
-                                  fontSize: 16.0,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                            ),
-                            Container(
-                              height: 60.0,
-                              width: 60.0,
-                              decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                  colors: [
-                                    secondaryColor,
-                                    primaryColor,
-                                  ],
-                                ),
-                                borderRadius: BorderRadius.circular(30.0),
-                              ),
-                              child: Material(
-                                borderRadius: BorderRadius.circular(30.0),
-                                color: Colors.transparent,
-                                child: InkWell(
-                                  borderRadius: BorderRadius.circular(30.0),
-                                  onTap: () {},
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(12.0),
-                                    child: Center(
-                                      child: Shimmer.fromColors(
-                                        enabled: true,
-                                        direction: ShimmerDirection.ttb,
-                                        baseColor: Colors.white,
-                                        highlightColor: primaryColor,
-                                        child: SvgPicture.asset(
-                                          "assets/svg/location-position-svgrepo-com.svg",
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              )
+              detailsWidget(_size),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget detailsWidget(Size _size) {
+    return Container(
+      height: _size.height,
+      margin: const EdgeInsets.fromLTRB(0.0, 230.0, 0.0, 0.0),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(30.0),
+      ),
+      padding: const EdgeInsets.only(
+        right: 5.0,
+        left: 5.0,
+      ),
+      width: _size.width,
+      child: Stack(
+        overflow: Overflow.visible,
+        children: [
+          Container(
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              padding: const EdgeInsets.only(top: 60.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                        child: CustomExpandable(
+                          title: "Points de vente",
+                          icon: "assets/svg/store-svgrepo-com.svg",
+                          child: Container(
+                            height: 400.0,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 5.0,
+                          vertical: 10.0,
+                        ),
+                        child: CustomExpandable(
+                          icon: "assets/svg/delivery-svgrepo-com.svg",
+                          title: "Remises",
+                          hasExpanded: true,
+                          child: Container(
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 10.0),
+                              child: Column(
+                                children: [
+                                  for (int i = 0; i < 6; i++) ...[
+                                    const RemiseCard()
+                                  ]
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  )
+                ],
+              ),
+            ),
+          ),
+          Positioned(
+            top: -25.0,
+            right: 10.0,
+            left: 10.0,
+            child: Container(
+              height: 60.0,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(30.0),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(.2),
+                    blurRadius: 12.0,
+                    offset: const Offset(0, 12.0),
+                  )
+                ],
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    child: Text(
+                      'à 4 km de votre position actuelle',
+                      style: GoogleFonts.mulish(
+                        color: secondaryColor,
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    height: 60.0,
+                    width: 60.0,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          secondaryColor,
+                          primaryColor,
+                        ],
+                      ),
+                      borderRadius: BorderRadius.circular(30.0),
+                    ),
+                    child: Material(
+                      borderRadius: BorderRadius.circular(30.0),
+                      color: Colors.transparent,
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(30.0),
+                        onTap: () {},
+                        child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Center(
+                            child: Shimmer.fromColors(
+                              enabled: true,
+                              direction: ShimmerDirection.ttb,
+                              baseColor: Colors.white,
+                              highlightColor: primaryColor,
+                              child: SvgPicture.asset(
+                                "assets/svg/location-position-svgrepo-com.svg",
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          )
+        ],
       ),
     );
   }

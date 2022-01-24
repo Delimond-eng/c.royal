@@ -17,11 +17,32 @@ class AuthenticateScreen extends StatefulWidget {
 }
 
 class _AuthenticateScreenState extends State<AuthenticateScreen> {
+  final PageController pageController = PageController(initialPage: 0);
   final TextEditingController textPhone = TextEditingController();
   String countryCode = "";
+  int currentSteps = 1;
+
+  @override
+  void dispose() {
+    super.dispose();
+    pageController.dispose();
+  }
+
+  onPageChanged(int index) {
+    setState(() {
+      currentSteps = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     var _size = MediaQuery.of(context).size;
+    List<Widget> steps = [
+      firstStepAuth(context),
+      const Center(
+        child: Text("Second step"),
+      ),
+    ];
     return Scaffold(
       body: Container(
         height: _size.height,
@@ -153,111 +174,167 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
               ),
             ),
             Expanded(
-              child: Container(
+              child: PageView(
+                controller: pageController,
+                onPageChanged: onPageChanged,
+                children: steps,
+              ),
+            ),
+            Stack(
+              alignment: AlignmentDirectional.topStart,
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(bottom: 35),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      for (int i = 0; i < steps.length; i++) ...[
+                        if (i == currentSteps) ...[
+                          Dot(true)
+                        ] else ...[
+                          Dot(false)
+                        ]
+                      ]
+                    ],
+                  ),
+                )
+              ],
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget firstStepAuth(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(.5),
+      ),
+      child: Center(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 15.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(.5),
+                  borderRadius: BorderRadius.circular(30.0),
+                  border: Border.all(
+                    color: primaryColor,
+                  ),
+                  color: Colors.white,
                 ),
-                child: Center(
-                  child: SingleChildScrollView(
-                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30.0),
-                            border: Border.all(
-                              color: primaryColor,
-                            ),
-                            color: Colors.white,
-                          ),
-                          child: IntlPhoneField(
-                            controller: textPhone,
-                            keyboardType: TextInputType.phone,
-                            showCountryFlag: false,
-                            decoration: const InputDecoration(
-                              hintMaxLines: 9,
-                              contentPadding:
-                                  EdgeInsets.only(top: 10, bottom: 10),
-                              hintText: "Entrez votre numéro de tél.",
-                              hintStyle: TextStyle(
-                                color: Colors.black54,
-                                fontSize: 14.0,
-                              ),
-                              border: InputBorder.none,
-                              counterText: '',
-                            ),
-                            initialCountryCode: 'CD',
-                            countryCodeTextColor: Colors.grey[600],
-                            onChanged: (phone) {
-                              setState(() {
-                                countryCode = phone.countryCode;
-                              });
-                            },
-                            onCountryChanged: (phone) {
-                              setState(() {
-                                countryCode = phone.countryCode;
-                              });
-                            },
-                          ),
+                child: IntlPhoneField(
+                  controller: textPhone,
+                  keyboardType: TextInputType.phone,
+                  showCountryFlag: false,
+                  decoration: const InputDecoration(
+                    hintMaxLines: 9,
+                    contentPadding: EdgeInsets.only(top: 10, bottom: 10),
+                    hintText: "Entrez votre numéro de tél.",
+                    hintStyle: TextStyle(
+                      color: Colors.black54,
+                      fontSize: 14.0,
+                    ),
+                    border: InputBorder.none,
+                    counterText: '',
+                  ),
+                  initialCountryCode: 'CD',
+                  countryCodeTextColor: Colors.grey[600],
+                  onChanged: (phone) {
+                    setState(() {
+                      countryCode = phone.countryCode;
+                    });
+                  },
+                  onCountryChanged: (phone) {
+                    setState(() {
+                      countryCode = phone.countryCode;
+                    });
+                  },
+                ),
+              ),
+              const SizedBox(
+                height: 15.0,
+              ),
+              Container(
+                height: 50.0,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30.0),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(.1),
+                      blurRadius: 12.0,
+                      offset: const Offset(0, 3),
+                    )
+                  ],
+                  gradient: LinearGradient(
+                    colors: [
+                      primaryColor,
+                      secondaryColor,
+                    ],
+                  ),
+                ),
+                child: Material(
+                  borderRadius: BorderRadius.circular(30.0),
+                  color: Colors.transparent,
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        PageTransition(
+                          child: const HomeScreen(),
+                          type: PageTransitionType.rightToLeftWithFade,
                         ),
-                        const SizedBox(
-                          height: 15.0,
+                      );
+                    },
+                    borderRadius: BorderRadius.circular(30.0),
+                    child: Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: SvgPicture.asset(
+                          "assets/svg/next-right-arrow-svgrepo-com.svg",
+                          color: Colors.white,
                         ),
-                        Container(
-                          height: 50.0,
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30.0),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(.1),
-                                blurRadius: 12.0,
-                                offset: const Offset(0, 3),
-                              )
-                            ],
-                            gradient: LinearGradient(
-                              colors: [
-                                primaryColor,
-                                secondaryColor,
-                              ],
-                            ),
-                          ),
-                          child: Material(
-                            borderRadius: BorderRadius.circular(30.0),
-                            color: Colors.transparent,
-                            child: InkWell(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  PageTransition(
-                                    child: const HomeScreen(),
-                                    type:
-                                        PageTransitionType.rightToLeftWithFade,
-                                  ),
-                                );
-                              },
-                              borderRadius: BorderRadius.circular(30.0),
-                              child: Center(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(15.0),
-                                  child: SvgPicture.asset(
-                                    "assets/svg/next-right-arrow-svgrepo-com.svg",
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
                   ),
                 ),
               ),
-            )
-          ],
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// ignore: must_be_immutable
+class Dot extends StatelessWidget {
+  bool isActive;
+  Dot(this.isActive);
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedContainer(
+      height: 12.0,
+      width: 12.0,
+      margin: const EdgeInsets.symmetric(horizontal: 10),
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: primaryColor,
+          width: 2.0,
+        ),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      duration: const Duration(milliseconds: 150),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 150),
+        decoration: BoxDecoration(
+          color: isActive ? primaryColor : Colors.transparent,
+          borderRadius: BorderRadius.circular(12),
         ),
       ),
     );
