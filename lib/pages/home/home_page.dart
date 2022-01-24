@@ -82,7 +82,7 @@ class _HomePageState extends State<HomePage> {
               Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: Text(
-                  "Nous ont rejoint cette semaine",
+                  "Recommandations",
                   style: GoogleFonts.lato(
                     color: Colors.black87,
                     fontSize: 20.0,
@@ -131,6 +131,17 @@ class _HomePageState extends State<HomePage> {
                       const PopularCard(),
                     ]
                   ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Text(
+                  "Tous les points de vente",
+                  style: GoogleFonts.lato(
+                    color: Colors.black87,
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.w800,
+                  ),
                 ),
               ),
             ],
