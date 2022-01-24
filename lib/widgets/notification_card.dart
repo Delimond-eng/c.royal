@@ -12,11 +12,15 @@ class NotificationCard extends StatelessWidget {
       width: double.infinity,
       margin: const EdgeInsets.only(bottom: 10.0),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10.0),
+        color: Colors.white.withOpacity(.8),
+        border: Border.all(
+          color: secondaryColor,
+          width: .5,
+        ),
+        borderRadius: BorderRadius.circular(20.0),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(.2),
+            color: Colors.black.withOpacity(.1),
             blurRadius: 12.0,
             offset: const Offset(0, 10.0),
           )
@@ -30,7 +34,7 @@ class NotificationCard extends StatelessWidget {
             decoration: BoxDecoration(
               image: const DecorationImage(
                 image: AssetImage(
-                    "assets/images/Logo-BeatriceHotel-bizcongo-hotel.jpg"),
+                    "assets/images/Logo-CongoAirways-bizcongo-compagnieaerienne.jpg"),
                 fit: BoxFit.cover,
                 alignment: Alignment.topCenter,
               ),
@@ -41,7 +45,7 @@ class NotificationCard extends StatelessWidget {
                   blurRadius: 12.0,
                 )
               ],
-              borderRadius: BorderRadius.circular(10.0),
+              borderRadius: BorderRadius.circular(20.0),
             ),
           ),
           Flexible(
@@ -52,7 +56,7 @@ class NotificationCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Chaned Tacos',
+                    'Congo Airways',
                     style: GoogleFonts.mulish(
                       color: primaryColor,
                       fontSize: 17.0,
@@ -75,7 +79,7 @@ class NotificationCard extends StatelessWidget {
                   Text(
                     "valable jusqu'au 25 Février à 15:30",
                     style: GoogleFonts.lato(
-                      color: Colors.grey[500],
+                      color: Colors.black87,
                       fontWeight: FontWeight.w500,
                     ),
                   ),

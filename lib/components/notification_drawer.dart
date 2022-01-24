@@ -11,8 +11,8 @@ class NotificationDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(left: 20.0),
-      decoration: BoxDecoration(
-        color: primaryColor,
+      decoration: const BoxDecoration(
+        color: Colors.white,
       ),
       child: SafeArea(
         child: Column(
@@ -46,7 +46,7 @@ class NotificationDrawer extends StatelessWidget {
                           child: Center(
                             child: SvgPicture.asset(
                               "assets/svg/back-svgrepo-com.svg",
-                              color: Colors.white,
+                              color: primaryColor,
                             ),
                           ),
                         ),
@@ -58,7 +58,7 @@ class NotificationDrawer extends StatelessWidget {
                   ),
                   SvgPicture.asset(
                     "assets/svg/bell-notification-svgrepo-com.svg",
-                    color: Colors.white,
+                    color: primaryColor,
                     height: 25.0,
                     width: 25.0,
                   ),
@@ -79,7 +79,7 @@ class NotificationDrawer extends StatelessWidget {
             Expanded(
               child: Container(
                 child: SingleChildScrollView(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
                   physics: const BouncingScrollPhysics(),
                   child: Column(
                     children: [

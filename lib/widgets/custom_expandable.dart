@@ -118,7 +118,7 @@ class CustomExpandable extends StatelessWidget {
               ),
               collapsed: Container(),
               expanded: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                padding: const EdgeInsets.symmetric(horizontal: 5.0),
                 child: child,
               ),
             ),

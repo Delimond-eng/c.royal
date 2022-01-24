@@ -1,7 +1,6 @@
 import 'package:c_royal/components/app_header.dart';
 import 'package:c_royal/components/notification_drawer.dart';
 import 'package:c_royal/models/category.dart';
-import 'package:c_royal/settings/style.dart';
 import 'package:c_royal/widgets/category_card.dart';
 import 'package:c_royal/widgets/popular_card.dart';
 import 'package:c_royal/widgets/post_card.dart';

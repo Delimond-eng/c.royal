@@ -1,6 +1,8 @@
 import 'package:c_royal/components/app_bottom_navigation.dart';
 import 'package:c_royal/pages/home/home_page.dart';
+import 'package:c_royal/pages/locations/proximity_store_page.dart';
 import 'package:c_royal/pages/privileges/privilege_page.dart';
+import 'package:c_royal/pages/scans/scan_page.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -25,12 +27,8 @@ class _HomeScreenState extends State<HomeScreen> {
     List<Widget> pages = [
       const HomePage(),
       const PrivilegePage(),
-      const Center(
-        child: Text("Scanner le code"),
-      ),
-      const Center(
-        child: Text("Près de moi"),
-      )
+      const ScanPage(),
+      const ProximityStorePage(),
     ];
 
     void _onItemTapped(int index) {

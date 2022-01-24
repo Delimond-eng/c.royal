@@ -7,7 +7,9 @@ import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:lottie/lottie.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:pinput/pin_put/pin_put.dart';
 
 class AuthenticateScreen extends StatefulWidget {
   const AuthenticateScreen({Key key}) : super(key: key);
@@ -20,7 +22,7 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
   final PageController pageController = PageController(initialPage: 0);
   final TextEditingController textPhone = TextEditingController();
   String countryCode = "";
-  int currentSteps = 1;
+  int currentSteps = 0;
 
   @override
   void dispose() {
@@ -39,9 +41,7 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
     var _size = MediaQuery.of(context).size;
     List<Widget> steps = [
       firstStepAuth(context),
-      const Center(
-        child: Text("Second step"),
-      ),
+      secondStepAuth(context),
     ];
     return Scaffold(
       body: Container(
@@ -54,8 +54,8 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
           ),
         ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             ClipPath(
               clipper: WaveClipperTwo(),
@@ -65,8 +65,8 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
-                      Colors.blue.withOpacity(.8),
                       primaryColor.withOpacity(.8),
+                      Colors.blue.withOpacity(.8),
                     ],
                   ),
                 ),
@@ -81,17 +81,9 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
                             TextSpan(
                               text: 'Cercle ',
                               style: GoogleFonts.lato(
-                                color: primaryColor,
+                                color: Colors.white,
                                 fontWeight: FontWeight.w900,
-                                fontStyle: FontStyle.italic,
-                                fontSize: 50.0,
-                                shadows: [
-                                  Shadow(
-                                    color: Colors.white.withOpacity(.8),
-                                    blurRadius: 4.0,
-                                    offset: const Offset(0, 5),
-                                  )
-                                ],
+                                fontSize: 30.0,
                               ),
                             ),
                             TextSpan(
@@ -100,88 +92,50 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
                                 fontWeight: FontWeight.w600,
                                 color: accentColor,
                                 letterSpacing: 1.0,
-                                fontStyle: FontStyle.italic,
-                                fontSize: 30.0,
-                                shadows: [
-                                  Shadow(
-                                    color: Colors.black.withOpacity(.2),
-                                    blurRadius: 4.0,
-                                    offset: const Offset(0, 5),
-                                  )
-                                ],
+                                fontSize: 18.0,
                               ),
                             ),
                           ],
                         ),
+                      ),*/
+
+                      if (currentSteps == 0) ...[
+                        Lottie.asset(
+                          "assets/lottiesfiles/4430-phone-number-verification.json",
+                          height: 150.0,
+                          width: 150.0,
+                        ),
+                      ] else ...[
+                        Lottie.asset(
+                          "assets/lottiesfiles/81148-new-message-notification.json",
+                          height: 150.0,
+                          width: 150.0,
+                        ),
+                      ],
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 50.0),
+                        child: Text(
+                          currentSteps == 0
+                              ? "Entrez votre numéro de téléphone pour activer votre compte !"
+                              : "Veuillez entrer le code de validation envoyée par sms à votre numéro de téléphone !",
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.lato(
+                            color: Colors.white,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.w300,
+                          ),
+                        ),
                       ),
                       const SizedBox(
-                        height: 8.0,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            height: 5,
-                            width: 110,
-                            decoration: BoxDecoration(
-                              color: secondaryColor,
-                              borderRadius: const BorderRadius.horizontal(
-                                left: Radius.circular(20.0),
-                              ),
-                              boxShadow: [
-                                BoxShadow(
-                                  blurRadius: 10.0,
-                                  color: Colors.black.withOpacity(.2),
-                                  offset: const Offset(0, 8.0),
-                                )
-                              ],
-                            ),
-                          ),
-                          Container(
-                            height: 5,
-                            width: 110,
-                            decoration: BoxDecoration(
-                              color: primaryColor,
-                              borderRadius: const BorderRadius.horizontal(
-                                right: Radius.circular(20.0),
-                              ),
-                              boxShadow: [
-                                BoxShadow(
-                                  blurRadius: 10.0,
-                                  color: Colors.black.withOpacity(.2),
-                                  offset: const Offset(0, 8.0),
-                                )
-                              ],
-                            ),
-                          ),
-                        ],
-                      )*/
-
-                      Text(
-                        'Entrez votre numéro de téléphone pour activer votre compte !',
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.mulish(
-                          color: Colors.white,
-                          fontSize: 18.0,
-                          fontWeight: FontWeight.w500,
-                          letterSpacing: 1.0,
-                        ),
+                        height: 20.0,
                       ),
                     ],
                   ),
                 ),
               ),
             ),
-            Expanded(
-              child: PageView(
-                controller: pageController,
-                onPageChanged: onPageChanged,
-                children: steps,
-              ),
-            ),
-            Stack(
-              alignment: AlignmentDirectional.topStart,
+            /*Stack(
+              alignment: AlignmentDirectional.topEnd,
               children: [
                 Container(
                   margin: const EdgeInsets.only(bottom: 35),
@@ -200,7 +154,15 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
                   ),
                 )
               ],
-            )
+            ),*/
+            Expanded(
+              child: PageView(
+                controller: pageController,
+                onPageChanged: onPageChanged,
+                children: steps,
+                physics: const NeverScrollableScrollPhysics(),
+              ),
+            ),
           ],
         ),
       ),
@@ -221,21 +183,21 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
             children: [
               Container(
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30.0),
+                  borderRadius: BorderRadius.circular(5.0),
                   border: Border.all(
-                    color: primaryColor,
+                    color: primaryColor.withAlpha(100),
                   ),
                   color: Colors.white,
                 ),
                 child: IntlPhoneField(
                   controller: textPhone,
                   keyboardType: TextInputType.phone,
-                  showCountryFlag: false,
-                  decoration: const InputDecoration(
+                  showCountryFlag: true,
+                  decoration: InputDecoration(
                     hintMaxLines: 9,
-                    contentPadding: EdgeInsets.only(top: 10, bottom: 10),
+                    contentPadding: const EdgeInsets.only(top: 10, bottom: 10),
                     hintText: "Entrez votre numéro de tél.",
-                    hintStyle: TextStyle(
+                    hintStyle: GoogleFonts.lato(
                       color: Colors.black54,
                       fontSize: 14.0,
                     ),
@@ -257,24 +219,137 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
                 ),
               ),
               const SizedBox(
-                height: 15.0,
+                height: 20.0,
               ),
               Container(
                 height: 50.0,
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30.0),
+                  borderRadius: BorderRadius.circular(5.0),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(.1),
+                      color: Colors.black.withOpacity(.2),
                       blurRadius: 12.0,
-                      offset: const Offset(0, 3),
+                      offset: const Offset(0, 10.0),
                     )
                   ],
                   gradient: LinearGradient(
                     colors: [
+                      Colors.blue,
                       primaryColor,
-                      secondaryColor,
+                    ],
+                  ),
+                ),
+                child: Material(
+                  borderRadius: BorderRadius.circular(30.0),
+                  color: Colors.transparent,
+                  child: InkWell(
+                    onTap: () {
+                      /*Navigator.push(
+                        context,
+                        PageTransition(
+                          child: const HomeScreen(),
+                          type: PageTransitionType.rightToLeftWithFade,
+                        ),
+                      );*/
+                      setState(() {
+                        currentSteps++;
+                      });
+                      pageController.animateToPage(
+                        currentSteps,
+                        duration: const Duration(milliseconds: 500),
+                        curve: Curves.easeIn,
+                      );
+                    },
+                    borderRadius: BorderRadius.circular(30.0),
+                    child: Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: SvgPicture.asset(
+                          "assets/svg/next-right-arrow-svgrepo-com.svg",
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget secondStepAuth(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(.5),
+      ),
+      child: Center(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 15.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: PinPut(
+                  fieldsCount: 5,
+
+                  //onSubmit: (String pin) => _showSnackBar(pin, context),
+                  //focusNode: _pinPutFocusNode,
+                  //controller: _pinPutController,
+                  selectedFieldDecoration: BoxDecoration(
+                    border: Border.all(color: Colors.green[700]),
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
+                  eachFieldWidth: 55.0,
+                  eachFieldHeight: 70.0,
+                  onSubmit: (String pin) {
+                    if (pin.isNotEmpty) {
+                      Navigator.push(
+                        context,
+                        PageTransition(
+                          child: const HomeScreen(),
+                          type: PageTransitionType.rightToLeftWithFade,
+                        ),
+                      );
+                    }
+                  },
+                  submittedFieldDecoration: BoxDecoration(
+                    border: Border.all(color: Colors.green[700]),
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
+                  followingFieldDecoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5.0),
+                    border: Border.all(
+                      color: primaryColor,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 65.0,
+              ),
+              /*Container(
+                margin: const EdgeInsets.all(8.0),
+                height: 50.0,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5.0),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(.2),
+                      blurRadius: 12.0,
+                      offset: const Offset(0, 10.0),
+                    )
+                  ],
+                  gradient: LinearGradient(
+                    colors: [
+                      Colors.blue,
+                      Colors.green[700],
                     ],
                   ),
                 ),
@@ -303,7 +378,17 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
                     ),
                   ),
                 ),
-              ),
+              ),*/
+
+              TextButton(
+                onPressed: () {},
+                child: Text(
+                  "Réenvoyer le code",
+                  style: GoogleFonts.lato(
+                    color: Colors.black87,
+                  ),
+                ),
+              )
             ],
           ),
         ),
@@ -319,24 +404,25 @@ class Dot extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
-      height: 12.0,
-      width: 12.0,
-      margin: const EdgeInsets.symmetric(horizontal: 10),
+      height: 10.0,
+      width: 10.0,
+      margin: const EdgeInsets.symmetric(horizontal: 5),
+      padding: const EdgeInsets.all(6.0),
       decoration: BoxDecoration(
-        border: Border.all(
-          color: primaryColor,
-          width: 2.0,
+        gradient: LinearGradient(
+          colors: isActive
+              ? [
+                  primaryColor,
+                  Colors.blue,
+                ]
+              : [
+                  Colors.grey[500],
+                  Colors.grey[500],
+                ],
         ),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(10.0),
       ),
-      duration: const Duration(milliseconds: 150),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 150),
-        decoration: BoxDecoration(
-          color: isActive ? primaryColor : Colors.transparent,
-          borderRadius: BorderRadius.circular(12),
-        ),
-      ),
+      duration: const Duration(milliseconds: 500),
     );
   }
 }

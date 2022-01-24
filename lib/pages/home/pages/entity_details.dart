@@ -1,5 +1,6 @@
 import 'package:c_royal/settings/style.dart';
 import 'package:c_royal/widgets/custom_expandable.dart';
+import 'package:c_royal/widgets/store_card.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -76,7 +77,17 @@ class _EntityDetailsState extends State<EntityDetails> {
                           title: "Points de vente",
                           icon: "assets/svg/store-svgrepo-com.svg",
                           child: Container(
-                            height: 400.0,
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 10.0),
+                              child: Column(
+                                children: [
+                                  for (int i = 0; i < 6; i++) ...[
+                                    const StoreCard()
+                                  ]
+                                ],
+                              ),
+                            ),
                           ),
                         ),
                       ),
