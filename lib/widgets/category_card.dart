@@ -1,6 +1,8 @@
 import 'dart:math';
 
 import 'package:c_royal/models/category.dart';
+import 'package:c_royal/models/configs.dart';
+import 'package:c_royal/services/api/api_manager.dart';
 import 'package:c_royal/settings/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -35,7 +37,15 @@ class CategoryCard extends StatelessWidget {
         color: Colors.transparent,
         child: InkWell(
           borderRadius: BorderRadius.circular(15.0),
-          onTap: () {},
+          onTap: () async {
+            await ApiManager.login(
+              data: {"telephone": "+243813719944", "otp": "258125"},
+            ).then((res) {
+              if (res != null) {
+                print(res["reponse"]);
+              }
+            });
+          },
           child: Padding(
             padding: const EdgeInsets.all(5.0),
             child: Column(
