@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_unnecessary_containers, sized_box_for_whitespace
+
 import 'package:c_royal/components/app_header.dart';
 import 'package:c_royal/components/notification_drawer.dart';
 import 'package:c_royal/models/category.dart';

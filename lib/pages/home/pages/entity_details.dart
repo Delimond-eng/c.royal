@@ -1,3 +1,5 @@
+// ignore_for_file: sized_box_for_whitespace
+
 import 'dart:math';
 
 import 'package:c_royal/settings/style.dart';
@@ -20,18 +22,6 @@ class _EntityDetailsState extends State<EntityDetails> {
   @override
   Widget build(BuildContext context) {
     var _size = MediaQuery.of(context).size;
-    List<Widget> steps = [
-      Container(
-        child: const Center(
-          child: Text("First step"),
-        ),
-      ),
-      Container(
-        child: const Center(
-          child: Text("Second step"),
-        ),
-      ),
-    ];
     return Scaffold(
       body: Container(
         height: _size.height,
@@ -84,7 +74,7 @@ class _EntityDetailsState extends State<EntityDetails> {
                             child: SingleChildScrollView(
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 15.0,
-                                vertical: 10.0,
+                                vertical: 15.0,
                               ),
                               scrollDirection: Axis.horizontal,
                               child: Row(

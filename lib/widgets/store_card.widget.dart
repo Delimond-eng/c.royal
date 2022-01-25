@@ -12,7 +12,7 @@ class StoreCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 200.0,
+      height: 150.0,
       width: 150.0,
       decoration: BoxDecoration(
         color: Colors.white,
@@ -28,23 +28,71 @@ class StoreCard extends StatelessWidget {
       margin: const EdgeInsets.only(right: 10.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Container(
-            height: 80.0,
-            width: 150.0,
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.vertical(
-                top: Radius.circular(20.0),
+          Stack(
+            children: [
+              Container(
+                height: 80.0,
+                width: 140.0,
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.vertical(
+                    top: Radius.circular(20.0),
+                  ),
+                  image: DecorationImage(
+                    image: AssetImage("assets/images/foo-chilly-chicken.jpg"),
+                    fit: BoxFit.cover,
+                  ),
+                ),
               ),
-              image: DecorationImage(
-                image: AssetImage("assets/images/foo-chilly-chicken.jpg"),
-                fit: BoxFit.cover,
-              ),
-            ),
+              Positioned(
+                top: 8.0,
+                right: 8.0,
+                child: Container(
+                  margin: const EdgeInsets.only(bottom: 5),
+                  height: 50.0,
+                  width: 50.0,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        primaryColor,
+                        Colors.blue,
+                      ],
+                    ),
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(.1),
+                        blurRadius: 12.0,
+                        offset: const Offset(0, 10.0),
+                      )
+                    ],
+                  ),
+                  child: Material(
+                    borderRadius: BorderRadius.circular(50.0),
+                    color: Colors.transparent,
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(50.0),
+                      onTap: () {},
+                      child: Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Center(
+                          child: SvgPicture.asset(
+                            "assets/svg/location-position-svgrepo-com.svg",
+                            color: Colors.white,
+                            width: 20.0,
+                            height: 20.0,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              )
+            ],
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 5.0),
+            padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 8.0),
             child: Text(
               "Kin mart Bandal.",
               style: GoogleFonts.mulish(
@@ -58,6 +106,7 @@ class StoreCard extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 5.0),
             child: Text(
               "à 2km de votre position actuelle",
+              textAlign: TextAlign.center,
               style: GoogleFonts.lato(
                 color: Colors.redAccent,
                 fontSize: 12.0,
@@ -65,39 +114,6 @@ class StoreCard extends StatelessWidget {
               ),
             ),
           ),
-          Align(
-            alignment: Alignment.center,
-            child: Container(
-              padding: const EdgeInsets.all(5.0),
-              margin: const EdgeInsets.only(bottom: 5),
-              height: 50.0,
-              width: 50.0,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    primaryColor,
-                    Colors.blue,
-                  ],
-                ),
-                shape: BoxShape.circle,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(.1),
-                    blurRadius: 12.0,
-                    offset: const Offset(0, 10.0),
-                  )
-                ],
-              ),
-              child: Center(
-                child: SvgPicture.asset(
-                  "assets/svg/location-position-svgrepo-com.svg",
-                  color: Colors.white,
-                  width: 20.0,
-                  height: 20.0,
-                ),
-              ),
-            ),
-          )
         ],
       ),
     );
