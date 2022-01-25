@@ -108,47 +108,8 @@ class RemiseCard extends StatelessWidget {
                   ],
                 ),
               ),
-              /*Container(
-                height: 50.0,
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                  color: primaryColor.withAlpha(100),
-                  borderRadius: BorderRadius.circular(20.0),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(.3),
-                      blurRadius: 12.0,
-                      offset: const Offset(0, 3),
-                    )
-                  ],
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: Container()
-                      ),
-                    ),
-                    ExpandableIcon(
-                      theme: const ExpandableThemeData(
-                        expandIcon: CupertinoIcons.add,
-                        collapseIcon: CupertinoIcons.minus,
-                        iconColor: Colors.white,
-                        iconSize: 15.0,
-                        iconRotationAngle: math.pi / 2,
-                        iconPadding: EdgeInsets.only(right: 15),
-                        hasIcon: false,
-                      ),
-                    ),
-                  ],
-                ),
-              )*/
               collapsed: Container(),
-              expanded: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                child: child,
-              ),
+              expanded: child,
             ),
           ],
         ),

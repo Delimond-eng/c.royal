@@ -65,7 +65,7 @@ class _EntityDetailsState extends State<EntityDetails> {
                     physics: const BouncingScrollPhysics(),
                     padding: const EdgeInsets.symmetric(
                       vertical: 10.0,
-                      horizontal: 15.0,
+                      horizontal: 10.0,
                     ),
                     child: Column(
                       children: [
@@ -73,7 +73,7 @@ class _EntityDetailsState extends State<EntityDetails> {
                           RemiseCard(
                             child: SingleChildScrollView(
                               padding: const EdgeInsets.symmetric(
-                                horizontal: 15.0,
+                                horizontal: 8.0,
                                 vertical: 15.0,
                               ),
                               scrollDirection: Axis.horizontal,

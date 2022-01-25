@@ -43,10 +43,24 @@ class AppHeader extends StatelessWidget {
           children: [
             Row(
               children: [
-                SvgPicture.asset(
-                  "assets/svg/circle-svgrepo-com.svg",
-                  height: 20.0,
-                  width: 20.0,
+                Stack(
+                  overflow: Overflow.visible,
+                  children: [
+                    SvgPicture.asset(
+                      "assets/svg/circle-svgrepo-com.svg",
+                      height: 20.0,
+                      width: 20.0,
+                    ),
+                    Positioned(
+                      top: -5,
+                      child: SvgPicture.asset(
+                        "assets/svg/royal.svg",
+                        height: 20.0,
+                        width: 20.0,
+                        color: primaryColor,
+                      ),
+                    )
+                  ],
                 ),
                 const SizedBox(
                   width: 8.0,

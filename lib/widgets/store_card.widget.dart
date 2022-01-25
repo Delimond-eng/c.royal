@@ -1,3 +1,4 @@
+import 'package:c_royal/services/api/api_manager.dart';
 import 'package:c_royal/settings/style.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,7 @@ class StoreCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 150.0,
-      width: 150.0,
+      width: 140.0,
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: [
@@ -50,21 +51,21 @@ class StoreCard extends StatelessWidget {
                 right: 8.0,
                 child: Container(
                   margin: const EdgeInsets.only(bottom: 5),
-                  height: 50.0,
-                  width: 50.0,
+                  height: 40.0,
+                  width: 40.0,
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: [
                         primaryColor,
-                        Colors.blue,
+                        secondaryColor,
                       ],
                     ),
                     shape: BoxShape.circle,
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(.1),
+                        color: Colors.black.withOpacity(.2),
                         blurRadius: 12.0,
-                        offset: const Offset(0, 10.0),
+                        offset: const Offset(0, 5.0),
                       )
                     ],
                   ),
@@ -73,7 +74,11 @@ class StoreCard extends StatelessWidget {
                     color: Colors.transparent,
                     child: InkWell(
                       borderRadius: BorderRadius.circular(50.0),
-                      onTap: () {},
+                      onTap: () async {
+                        await ApiManager.getHomeData().then((e) {
+                          print(e.content.marchands[0].nom);
+                        });
+                      },
                       child: Padding(
                         padding: const EdgeInsets.all(5.0),
                         child: Center(
