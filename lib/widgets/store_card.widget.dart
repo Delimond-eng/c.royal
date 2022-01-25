@@ -1,4 +1,5 @@
 import 'package:c_royal/settings/style.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -11,8 +12,8 @@ class StoreCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 80.0,
-      width: double.infinity,
+      height: 200.0,
+      width: 150.0,
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: [
@@ -24,57 +25,53 @@ class StoreCard extends StatelessWidget {
         ],
         borderRadius: BorderRadius.circular(20.0),
       ),
-      padding: const EdgeInsets.all(5.0),
-      margin: const EdgeInsets.only(bottom: 10.0),
-      child: Row(
+      margin: const EdgeInsets.only(right: 10.0),
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(
             height: 80.0,
-            width: 80.0,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20.0),
-              color: primaryColor,
+            width: 150.0,
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.vertical(
+                top: Radius.circular(20.0),
+              ),
+              image: DecorationImage(
+                image: AssetImage("assets/images/foo-chilly-chicken.jpg"),
+                fit: BoxFit.cover,
+              ),
             ),
           ),
-          Flexible(
-            child: Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(
-                    "Kin mart Bandal.",
-                    style: GoogleFonts.mulish(
-                      color: primaryColor,
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.w800,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 4.0,
-                  ),
-                  Text(
-                    "à 2km de votre position actuelle",
-                    style: GoogleFonts.lato(
-                      color: Colors.redAccent,
-                      fontSize: 12.0,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  )
-                ],
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 5.0),
+            child: Text(
+              "Kin mart Bandal.",
+              style: GoogleFonts.mulish(
+                color: primaryColor,
+                fontSize: 14.0,
+                fontWeight: FontWeight.w800,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 5.0),
+            child: Text(
+              "à 2km de votre position actuelle",
+              style: GoogleFonts.lato(
+                color: Colors.redAccent,
+                fontSize: 12.0,
+                fontWeight: FontWeight.w400,
               ),
             ),
           ),
           Align(
-            alignment: Alignment.bottomRight,
+            alignment: Alignment.center,
             child: Container(
               padding: const EdgeInsets.all(5.0),
               margin: const EdgeInsets.only(bottom: 5),
-              height: 35.0,
-              width: 90.0,
+              height: 50.0,
+              width: 50.0,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
@@ -82,7 +79,7 @@ class StoreCard extends StatelessWidget {
                     Colors.blue,
                   ],
                 ),
-                borderRadius: BorderRadius.circular(20.0),
+                shape: BoxShape.circle,
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withOpacity(.1),
@@ -92,27 +89,11 @@ class StoreCard extends StatelessWidget {
                 ],
               ),
               child: Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Guidage",
-                      style: GoogleFonts.lato(
-                        color: Colors.white,
-                        fontSize: 12.0,
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 8.0,
-                    ),
-                    SvgPicture.asset(
-                      "assets/svg/location-position-svgrepo-com.svg",
-                      color: Colors.white,
-                      width: 15.0,
-                      height: 15.0,
-                    ),
-                  ],
+                child: SvgPicture.asset(
+                  "assets/svg/location-position-svgrepo-com.svg",
+                  color: Colors.white,
+                  width: 20.0,
+                  height: 20.0,
                 ),
               ),
             ),

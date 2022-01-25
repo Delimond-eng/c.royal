@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'screens/auth/auth_screen.dart';
-//import 'screens/home/home_screens.dart';
+//import 'screens/auth/auth_screen.dart';
+import 'screens/home/home_screens.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const AuthenticateScreen(),
+      home: const HomeScreen(), //AuthenticateScreen(),
     );
   }
 }

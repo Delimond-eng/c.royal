@@ -75,7 +75,7 @@ class PostNewCard extends StatelessWidget {
                             offset: const Offset(0, 10),
                           )
                         ],
-                        borderRadius: BorderRadius.circular(15.0),
+                        shape: BoxShape.circle,
                       ),
                     ),
                   )

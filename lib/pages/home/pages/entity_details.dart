@@ -1,6 +1,9 @@
+import 'dart:math';
+
 import 'package:c_royal/settings/style.dart';
-import 'package:c_royal/widgets/custom_expandable.dart';
+import 'package:c_royal/widgets/expanded_remise_card.dart';
 import 'package:c_royal/widgets/store_card.widget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -53,72 +56,52 @@ class _EntityDetailsState extends State<EntityDetails> {
         color: Colors.white,
         borderRadius: BorderRadius.circular(30.0),
       ),
-      padding: const EdgeInsets.only(
-        right: 5.0,
-        left: 5.0,
-      ),
       width: _size.width,
       child: Stack(
         overflow: Overflow.visible,
         children: [
           Container(
-            child: SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
-              padding: const EdgeInsets.only(top: 60.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                        child: CustomExpandable(
-                          title: "Points de vente",
-                          icon: "assets/svg/store-svgrepo-com.svg",
-                          child: Container(
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 10.0),
-                              child: Column(
+            padding: const EdgeInsets.only(top: 50.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const PartTitle(
+                  icon: "assets/svg/delivery-svgrepo-com.svg",
+                  title: "Remises",
+                ),
+                Expanded(
+                  child: SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 10.0,
+                      horizontal: 15.0,
+                    ),
+                    child: Column(
+                      children: [
+                        for (int i = 0; i < 6; i++) ...[
+                          RemiseCard(
+                            child: SingleChildScrollView(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 15.0,
+                                vertical: 10.0,
+                              ),
+                              scrollDirection: Axis.horizontal,
+                              child: Row(
                                 children: [
                                   for (int i = 0; i < 6; i++) ...[
-                                    const StoreCard()
+                                    const StoreCard(),
                                   ]
                                 ],
                               ),
                             ),
                           ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 5.0,
-                          vertical: 10.0,
-                        ),
-                        child: CustomExpandable(
-                          icon: "assets/svg/delivery-svgrepo-com.svg",
-                          title: "Remises",
-                          hasExpanded: true,
-                          child: Container(
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 10.0),
-                              child: Column(
-                                children: [
-                                  for (int i = 0; i < 6; i++) ...[
-                                    const RemiseCard()
-                                  ]
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      )
-                    ],
-                  )
-                ],
-              ),
+                        ]
+                      ],
+                    ),
+                  ),
+                )
+              ],
             ),
           ),
           Positioned(
@@ -129,7 +112,7 @@ class _EntityDetailsState extends State<EntityDetails> {
               height: 60.0,
               width: double.infinity,
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: primaryColor,
                 borderRadius: BorderRadius.circular(30.0),
                 boxShadow: [
                   BoxShadow(
@@ -148,8 +131,8 @@ class _EntityDetailsState extends State<EntityDetails> {
                     child: Text(
                       'à 4 km de votre position actuelle',
                       style: GoogleFonts.mulish(
-                        color: secondaryColor,
-                        fontSize: 16.0,
+                        color: Colors.white,
+                        fontSize: 15.0,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -160,8 +143,8 @@ class _EntityDetailsState extends State<EntityDetails> {
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                         colors: [
-                          secondaryColor,
                           primaryColor,
+                          secondaryColor,
                         ],
                       ),
                       borderRadius: BorderRadius.circular(30.0),
@@ -306,82 +289,74 @@ class _EntityDetailsState extends State<EntityDetails> {
   }
 }
 
-class RemiseCard extends StatelessWidget {
-  const RemiseCard({
-    Key key,
-  }) : super(key: key);
+class PartTitle extends StatelessWidget {
+  final String icon, title;
+  const PartTitle({Key key, this.icon, this.title}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 80.0,
+      height: 50.0,
       width: double.infinity,
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: primaryColor.withAlpha(50),
-        ),
-        borderRadius: BorderRadius.circular(20.0),
+      margin: const EdgeInsets.only(
+        right: 20.0,
+        bottom: 15.0,
       ),
-      padding: const EdgeInsets.all(5.0),
-      margin: const EdgeInsets.only(bottom: 8.0),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Flexible(
-            child: Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(
-                    "15 % de remise sur l'addition",
-                    style: GoogleFonts.mulish(
-                      color: primaryColor,
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.w800,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10.0,
-                  ),
-                  Text(
-                    "Tous les jours de 10H à 18H",
-                    style: GoogleFonts.mulish(
-                      color: Colors.black87,
-                    ),
-                  )
-                ],
-              ),
-            ),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(.3),
+            blurRadius: 12.0,
+            offset: const Offset(0, 3),
           ),
-          Align(
-            alignment: Alignment.bottomRight,
-            child: Container(
-              padding: const EdgeInsets.all(7.0),
+        ],
+        borderRadius: const BorderRadius.horizontal(
+          right: Radius.circular(30.0),
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
               height: 30.0,
-              width: 60.0,
+              width: 30.0,
               decoration: BoxDecoration(
-                color: secondaryColor,
-                borderRadius: BorderRadius.circular(20.0),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(.1),
-                    blurRadius: 12.0,
-                    offset: const Offset(0, 10.0),
-                  )
-                ],
+                shape: BoxShape.circle,
+                gradient: LinearGradient(
+                  colors: [
+                    Colors.primaries[Random().nextInt(Colors.primaries.length)]
+                        .shade900,
+                    Colors.primaries[Random().nextInt(Colors.primaries.length)]
+                        .shade900,
+                  ],
+                ),
               ),
               child: Center(
                 child: SvgPicture.asset(
-                  "assets/svg/next-right-arrow-svgrepo-com.svg",
+                  icon,
+                  height: 15.0,
+                  width: 15.0,
                   color: Colors.white,
                 ),
               ),
             ),
-          )
-        ],
+            const SizedBox(
+              width: 10.0,
+            ),
+            Text(
+              title,
+              style: GoogleFonts.lato(
+                fontWeight: FontWeight.w700,
+                color: Colors.black87,
+                fontSize: 18.0,
+                letterSpacing: 1.0,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -2,7 +2,7 @@ import 'package:c_royal/components/app_header.dart';
 import 'package:c_royal/components/notification_drawer.dart';
 import 'package:c_royal/models/category.dart';
 import 'package:c_royal/widgets/category_card.dart';
-import 'package:c_royal/widgets/store_card.widget.dart';
+import 'package:c_royal/widgets/shop_card.dart';
 import 'package:flutter/material.dart';
 
 class ProximityStorePage extends StatefulWidget {
@@ -46,8 +46,8 @@ class _ProximityStorePageState extends State<ProximityStorePage> {
                       children: [
                         SingleChildScrollView(
                           padding: const EdgeInsets.only(
-                            left: 15.0,
-                            right: 15.0,
+                            left: 10.0,
+                            right: 10.0,
                             bottom: 10.0,
                           ),
                           scrollDirection: Axis.horizontal,
@@ -68,11 +68,11 @@ class _ProximityStorePageState extends State<ProximityStorePage> {
                               child: SingleChildScrollView(
                                 physics: const BouncingScrollPhysics(),
                                 padding: const EdgeInsets.symmetric(
-                                    horizontal: 15.0),
+                                    horizontal: 10.0),
                                 child: Column(
                                   children: [
                                     for (int i = 0; i < 10; i++) ...[
-                                      const StoreCard(),
+                                      const ShopCard()
                                     ]
                                   ],
                                 ),
