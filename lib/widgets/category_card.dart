@@ -38,13 +38,13 @@ class CategoryCard extends StatelessWidget {
         child: InkWell(
           borderRadius: BorderRadius.circular(15.0),
           onTap: () async {
-            await ApiManager.login(
+            /*await ApiManager.login(
               data: {"telephone": "+243813719944", "otp": "258125"},
             ).then((res) {
               if (res != null) {
                 print(res["reponse"]);
               }
-            });
+            });*/
           },
           child: Padding(
             padding: const EdgeInsets.all(5.0),
