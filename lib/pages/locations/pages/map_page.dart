@@ -11,8 +11,8 @@ import 'package:location/location.dart';
 const double CAMERA_ZOOM = 16;
 const double CAMERA_TILT = 80;
 const double CAMERA_BEARING = 30;
-const LatLng SOURCE_LOCATION = LatLng(15.2812905, -71.167889);
-const LatLng DEST_LOCATION = LatLng(15.306909, -4.322086);
+const LatLng SOURCE_LOCATION = LatLng(-71.167889, 15.2812905);
+const LatLng DEST_LOCATION = LatLng(-4.322086, 15.306909);
 
 class MapPage extends StatefulWidget {
   const MapPage({Key key}) : super(key: key);
@@ -55,13 +55,17 @@ class _MapPageState extends State<MapPage> {
       const ImageConfiguration(devicePixelRatio: 2.0),
       'assets/icons/driving_pin.png',
     ).then((onValue) {
-      sourceIcon = onValue;
+      setState(() {
+        sourceIcon = onValue;
+      });
     });
     BitmapDescriptor.fromAssetImage(
       const ImageConfiguration(devicePixelRatio: 2.0),
       'assets/icons/destination_map_marker.png',
     ).then((onValue) {
-      destinationIcon = onValue;
+      setState(() {
+        destinationIcon = onValue;
+      });
     });
   }
 
@@ -74,6 +78,33 @@ class _MapPageState extends State<MapPage> {
       "latitude": DEST_LOCATION.latitude,
       "longitude": DEST_LOCATION.longitude
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    // create an instance of Location
+    location = Location();
+    polylinePoints = PolylinePoints();
+    // subscribe to changes in the user's location
+    // by "listening" to the location's onLocationChanged event
+    location.onLocationChanged.listen((LocationData cLoc) {
+      // cLoc contains the lat and long of the
+      // current user's position in real time,
+      // so we're holding on to it
+      currentLocation = cLoc;
+      updatePinOnMap();
+    });
+    // set custom marker pins
+    setSourceAndDestinationIcons();
+    // set the initial location
+    setInitialLocation();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
