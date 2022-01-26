@@ -2,6 +2,7 @@
 
 import 'dart:math';
 
+import 'package:c_royal/pages/locations/pages/map_page.dart';
 import 'package:c_royal/settings/style.dart';
 import 'package:c_royal/widgets/expanded_remise_card.dart';
 import 'package:c_royal/widgets/store_card.widget.dart';
@@ -9,6 +10,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:shimmer/shimmer.dart';
 
 class EntityDetails extends StatefulWidget {
@@ -144,7 +146,15 @@ class _EntityDetailsState extends State<EntityDetails> {
                       color: Colors.transparent,
                       child: InkWell(
                         borderRadius: BorderRadius.circular(30.0),
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            PageTransition(
+                              child: const MapPage(),
+                              type: PageTransitionType.bottomToTop,
+                            ),
+                          );
+                        },
                         child: Padding(
                           padding: const EdgeInsets.all(12.0),
                           child: Center(

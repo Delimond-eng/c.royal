@@ -43,7 +43,7 @@ class _MapPageState extends State<MapPage> {
   PinInfo currentlySelectedPin = PinInfo(
     pinPath: '',
     avatarPath: '',
-    location: LatLng(0, 0),
+    location: const LatLng(0, 0),
     locationName: '',
     labelColor: Colors.grey,
   );
@@ -96,23 +96,24 @@ class _MapPageState extends State<MapPage> {
       body: Stack(
         children: <Widget>[
           GoogleMap(
-              myLocationEnabled: true,
-              compassEnabled: true,
-              tiltGesturesEnabled: false,
-              markers: markers,
-              polylines: polylines,
-              mapType: MapType.normal,
-              initialCameraPosition: initialCameraPosition,
-              onTap: (LatLng loc) {
-                pinPillPosition = -100;
-              },
-              onMapCreated: (GoogleMapController controller) {
-                controller.setMapStyle(Utils.mapStyles);
-                mapController.complete(controller);
-                // my map has completed being created;
-                // i'm ready to show the pins on the map
-                showPinsOnMap();
-              }),
+            myLocationEnabled: true,
+            compassEnabled: true,
+            tiltGesturesEnabled: false,
+            markers: markers,
+            polylines: polylines,
+            mapType: MapType.normal,
+            initialCameraPosition: initialCameraPosition,
+            onTap: (LatLng loc) {
+              pinPillPosition = -100;
+            },
+            onMapCreated: (GoogleMapController controller) {
+              controller.setMapStyle(Utils.mapStyles);
+              mapController.complete(controller);
+              // my map has completed being created;
+              // i'm ready to show the pins on the map
+              showPinsOnMap();
+            },
+          ),
           MapPin(
             pinPosition: pinPillPosition,
             pinInfo: currentlySelectedPin,
@@ -165,15 +166,16 @@ class _MapPageState extends State<MapPage> {
     // destination pin
     markers.add(
       Marker(
-          markerId: const MarkerId('destPin'),
-          position: destPosition,
-          onTap: () {
-            setState(() {
-              currentlySelectedPin = destinationPinInfo;
-              pinPillPosition = 0;
-            });
-          },
-          icon: destinationIcon),
+        markerId: const MarkerId('destPin'),
+        position: destPosition,
+        onTap: () {
+          setState(() {
+            currentlySelectedPin = destinationPinInfo;
+            pinPillPosition = 0;
+          });
+        },
+        icon: destinationIcon,
+      ),
     );
     // set the route lines on the map from source to destination
     // for more info follow this tutorial
@@ -191,7 +193,6 @@ class _MapPageState extends State<MapPage> {
       for (var point in result.points) {
         polylineCoordinates.add(LatLng(point.latitude, point.longitude));
       }
-
       setState(() {
         polylines.add(
           Polyline(
