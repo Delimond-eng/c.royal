@@ -1,9 +1,12 @@
 import 'package:c_royal/components/app_header.dart';
+import 'package:c_royal/components/categries_component.dart';
 import 'package:c_royal/components/notification_drawer.dart';
 import 'package:c_royal/models/category.dart';
+import 'package:c_royal/settings/controllers.dart';
 import 'package:c_royal/widgets/category_card.dart';
 import 'package:c_royal/widgets/privilege_card.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class PrivilegePage extends StatefulWidget {
   const PrivilegePage({Key key}) : super(key: key);
@@ -58,21 +61,8 @@ class _PrivilegePageState extends State<PrivilegePage> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SingleChildScrollView(
-              padding: const EdgeInsets.only(
-                left: 15.0,
-                right: 15.0,
-                bottom: 10.0,
-              ),
-              scrollDirection: Axis.horizontal,
-              physics: const BouncingScrollPhysics(),
-              child: Row(
-                children: categories.map((e) {
-                  return CategoryCard(
-                    data: e,
-                  );
-                }).toList(),
-              ),
+            CategoriesComponent(
+              data: homeController.categories,
             ),
             Expanded(
               child: Container(

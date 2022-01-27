@@ -6,7 +6,7 @@
 
     <application android:label="Cercle royal" android:icon="@mipmap/ic_launcher">
 
-        <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyAuzLhfgy0SY3m_nlcDVR4s5qHFa7y_jyk"/>
+        <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyB3zCnYsnKTsnN7uLJKWQ4SPWc0BZ50JkY"/>
 
         <activity android:name=".MainActivity" android:launchMode="singleTop" android:theme="@style/LaunchTheme" android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode" android:hardwareAccelerated="true" android:windowSoftInputMode="adjustResize">
             <meta-data android:name="io.flutter.embedding.android.NormalTheme" android:resource="@style/NormalTheme" />

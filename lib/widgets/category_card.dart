@@ -2,17 +2,19 @@ import 'dart:math';
 
 import 'package:c_royal/models/category.dart';
 import 'package:c_royal/models/configs.dart';
-import 'package:c_royal/services/api/api_manager.dart';
 import 'package:c_royal/settings/style.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import 'cat_icon.dart';
 
 class CategoryCard extends StatelessWidget {
   final Category data;
+  final MarchandCategories category;
   const CategoryCard({
     Key key,
     this.data,
+    this.category,
   }) : super(key: key);
 
   @override
@@ -20,7 +22,7 @@ class CategoryCard extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(right: 10.0),
       height: 100.0,
-      width: 80.0,
+      width: 90.0,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(15.0),
@@ -29,7 +31,7 @@ class CategoryCard extends StatelessWidget {
             color: Colors.grey.withOpacity(.2),
             offset: const Offset(0, 3),
             blurRadius: 12.0,
-          )
+          ),
         ],
       ),
       child: Material(
@@ -69,11 +71,8 @@ class CategoryCard extends StatelessWidget {
                       ],
                     ),
                   ),
-                  child: SvgPicture.asset(
-                    data.icon,
-                    color: Colors.white,
-                    height: 25.0,
-                    width: 25.0,
+                  child: CatIcon(
+                    iconKey: category.categorie,
                   ),
                 ),
                 const SizedBox(
@@ -81,7 +80,7 @@ class CategoryCard extends StatelessWidget {
                 ),
                 Flexible(
                   child: Text(
-                    data.title,
+                    category.categorie,
                     textAlign: TextAlign.center,
                     style: GoogleFonts.lato(
                       color: primaryColor,

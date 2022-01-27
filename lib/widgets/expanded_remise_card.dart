@@ -1,3 +1,4 @@
+import 'package:c_royal/models/user_home_data.dart';
 import 'package:c_royal/settings/style.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/cupertino.dart';
@@ -6,10 +7,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'dart:math' as math;
 
 class RemiseCard extends StatelessWidget {
+  final Offres offer;
   final Widget child;
   const RemiseCard({
     Key key,
     this.child,
+    this.offer,
   }) : super(key: key);
 
   @override
@@ -49,7 +52,7 @@ class RemiseCard extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Text(
-                              "15 % de remise sur l'addition",
+                              "${offer.remise} % de remise sur l'addition",
                               style: GoogleFonts.mulish(
                                 color: primaryColor,
                                 fontSize: 16.0,

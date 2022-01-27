@@ -1,12 +1,13 @@
 import 'package:c_royal/pages/home/pages/entity_details.dart';
-import 'package:c_royal/settings/style.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 
 class PostNewCard extends StatelessWidget {
+  final data;
   const PostNewCard({
     Key key,
+    this.data,
   }) : super(key: key);
 
   @override
@@ -35,7 +36,9 @@ class PostNewCard extends StatelessWidget {
             Navigator.push(
               context,
               PageTransition(
-                child: const EntityDetails(),
+                child: EntityDetails(
+                  data: data,
+                ),
                 type: PageTransitionType.rightToLeftWithFade,
               ),
             );
@@ -64,7 +67,7 @@ class PostNewCard extends StatelessWidget {
                       width: 50.0,
                       decoration: BoxDecoration(
                         image: const DecorationImage(
-                          image: AssetImage("assets/images/safari.jpeg"),
+                          image: AssetImage("assets/images/olive_resto.png"),
                           fit: BoxFit.cover,
                         ),
                         color: Colors.white,
@@ -88,33 +91,19 @@ class PostNewCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      RichText(
-                        text: TextSpan(
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: "Restaurant\n",
-                              style: GoogleFonts.lato(
-                                color: Colors.black87,
-                                fontSize: 17.0,
-                                fontWeight: FontWeight.w800,
-                              ),
-                            ),
-                            TextSpan(
-                              text: 'Chaned Tacos',
-                              style: GoogleFonts.mulish(
-                                color: primaryColor,
-                                fontSize: 17.0,
-                                fontWeight: FontWeight.w800,
-                              ),
-                            ),
-                          ],
+                      Text(
+                        data.nom,
+                        style: GoogleFonts.lato(
+                          color: Colors.black87,
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.w900,
                         ),
                       ),
                       const SizedBox(
-                        height: 8.0,
+                        height: 15.0,
                       ),
                       Text(
-                        "Restaurant & lounges barres",
+                        data.categorie,
                         style: GoogleFonts.lato(
                           color: Colors.grey[500],
                           fontWeight: FontWeight.w500,
@@ -124,7 +113,7 @@ class PostNewCard extends StatelessWidget {
                         height: 5.0,
                       ),
                       Text(
-                        "15% de remise sur l'addition",
+                        "Remise de ${data.offres.first.remise}% sur l'addition",
                         style: GoogleFonts.lato(
                           color: Colors.red,
                           fontWeight: FontWeight.w700,

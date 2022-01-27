@@ -1,13 +1,14 @@
 // ignore_for_file: avoid_unnecessary_containers, sized_box_for_whitespace
 
 import 'package:c_royal/components/app_header.dart';
+import 'package:c_royal/components/categries_component.dart';
 import 'package:c_royal/components/notification_drawer.dart';
-import 'package:c_royal/models/category.dart';
-import 'package:c_royal/widgets/category_card.dart';
+import 'package:c_royal/settings/controllers.dart';
 import 'package:c_royal/widgets/popular_card.dart';
 import 'package:c_royal/widgets/post_card.dart';
 import 'package:c_royal/widgets/shop_card.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class HomePage extends StatefulWidget {
@@ -38,16 +39,18 @@ class _HomePageState extends State<HomePage> {
             decoration: BoxDecoration(
               color: Colors.white.withOpacity(.5),
             ),
-            child: Column(
-              children: [
-                AppHeader(
-                  isHome: true,
-                  onOpenNotificateDrawer: () {
-                    scaffoldKey.currentState.openEndDrawer();
-                  },
-                ),
-                costumBody(_size),
-              ],
+            child: Obx(
+              () => Column(
+                children: [
+                  AppHeader(
+                    isHome: true,
+                    onOpenNotificateDrawer: () {
+                      scaffoldKey.currentState.openEndDrawer();
+                    },
+                  ),
+                  costumBody(_size),
+                ],
+              ),
             ),
           ),
         ),
@@ -64,21 +67,8 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SingleChildScrollView(
-                padding: const EdgeInsets.only(
-                  left: 15.0,
-                  right: 15.0,
-                  bottom: 10.0,
-                ),
-                scrollDirection: Axis.horizontal,
-                physics: const BouncingScrollPhysics(),
-                child: Row(
-                  children: categories.map((e) {
-                    return CategoryCard(
-                      data: e,
-                    );
-                  }).toList(),
-                ),
+              CategoriesComponent(
+                data: homeController.categories,
               ),
               Expanded(
                 child: Container(
@@ -108,11 +98,11 @@ class _HomePageState extends State<HomePage> {
                           scrollDirection: Axis.horizontal,
                           physics: const BouncingScrollPhysics(),
                           child: Row(
-                            children: [
-                              for (int i = 0; i < 4; i++) ...[
-                                const PostNewCard(),
-                              ]
-                            ],
+                            children: homeController.recommandations
+                                .map((e) => PostNewCard(
+                                      data: e,
+                                    ))
+                                .toList(),
                           ),
                         ),
                         Padding(
@@ -153,8 +143,10 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                         ),
-                        for (int i = 0; i < 8; i++) ...[
-                          const ShopCard(),
+                        for (var data in homeController.marchands) ...[
+                          ShopCard(
+                            data: data,
+                          ),
                         ]
                       ],
                     ),

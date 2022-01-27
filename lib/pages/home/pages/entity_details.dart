@@ -2,6 +2,7 @@
 
 import 'dart:math';
 
+import 'package:c_royal/models/user_home_data.dart';
 import 'package:c_royal/pages/locations/pages/map_page.dart';
 import 'package:c_royal/pages/locations/utils/check_location_permission.dart';
 import 'package:c_royal/settings/style.dart';
@@ -11,12 +12,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:location/location.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:shimmer/shimmer.dart';
 
 class EntityDetails extends StatefulWidget {
-  const EntityDetails({Key key}) : super(key: key);
+  final Marchands data;
+  const EntityDetails({Key key, this.data}) : super(key: key);
 
   @override
   _EntityDetailsState createState() => _EntityDetailsState();
@@ -72,26 +73,27 @@ class _EntityDetailsState extends State<EntityDetails> {
                       horizontal: 10.0,
                     ),
                     child: Column(
-                      children: [
-                        for (int i = 0; i < 6; i++) ...[
-                          RemiseCard(
-                            child: SingleChildScrollView(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 8.0,
-                                vertical: 15.0,
-                              ),
-                              scrollDirection: Axis.horizontal,
-                              child: Row(
-                                children: [
-                                  for (int i = 0; i < 6; i++) ...[
-                                    const StoreCard(),
-                                  ]
-                                ],
+                      children: widget.data.offres
+                          .map(
+                            (e) => RemiseCard(
+                              offer: e,
+                              child: SingleChildScrollView(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 8.0,
+                                  vertical: 15.0,
+                                ),
+                                scrollDirection: Axis.horizontal,
+                                child: Row(
+                                  children: [
+                                    for (int i = 0; i < 6; i++) ...[
+                                      const StoreCard(),
+                                    ]
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                        ]
-                      ],
+                          )
+                          .toList(),
                     ),
                   ),
                 )
@@ -123,7 +125,7 @@ class _EntityDetailsState extends State<EntityDetails> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: Text(
-                      'à 4 km de votre position actuelle',
+                      'à ${widget.data.distance} de votre position actuelle',
                       style: GoogleFonts.mulish(
                         color: Colors.white,
                         fontSize: 15.0,
@@ -151,20 +153,23 @@ class _EntityDetailsState extends State<EntityDetails> {
                         onTap: () async {
                           bool hasPermission = await checkPermissionLocation();
                           if (hasPermission) {
-                            Location location = Location();
+                            /*Location location = Location();
 
                             var currentLoc = location.getLocation();
-                            print(currentLoc.toString());
+                            currentLoc.then((loc) {
+                              print(loc.latitude);
+                              print(loc.longitude);
+                            });*/
+                            Navigator.push(
+                              context,
+                              PageTransition(
+                                child: const MapPage(),
+                                type: PageTransitionType.bottomToTop,
+                              ),
+                            );
                           } else {
                             return;
                           }
-                          /*Navigator.push(
-                            context,
-                            PageTransition(
-                              child: const MapPage(),
-                              type: PageTransitionType.bottomToTop,
-                            ),
-                          );*/
                         },
                         child: Padding(
                           padding: const EdgeInsets.all(12.0),
@@ -267,7 +272,7 @@ class _EntityDetailsState extends State<EntityDetails> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Restaurant Olive',
+                          widget.data.nom,
                           style: GoogleFonts.mulish(
                             color: Colors.white,
                             fontSize: 20.0,
@@ -278,7 +283,7 @@ class _EntityDetailsState extends State<EntityDetails> {
                           height: 4.0,
                         ),
                         Text(
-                          'Restaurant & lounges',
+                          widget.data.categorie,
                           style: GoogleFonts.mulish(
                             color: Colors.grey[100],
                             fontWeight: FontWeight.w600,

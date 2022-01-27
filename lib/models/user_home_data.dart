@@ -20,8 +20,13 @@ class UserHomeData {
 class Content {
   List<Recommandations> recommandations;
   List<Marchands> marchands;
+  List<Populaires> populaires;
 
-  Content({recommandations, marchands});
+  Content({
+    recommandations,
+    marchands,
+    populaires,
+  });
 
   Content.fromJson(Map<String, dynamic> json) {
     if (json['recommandations'] != null) {
@@ -36,6 +41,12 @@ class Content {
         marchands.add(Marchands.fromJson(v));
       });
     }
+    if (json['populaires'] != null) {
+      populaires = <Populaires>[];
+      json['populaires'].forEach((v) {
+        populaires.add(Populaires.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -45,6 +56,9 @@ class Content {
     }
     if (marchands != null) {
       data['marchands'] = marchands.map((v) => v.toJson()).toList();
+    }
+    if (populaires != null) {
+      data['populaires'] = populaires.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -99,6 +113,44 @@ class Marchands {
   Marchands({marchandId, nom, logo, categorie, distance, offres});
 
   Marchands.fromJson(Map<String, dynamic> json) {
+    marchandId = json['marchand_id'];
+    nom = json['nom'];
+    logo = json['logo'];
+    categorie = json['categorie'];
+    distance = json['distance'];
+    if (json['offres'] != null) {
+      offres = <Offres>[];
+      json['offres'].forEach((v) {
+        offres.add(Offres.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['marchand_id'] = marchandId;
+    data['nom'] = nom;
+    data['logo'] = logo;
+    data['categorie'] = categorie;
+    data['distance'] = distance;
+    if (offres != null) {
+      data['offres'] = offres.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class Populaires {
+  String marchandId;
+  String nom;
+  String logo;
+  String categorie;
+  String distance;
+  List<Offres> offres;
+
+  Populaires({marchandId, nom, logo, categorie, distance, offres});
+
+  Populaires.fromJson(Map<String, dynamic> json) {
     marchandId = json['marchand_id'];
     nom = json['nom'];
     logo = json['logo'];

@@ -1,9 +1,10 @@
 import 'package:c_royal/components/app_header.dart';
+import 'package:c_royal/components/categries_component.dart';
 import 'package:c_royal/components/notification_drawer.dart';
-import 'package:c_royal/models/category.dart';
-import 'package:c_royal/widgets/category_card.dart';
+import 'package:c_royal/settings/controllers.dart';
 import 'package:c_royal/widgets/shop_card.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ProximityStorePage extends StatefulWidget {
   const ProximityStorePage({Key key}) : super(key: key);
@@ -44,21 +45,8 @@ class _ProximityStorePageState extends State<ProximityStorePage> {
                   child: Container(
                     child: Column(
                       children: [
-                        SingleChildScrollView(
-                          padding: const EdgeInsets.only(
-                            left: 10.0,
-                            right: 10.0,
-                            bottom: 10.0,
-                          ),
-                          scrollDirection: Axis.horizontal,
-                          physics: const BouncingScrollPhysics(),
-                          child: Row(
-                            children: categories.map((e) {
-                              return CategoryCard(
-                                data: e,
-                              );
-                            }).toList(),
-                          ),
+                        CategoriesComponent(
+                          data: homeController.categories,
                         ),
                         Expanded(
                           child: Container(
@@ -67,14 +55,14 @@ class _ProximityStorePageState extends State<ProximityStorePage> {
                               radius: const Radius.circular(5.0),
                               child: SingleChildScrollView(
                                 physics: const BouncingScrollPhysics(),
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 10.0),
                                 child: Column(
-                                  children: [
-                                    for (int i = 0; i < 10; i++) ...[
-                                      const ShopCard()
-                                    ]
-                                  ],
+                                  children: homeController.marchands
+                                      .map(
+                                        (data) => ShopCard(
+                                          data: data,
+                                        ),
+                                      )
+                                      .toList(),
                                 ),
                               ),
                             ),

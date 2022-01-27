@@ -1,13 +1,15 @@
+import 'package:c_royal/models/user_home_data.dart';
 import 'package:c_royal/pages/home/pages/entity_details.dart';
 import 'package:c_royal/settings/style.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 
 class ShopCard extends StatelessWidget {
+  final Marchands data;
   const ShopCard({
     Key key,
+    this.data,
   }) : super(key: key);
 
   @override
@@ -36,7 +38,9 @@ class ShopCard extends StatelessWidget {
             Navigator.push(
               context,
               PageTransition(
-                child: const EntityDetails(),
+                child: EntityDetails(
+                  data: data,
+                ),
                 type: PageTransitionType.rightToLeftWithFade,
               ),
             );
@@ -67,7 +71,7 @@ class ShopCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
-                          "Restau. Olive",
+                          data.nom,
                           style: GoogleFonts.mulish(
                             color: primaryColor,
                             fontSize: 16.0,
@@ -78,7 +82,7 @@ class ShopCard extends StatelessWidget {
                           height: 2.0,
                         ),
                         Text(
-                          "Restau. & lounges",
+                          data.categorie,
                           style: GoogleFonts.lato(
                             color: Colors.grey[700],
                             fontSize: 14.0,
@@ -89,7 +93,7 @@ class ShopCard extends StatelessWidget {
                           height: 8.0,
                         ),
                         Text(
-                          "10 % de remises sur l'addition",
+                          "${data.offres.first.remise} % de remises sur l'addition",
                           style: GoogleFonts.lato(
                             color: Colors.redAccent,
                             fontSize: 12.0,
