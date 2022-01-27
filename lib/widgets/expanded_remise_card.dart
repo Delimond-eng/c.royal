@@ -52,9 +52,9 @@ class RemiseCard extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Text(
-                              "${offer.remise} % de remise sur l'addition",
+                              "${offer.remise} % de remise",
                               style: GoogleFonts.mulish(
-                                color: primaryColor,
+                                color: Colors.redAccent,
                                 fontSize: 16.0,
                                 fontWeight: FontWeight.w800,
                               ),

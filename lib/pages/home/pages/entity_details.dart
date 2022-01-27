@@ -90,19 +90,43 @@ class _EntityDetailsState extends State<EntityDetails> {
                           .map(
                             (e) => RemiseCard(
                               offer: e,
-                              child: SingleChildScrollView(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 8.0,
-                                  vertical: 15.0,
-                                ),
-                                scrollDirection: Axis.horizontal,
-                                child: Row(
-                                  children: [
-                                    for (int i = 0; i < 6; i++) ...[
-                                      const StoreCard(),
-                                    ]
-                                  ],
-                                ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10.0),
+                                    child: Text(
+                                      "Points de vente",
+                                      style: GoogleFonts.lato(
+                                          color: primaryColor,
+                                          fontWeight: FontWeight.w900),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 5.0,
+                                  ),
+                                  SingleChildScrollView(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 8.0,
+                                      vertical: 5.0,
+                                    ),
+                                    scrollDirection: Axis.horizontal,
+                                    child: (e.pointDeVentes != null &&
+                                            e.pointDeVentes.isNotEmpty)
+                                        ? Row(
+                                            children: e.pointDeVentes
+                                                .map(
+                                                  (k) => StoreCard(
+                                                    data: k,
+                                                  ),
+                                                )
+                                                .toList(),
+                                          )
+                                        : Container(),
+                                  ),
+                                ],
                               ),
                             ),
                           )
@@ -166,13 +190,6 @@ class _EntityDetailsState extends State<EntityDetails> {
                         onTap: () async {
                           bool hasPermission = await checkPermissionLocation();
                           if (hasPermission) {
-                            /*Location location = Location();
-
-                            var currentLoc = location.getLocation();
-                            currentLoc.then((loc) {
-                              print(loc.latitude);
-                              print(loc.longitude);
-                            });*/
                             Navigator.push(
                               context,
                               PageTransition(

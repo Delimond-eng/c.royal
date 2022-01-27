@@ -1,4 +1,4 @@
-import 'package:c_royal/services/api/api_manager.dart';
+import 'package:c_royal/models/user_home_data.dart';
 import 'package:c_royal/settings/style.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,15 +6,17 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class StoreCard extends StatelessWidget {
+  final PointDeVentes data;
   const StoreCard({
     Key key,
+    this.data,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 150.0,
-      width: 140.0,
+      width: 120.0,
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: [
@@ -35,13 +37,13 @@ class StoreCard extends StatelessWidget {
             children: [
               Container(
                 height: 80.0,
-                width: 140.0,
+                width: 120.0,
                 decoration: const BoxDecoration(
                   borderRadius: BorderRadius.vertical(
                     top: Radius.circular(20.0),
                   ),
                   image: DecorationImage(
-                    image: AssetImage("assets/images/foo-chilly-chicken.jpg"),
+                    image: AssetImage("assets/images/Beatrice-Hotel_6.jpg"),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -74,11 +76,7 @@ class StoreCard extends StatelessWidget {
                     color: Colors.transparent,
                     child: InkWell(
                       borderRadius: BorderRadius.circular(50.0),
-                      onTap: () async {
-                        await ApiManager.getHomeData().then((e) {
-                          print(e.content.marchands[0].nom);
-                        });
-                      },
+                      onTap: () async {},
                       child: Padding(
                         padding: const EdgeInsets.all(5.0),
                         child: Center(
@@ -99,7 +97,7 @@ class StoreCard extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 8.0),
             child: Text(
-              "Kin mart Bandal.",
+              data.nom,
               style: GoogleFonts.mulish(
                 color: primaryColor,
                 fontSize: 14.0,
@@ -108,14 +106,13 @@ class StoreCard extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 5.0),
+            padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 8.0),
             child: Text(
-              "à 2km de votre position actuelle",
-              textAlign: TextAlign.center,
+              "à ${data.distance} de votre position",
               style: GoogleFonts.lato(
                 color: Colors.redAccent,
                 fontSize: 12.0,
-                fontWeight: FontWeight.w400,
+                fontWeight: FontWeight.w700,
               ),
             ),
           ),

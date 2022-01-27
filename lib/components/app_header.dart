@@ -20,10 +20,15 @@ class AppHeader extends StatelessWidget {
     return Container(
       height: 60.0,
       width: MediaQuery.of(context).size.width,
-      margin: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
+      margin: const EdgeInsets.only(
+        bottom: 15.0,
+        right: 10.0,
+        left: 10.0,
+        top: 10.0,
+      ),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(15.0),
+        borderRadius: BorderRadius.circular(30.0),
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(.3),
@@ -46,18 +51,15 @@ class AppHeader extends StatelessWidget {
                 Stack(
                   overflow: Overflow.visible,
                   children: [
-                    SvgPicture.asset(
-                      "assets/svg/circle-svgrepo-com.svg",
-                      height: 20.0,
-                      width: 20.0,
-                    ),
+                    SvgPicture.asset("assets/svg/circle-svgrepo-com.svg",
+                        height: 30.0, width: 30.0, color: primaryColor),
                     Positioned(
                       top: -5,
                       child: SvgPicture.asset(
                         "assets/svg/royal.svg",
-                        height: 20.0,
-                        width: 20.0,
-                        color: primaryColor,
+                        height: 30.0,
+                        width: 30.0,
+                        color: secondaryColor,
                       ),
                     )
                   ],
@@ -74,17 +76,15 @@ class AppHeader extends StatelessWidget {
                           style: GoogleFonts.lato(
                             color: primaryColor,
                             fontWeight: FontWeight.w900,
-                            fontStyle: FontStyle.italic,
                             fontSize: 25.0,
                           ),
                         ),
                         TextSpan(
                           text: 'Royal',
                           style: GoogleFonts.lato(
-                            fontWeight: FontWeight.w600,
+                            fontWeight: FontWeight.w700,
                             color: accentColor,
                             letterSpacing: 1.0,
-                            fontStyle: FontStyle.italic,
                             fontSize: 18.0,
                           ),
                         ),
@@ -104,7 +104,7 @@ class AppHeader extends StatelessWidget {
               ],
             ),
             Badge(
-              position: BadgePosition.topStart(),
+              position: BadgePosition.topStart(start: 1),
               elevation: 0,
               badgeContent: Text(
                 "0",
@@ -117,10 +117,10 @@ class AppHeader extends StatelessWidget {
                   gradient: LinearGradient(
                     colors: [
                       primaryColor,
-                      Colors.blue,
+                      secondaryColor,
                     ],
                   ),
-                  borderRadius: BorderRadius.circular(10.0),
+                  borderRadius: BorderRadius.circular(30.0),
                   boxShadow: [
                     BoxShadow(
                       blurRadius: 10.0,
@@ -133,16 +133,16 @@ class AppHeader extends StatelessWidget {
                 width: 40.0,
                 child: Material(
                   color: Colors.transparent,
-                  borderRadius: BorderRadius.circular(10.0),
+                  borderRadius: BorderRadius.circular(30.0),
                   child: InkWell(
-                    borderRadius: BorderRadius.circular(10.0),
+                    borderRadius: BorderRadius.circular(30.0),
                     onTap: onOpenNotificateDrawer,
                     child: Center(
                       child: SvgPicture.asset(
                         "assets/svg/notification-svgrepo-com.svg",
                         color: Colors.white,
-                        height: 25.0,
-                        width: 25.0,
+                        height: 20.0,
+                        width: 20.0,
                       ),
                     ),
                   ),

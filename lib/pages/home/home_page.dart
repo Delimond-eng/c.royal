@@ -37,7 +37,7 @@ class _HomePageState extends State<HomePage> {
           ),
           child: Container(
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(.5),
+              color: Colors.white.withOpacity(.8),
             ),
             child: Obx(
               () => (homeController.isHomeLoading.value)
@@ -82,75 +82,81 @@ class _HomePageState extends State<HomePage> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.all(15.0),
-                          child: Text(
-                            "Recommandations",
-                            style: GoogleFonts.lato(
-                              color: Colors.black87,
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.w800,
+                        if (homeController.recommandations.isNotEmpty) ...[
+                          Padding(
+                            padding: const EdgeInsets.all(15.0),
+                            child: Text(
+                              "Recommandations",
+                              style: GoogleFonts.lato(
+                                color: Colors.black87,
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.w800,
+                              ),
                             ),
                           ),
-                        ),
-                        SingleChildScrollView(
-                          padding: const EdgeInsets.only(
-                            left: 15.0,
-                            right: 15.0,
-                            bottom: 18.0,
-                          ),
-                          scrollDirection: Axis.horizontal,
-                          physics: const BouncingScrollPhysics(),
-                          child: Row(
-                            children: homeController.recommandations
-                                .map((e) => PostNewCard(
-                                      data: e,
-                                    ))
-                                .toList(),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(15.0),
-                          child: Text(
-                            "Les plus populaires",
-                            style: GoogleFonts.lato(
-                              color: Colors.black87,
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.w800,
+                          SingleChildScrollView(
+                            padding: const EdgeInsets.only(
+                              left: 15.0,
+                              right: 15.0,
+                              bottom: 18.0,
+                            ),
+                            scrollDirection: Axis.horizontal,
+                            physics: const BouncingScrollPhysics(),
+                            child: Row(
+                              children: homeController.recommandations
+                                  .map((e) => PostNewCard(
+                                        data: e,
+                                      ))
+                                  .toList(),
                             ),
                           ),
-                        ),
-                        SingleChildScrollView(
-                          padding: const EdgeInsets.only(
-                            left: 15.0,
-                            right: 15.0,
-                            bottom: 18.0,
-                          ),
-                          scrollDirection: Axis.horizontal,
-                          physics: const BouncingScrollPhysics(),
-                          child: Row(
-                            children: homeController.populaires
-                                .map((e) => PopularCard(
-                                      data: e,
-                                    ))
-                                .toList(),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(15.0),
-                          child: Text(
-                            "Tous les points de vente",
-                            style: GoogleFonts.lato(
-                              color: Colors.black87,
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.w800,
+                        ],
+                        if (homeController.populaires.isNotEmpty) ...[
+                          Padding(
+                            padding: const EdgeInsets.all(15.0),
+                            child: Text(
+                              "Les plus populaires",
+                              style: GoogleFonts.lato(
+                                color: Colors.black87,
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.w800,
+                              ),
                             ),
                           ),
-                        ),
-                        for (var data in homeController.marchands) ...[
-                          ShopCard(
-                            data: data,
+                          SingleChildScrollView(
+                            padding: const EdgeInsets.only(
+                              left: 15.0,
+                              right: 15.0,
+                              bottom: 18.0,
+                            ),
+                            scrollDirection: Axis.horizontal,
+                            physics: const BouncingScrollPhysics(),
+                            child: Row(
+                              children: homeController.populaires
+                                  .map((e) => PopularCard(
+                                        data: e,
+                                      ))
+                                  .toList(),
+                            ),
                           ),
+                        ],
+                        if (homeController.marchands.isNotEmpty) ...[
+                          Padding(
+                            padding: const EdgeInsets.all(15.0),
+                            child: Text(
+                              "Tous les points de vente",
+                              style: GoogleFonts.lato(
+                                color: Colors.black87,
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.w800,
+                              ),
+                            ),
+                          ),
+                          for (var data in homeController.marchands) ...[
+                            ShopCard(
+                              data: data,
+                            ),
+                          ]
                         ]
                       ],
                     ),
