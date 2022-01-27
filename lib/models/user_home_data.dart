@@ -69,15 +69,18 @@ class Recommandations {
   String nom;
   String logo;
   String categorie;
+  String imageCover;
   String distance;
   List<Offres> offres;
 
-  Recommandations({marchandId, nom, logo, categorie, distance, offres});
+  Recommandations(
+      {marchandId, nom, logo, imageCover, categorie, distance, offres});
 
   Recommandations.fromJson(Map<String, dynamic> json) {
     marchandId = json['marchand_id'];
     nom = json['nom'];
     logo = json['logo'];
+    imageCover = json['image_cover'];
     categorie = json['categorie'];
     distance = json['distance'];
     if (json['offres'] != null) {
@@ -93,6 +96,7 @@ class Recommandations {
     data['marchand_id'] = marchandId;
     data['nom'] = nom;
     data['logo'] = logo;
+    data['image_cover'] = imageCover;
     data['categorie'] = categorie;
     data['distance'] = distance;
     if (offres != null) {
@@ -106,16 +110,18 @@ class Marchands {
   String marchandId;
   String nom;
   String logo;
+  String imageCover;
   String categorie;
   String distance;
   List<Offres> offres;
 
-  Marchands({marchandId, nom, logo, categorie, distance, offres});
+  Marchands({marchandId, nom, logo, categorie, distance, offres, imageCover});
 
   Marchands.fromJson(Map<String, dynamic> json) {
     marchandId = json['marchand_id'];
     nom = json['nom'];
     logo = json['logo'];
+    imageCover = json['image_cover'];
     categorie = json['categorie'];
     distance = json['distance'];
     if (json['offres'] != null) {
@@ -131,6 +137,7 @@ class Marchands {
     data['marchand_id'] = marchandId;
     data['nom'] = nom;
     data['logo'] = logo;
+    data['image_cover'] = imageCover;
     data['categorie'] = categorie;
     data['distance'] = distance;
     if (offres != null) {
@@ -144,16 +151,18 @@ class Populaires {
   String marchandId;
   String nom;
   String logo;
+  String imageCover;
   String categorie;
   String distance;
   List<Offres> offres;
 
-  Populaires({marchandId, nom, logo, categorie, distance, offres});
+  Populaires({marchandId, nom, logo, categorie, distance, offres, imageCover});
 
   Populaires.fromJson(Map<String, dynamic> json) {
     marchandId = json['marchand_id'];
     nom = json['nom'];
     logo = json['logo'];
+    imageCover = json['image_cover'];
     categorie = json['categorie'];
     distance = json['distance'];
     if (json['offres'] != null) {
@@ -169,6 +178,7 @@ class Populaires {
     data['marchand_id'] = marchandId;
     data['nom'] = nom;
     data['logo'] = logo;
+    data['image_cover'] = imageCover;
     data['categorie'] = categorie;
     data['distance'] = distance;
     if (offres != null) {

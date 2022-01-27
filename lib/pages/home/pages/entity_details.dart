@@ -16,7 +16,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:shimmer/shimmer.dart';
 
 class EntityDetails extends StatefulWidget {
-  final Marchands data;
+  final data;
   const EntityDetails({Key key, this.data}) : super(key: key);
 
   @override
@@ -24,6 +24,19 @@ class EntityDetails extends StatefulWidget {
 }
 
 class _EntityDetailsState extends State<EntityDetails> {
+  List<Offres> offers = [];
+  @override
+  void initState() {
+    super.initState();
+    initData();
+  }
+
+  initData() {
+    setState(() {
+      offers.addAll(widget.data.offres);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     var _size = MediaQuery.of(context).size;
@@ -61,9 +74,9 @@ class _EntityDetailsState extends State<EntityDetails> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const PartTitle(
+                PartTitle(
                   icon: "assets/svg/delivery-svgrepo-com.svg",
-                  title: "Remises",
+                  title: "Remises ${offers.length}",
                 ),
                 Expanded(
                   child: SingleChildScrollView(
@@ -73,7 +86,7 @@ class _EntityDetailsState extends State<EntityDetails> {
                       horizontal: 10.0,
                     ),
                     child: Column(
-                      children: widget.data.offres
+                      children: offers
                           .map(
                             (e) => RemiseCard(
                               offer: e,
@@ -204,9 +217,9 @@ class _EntityDetailsState extends State<EntityDetails> {
         Container(
           height: _size.height * .4,
           width: _size.width,
-          decoration: const BoxDecoration(
+          decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage("assets/images/foo-chilly-chicken.jpg"),
+              image: NetworkImage(widget.data.logo),
               fit: BoxFit.cover,
             ),
           ),

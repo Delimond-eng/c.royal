@@ -1,10 +1,11 @@
+import 'package:c_royal/models/user_home_data.dart';
 import 'package:c_royal/pages/home/pages/entity_details.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 
 class PostNewCard extends StatelessWidget {
-  final data;
+  final Recommandations data;
   const PostNewCard({
     Key key,
     this.data,
@@ -47,18 +48,35 @@ class PostNewCard extends StatelessWidget {
             children: [
               Stack(
                 children: [
-                  Container(
-                    height: 120.0,
-                    width: 130.0,
-                    decoration: BoxDecoration(
-                      image: const DecorationImage(
-                        image: AssetImage("assets/images/dogs.jpg"),
-                        fit: BoxFit.cover,
-                        alignment: Alignment.topCenter,
+                  if (data.imageCover != null &&
+                      data.imageCover.isNotEmpty) ...[
+                    Container(
+                      height: 120.0,
+                      width: 130.0,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: NetworkImage(data.imageCover),
+                          fit: BoxFit.cover,
+                          alignment: Alignment.topCenter,
+                        ),
+                        borderRadius: BorderRadius.circular(20.0),
                       ),
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
-                  ),
+                    )
+                  ] else ...[
+                    Container(
+                      height: 120.0,
+                      width: 130.0,
+                      decoration: BoxDecoration(
+                        image: const DecorationImage(
+                          image:
+                              AssetImage("assets/images/Beatrice-Hotel_6.jpg"),
+                          fit: BoxFit.cover,
+                          alignment: Alignment.topCenter,
+                        ),
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                    )
+                  ],
                   Positioned(
                     top: 10.0,
                     left: 10.0,

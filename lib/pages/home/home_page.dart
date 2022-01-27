@@ -40,17 +40,21 @@ class _HomePageState extends State<HomePage> {
               color: Colors.white.withOpacity(.5),
             ),
             child: Obx(
-              () => Column(
-                children: [
-                  AppHeader(
-                    isHome: true,
-                    onOpenNotificateDrawer: () {
-                      scaffoldKey.currentState.openEndDrawer();
-                    },
-                  ),
-                  costumBody(_size),
-                ],
-              ),
+              () => (homeController.isHomeLoading.value)
+                  ? const Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : Column(
+                      children: [
+                        AppHeader(
+                          isHome: true,
+                          onOpenNotificateDrawer: () {
+                            scaffoldKey.currentState.openEndDrawer();
+                          },
+                        ),
+                        costumBody(_size),
+                      ],
+                    ),
             ),
           ),
         ),
@@ -125,11 +129,11 @@ class _HomePageState extends State<HomePage> {
                           scrollDirection: Axis.horizontal,
                           physics: const BouncingScrollPhysics(),
                           child: Row(
-                            children: [
-                              for (int i = 0; i < 4; i++) ...[
-                                const PopularCard(),
-                              ]
-                            ],
+                            children: homeController.populaires
+                                .map((e) => PopularCard(
+                                      data: e,
+                                    ))
+                                .toList(),
                           ),
                         ),
                         Padding(

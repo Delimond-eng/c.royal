@@ -51,18 +51,33 @@ class ShopCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Container(
-                  height: 90.0,
-                  width: 90.0,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15.0),
-                    image: const DecorationImage(
-                      image: AssetImage("assets/images/foo-chilly-chicken.jpg"),
-                      fit: BoxFit.cover,
-                      alignment: Alignment.topCenter,
+                if (data.imageCover != null && data.imageCover.isNotEmpty) ...[
+                  Container(
+                    height: 90.0,
+                    width: 90.0,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15.0),
+                      image: DecorationImage(
+                        image: NetworkImage(data.imageCover),
+                        fit: BoxFit.cover,
+                        alignment: Alignment.topCenter,
+                      ),
                     ),
-                  ),
-                ),
+                  )
+                ] else ...[
+                  Container(
+                    height: 90.0,
+                    width: 90.0,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15.0),
+                      image: const DecorationImage(
+                        image: AssetImage("assets/images/Beatrice-Hotel_6.jpg"),
+                        fit: BoxFit.cover,
+                        alignment: Alignment.topCenter,
+                      ),
+                    ),
+                  )
+                ],
                 Flexible(
                   child: Padding(
                     padding: const EdgeInsets.all(5.0),

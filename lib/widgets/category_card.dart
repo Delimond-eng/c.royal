@@ -4,6 +4,7 @@ import 'package:c_royal/models/category.dart';
 import 'package:c_royal/models/configs.dart';
 import 'package:c_royal/settings/style.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'cat_icon.dart';
@@ -22,7 +23,7 @@ class CategoryCard extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(right: 10.0),
       height: 100.0,
-      width: 90.0,
+      width: 80.0,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(15.0),
@@ -71,9 +72,16 @@ class CategoryCard extends StatelessWidget {
                       ],
                     ),
                   ),
-                  child: CatIcon(
-                    iconKey: category.categorie,
-                  ),
+                  child: (category.icon != null && category.icon.isNotEmpty)
+                      ? SvgPicture.network(
+                          category.icon,
+                          color: Colors.white,
+                          height: 25.0,
+                          width: 25.0,
+                        )
+                      : CatIcon(
+                          iconKey: category.categorie,
+                        ),
                 ),
                 const SizedBox(
                   height: 5.0,

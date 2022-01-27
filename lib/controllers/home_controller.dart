@@ -9,6 +9,9 @@ class HomeController extends GetxController {
   var categories = <MarchandCategories>[].obs;
   var recommandations = <Recommandations>[].obs;
   var marchands = <Marchands>[].obs;
+  var populaires = <Populaires>[].obs;
+
+  var isHomeLoading = false.obs;
 
   @override
   void onInit() {
@@ -18,7 +21,9 @@ class HomeController extends GetxController {
 
   loadDatas() async {
     try {
+      isHomeLoading.value = true;
       var configs = await ApiManager.getHomeCategories();
+      isHomeLoading.value = false;
       if (configs != null) {
         categories.value = configs.config.marchandCategories;
       }
@@ -29,6 +34,10 @@ class HomeController extends GetxController {
         }
         if (homeData.content.recommandations != null) {
           recommandations.value = homeData.content.recommandations;
+        }
+
+        if (homeData.content.populaires != null) {
+          populaires.value = homeData.content.populaires;
         }
       }
     } catch (err) {}
