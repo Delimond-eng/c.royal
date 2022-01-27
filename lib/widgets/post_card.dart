@@ -77,29 +77,31 @@ class PostNewCard extends StatelessWidget {
                       ),
                     )
                   ],
-                  Positioned(
-                    top: 10.0,
-                    left: 10.0,
-                    child: Container(
-                      height: 50.0,
-                      width: 50.0,
-                      decoration: BoxDecoration(
-                        image: const DecorationImage(
-                          image: AssetImage("assets/images/olive_resto.png"),
-                          fit: BoxFit.cover,
+                  if (data.logo != null && data.logo.isNotEmpty) ...[
+                    Positioned(
+                      top: 10.0,
+                      left: 10.0,
+                      child: Container(
+                        height: 50.0,
+                        width: 50.0,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: NetworkImage(data.logo),
+                            fit: BoxFit.cover,
+                          ),
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(.1),
+                              blurRadius: 12.0,
+                              offset: const Offset(0, 10),
+                            )
+                          ],
+                          shape: BoxShape.circle,
                         ),
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(.1),
-                            blurRadius: 12.0,
-                            offset: const Offset(0, 10),
-                          )
-                        ],
-                        shape: BoxShape.circle,
                       ),
-                    ),
-                  )
+                    )
+                  ]
                 ],
               ),
               Expanded(
@@ -130,14 +132,25 @@ class PostNewCard extends StatelessWidget {
                       const SizedBox(
                         height: 5.0,
                       ),
-                      Text(
-                        "Remise de ${data.offres.first.remise}% sur l'addition",
-                        style: GoogleFonts.lato(
-                          color: Colors.red,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 11.0,
-                        ),
-                      ),
+                      if (data.offres.length <= 1) ...[
+                        Text(
+                          "Remise de ${data.offres.first.remise}% ",
+                          style: GoogleFonts.lato(
+                            color: Colors.red,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 12.0,
+                          ),
+                        )
+                      ] else ...[
+                        Text(
+                          "Remise de ${data.offres.first.remise}% à ${data.offres.last.remise}%",
+                          style: GoogleFonts.lato(
+                            color: Colors.red,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 12.0,
+                          ),
+                        )
+                      ],
                     ],
                   ),
                 ),

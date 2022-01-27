@@ -134,14 +134,25 @@ class PopularCard extends StatelessWidget {
                       const SizedBox(
                         height: 8.0,
                       ),
-                      Text(
-                        "${data.offres.first.remise}% de remise sur l'addition",
-                        style: GoogleFonts.lato(
-                          color: Colors.red,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 12.0,
-                        ),
-                      ),
+                      if (data.offres.length <= 1) ...[
+                        Text(
+                          "Remise de ${data.offres.first.remise}% ",
+                          style: GoogleFonts.lato(
+                            color: Colors.red,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 12.0,
+                          ),
+                        )
+                      ] else ...[
+                        Text(
+                          "Remise de ${data.offres.first.remise}% à ${data.offres.last.remise}%",
+                          style: GoogleFonts.lato(
+                            color: Colors.red,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 12.0,
+                          ),
+                        )
+                      ],
                     ],
                   ),
                 ),

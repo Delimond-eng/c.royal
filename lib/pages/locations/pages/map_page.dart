@@ -12,7 +12,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 
 const double CAMERA_ZOOM = 16;
-const double CAMERA_TILT = 50;
+const double CAMERA_TILT = 80;
 const double CAMERA_BEARING = 30;
 const LatLng SOURCE_LOCATION = LatLng(-71.167889, 15.2812905);
 const LatLng DEST_LOCATION = LatLng(-4.313430, 15.275640);
@@ -192,8 +192,8 @@ class _MapPageState extends State<MapPage> {
                       myLocationEnabled: true,
                       compassEnabled: true,
                       tiltGesturesEnabled: false,
-                      markers: Set<Marker>.of(markers),
-                      polylines: Set<Polyline>.of(polylines),
+                      markers: markers,
+                      polylines: polylines,
                       mapType: MapType.normal,
                       initialCameraPosition: initialCameraPosition,
                       onTap: (LatLng loc) {
@@ -207,7 +207,7 @@ class _MapPageState extends State<MapPage> {
                       },
                     ),
                     MapPin(
-                      pinPosition: pinPillPosition,
+                      pinPosition: 0,
                       pinInfo: currentlySelectedPin,
                     )
                   ],

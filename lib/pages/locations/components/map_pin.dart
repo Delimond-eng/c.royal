@@ -1,6 +1,9 @@
 import 'package:c_royal/pages/locations/models/pin_info.dart';
+import 'package:c_royal/settings/style.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shimmer/shimmer.dart';
 
 class MapPin extends StatelessWidget {
   final PinInfo pinInfo;
@@ -17,7 +20,7 @@ class MapPin extends StatelessWidget {
       child: Align(
         alignment: Alignment.bottomCenter,
         child: Container(
-          margin: const EdgeInsets.all(20),
+          margin: const EdgeInsets.all(10),
           height: 70,
           decoration: BoxDecoration(
             color: Colors.white,
@@ -38,8 +41,19 @@ class MapPin extends StatelessWidget {
                 width: 50,
                 height: 50,
                 margin: const EdgeInsets.only(left: 10),
-                child: ClipOval(
-                  child: Image.asset(pinInfo.avatarPath, fit: BoxFit.cover),
+                decoration:
+                    BoxDecoration(shape: BoxShape.circle, color: primaryColor),
+                child: Center(
+                  child: Shimmer.fromColors(
+                    enabled: true,
+                    direction: ShimmerDirection.ttb,
+                    baseColor: Colors.white,
+                    highlightColor: primaryColor,
+                    child: SvgPicture.asset(
+                      "assets/svg/location-position-svgrepo-com.svg",
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
               ),
               Expanded(
@@ -50,27 +64,13 @@ class MapPin extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        pinInfo.locationName,
+                        "Ma position",
                         style: GoogleFonts.lato(color: pinInfo.labelColor),
-                      ),
-                      Text(
-                        'Latitude: ${pinInfo.location.latitude.toString()}',
-                        style:
-                            GoogleFonts.lato(fontSize: 12, color: Colors.grey),
-                      ),
-                      Text(
-                        'Longitude: ${pinInfo.location.longitude.toString()}',
-                        style:
-                            GoogleFonts.lato(fontSize: 12, color: Colors.grey),
                       ),
                     ],
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(15),
-                child: Image.asset(pinInfo.pinPath, width: 50, height: 50),
-              )
             ],
           ),
         ),

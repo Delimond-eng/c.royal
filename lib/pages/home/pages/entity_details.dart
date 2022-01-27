@@ -74,9 +74,9 @@ class _EntityDetailsState extends State<EntityDetails> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                PartTitle(
+                const PartTitle(
                   icon: "assets/svg/delivery-svgrepo-com.svg",
-                  title: "Remises ${offers.length}",
+                  title: "Remises",
                 ),
                 Expanded(
                   child: SingleChildScrollView(
@@ -214,16 +214,30 @@ class _EntityDetailsState extends State<EntityDetails> {
   Widget detailsHead(Size _size, BuildContext context) {
     return Stack(
       children: [
-        Container(
-          height: _size.height * .4,
-          width: _size.width,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: NetworkImage(widget.data.logo),
-              fit: BoxFit.cover,
+        if (widget.data.imageCover != null &&
+            widget.data.imageCover.isNotEmpty) ...[
+          Container(
+            height: _size.height * .4,
+            width: _size.width,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: NetworkImage(widget.data.imageCover),
+                fit: BoxFit.cover,
+              ),
             ),
-          ),
-        ),
+          )
+        ] else ...[
+          Container(
+            height: _size.height * .4,
+            width: _size.width,
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("assets/images/Beatrice-Hotel_6.jpg"),
+                fit: BoxFit.cover,
+              ),
+            ),
+          )
+        ],
         Positioned(
           top: 0,
           right: 0,
