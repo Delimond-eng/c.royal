@@ -133,7 +133,7 @@ class _AppBottomNavigationState extends State<AppBottomNavigation> {
             width: 20.0,
           ),
           icon: SvgPicture.asset(
-            'assets/svg/scan-svgrepo-com.svg',
+            'assets/svg/subscription.svg',
             fit: BoxFit.scaleDown,
             color: Colors.black87,
             height: 20.0,
@@ -143,7 +143,7 @@ class _AppBottomNavigationState extends State<AppBottomNavigation> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Text("Scanner le code"),
+              const Text("Abonnement"),
               if (widget.selectedIndex == 2) ...[
                 const SizedBox(
                   height: 2.0,

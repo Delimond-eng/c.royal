@@ -39,22 +39,24 @@ class _HomePageState extends State<HomePage> {
             decoration: BoxDecoration(
               color: Colors.white.withOpacity(.8),
             ),
-            child: Obx(
-              () => (homeController.isHomeLoading.value)
-                  ? const Center(
-                      child: CircularProgressIndicator(),
-                    )
-                  : Column(
-                      children: [
-                        AppHeader(
-                          isHome: true,
-                          onOpenNotificateDrawer: () {
-                            scaffoldKey.currentState.openEndDrawer();
-                          },
-                        ),
-                        costumBody(_size),
-                      ],
-                    ),
+            child: Column(
+              children: [
+                AppHeader(
+                  isHome: true,
+                  onOpenNotificateDrawer: () {
+                    scaffoldKey.currentState.openEndDrawer();
+                  },
+                ),
+                Obx(
+                  () => (homeController.isHomeLoading.value)
+                      ? const Expanded(
+                          child: Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                        )
+                      : costumBody(_size),
+                )
+              ],
             ),
           ),
         ),

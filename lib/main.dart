@@ -5,7 +5,9 @@ import 'package:get_storage/get_storage.dart';
 
 //import 'screens/auth/auth_screen.dart';
 import 'controllers/home_controller.dart';
+import 'screens/auth/auth_screen.dart';
 import 'screens/home/home_screens.dart';
+import 'services/db/local_storage.dart';
 
 void main() async {
   await GetStorage.init();
@@ -33,7 +35,14 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const HomeScreen(), //AuthenticateScreen(),
+      home: Builder(
+        builder: (context) {
+          if (storage.read("user_id") == null) {
+            return const AuthenticateScreen();
+          }
+          return const HomeScreen();
+        },
+      ), //AuthenticateScreen(),
     );
   }
 }

@@ -54,12 +54,18 @@ class AppHeader extends StatelessWidget {
                     SvgPicture.asset("assets/svg/circle-svgrepo-com.svg",
                         height: 30.0, width: 30.0, color: primaryColor),
                     Positioned(
-                      top: -5,
-                      child: SvgPicture.asset(
-                        "assets/svg/royal.svg",
-                        height: 30.0,
-                        width: 30.0,
-                        color: secondaryColor,
+                      top: 0,
+                      bottom: 0,
+                      right: 0,
+                      left: 0,
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: SvgPicture.asset(
+                          "assets/svg/royal.svg",
+                          height: 15.0,
+                          width: 15.0,
+                          color: secondaryColor,
+                        ),
                       ),
                     )
                   ],

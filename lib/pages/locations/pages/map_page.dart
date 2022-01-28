@@ -200,6 +200,7 @@ class _MapPageState extends State<MapPage> {
                         pinPillPosition = -100;
                       },
                       onMapCreated: (GoogleMapController controller) {
+                        controller.setMapStyle(Utils.mapStyleDark);
                         mapController.complete(controller);
                         // my map has completed being created;
                         // i'm ready to show the pins on the map
@@ -261,7 +262,7 @@ class _MapPageState extends State<MapPage> {
               pinPillPosition = 0;
             });
           },
-          icon: sourceIcon,
+          icon: BitmapDescriptor.defaultMarkerWithHue(100),
         ),
       );
       // destination pin
@@ -275,7 +276,7 @@ class _MapPageState extends State<MapPage> {
               pinPillPosition = 0;
             });
           },
-          icon: destinationIcon,
+          icon: BitmapDescriptor.defaultMarkerWithHue(90),
         ),
       );
     });
@@ -287,15 +288,15 @@ class _MapPageState extends State<MapPage> {
   void setPolylines() async {
     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
       googleAPIKey,
-      PointLatLng(currentLocation.latitude, currentLocation.longitude),
-      PointLatLng(destinationLocation.latitude, destinationLocation.longitude),
+      const PointLatLng(-71.167889, 15.2812905),
+      const PointLatLng(-4.313430, 15.275640),
     );
-
+    print("points length ${result.points.length}");
     if (result.points.isNotEmpty) {
       result.points.forEach((PointLatLng point) {
         polylineCoordinates.add(LatLng(point.latitude, point.longitude));
       });
-      PolylineId id = PolylineId("poly");
+      PolylineId id = const PolylineId("poly");
       Polyline polyline = Polyline(
           polylineId: id, color: Colors.red, points: polylineCoordinates);
       setState(() {

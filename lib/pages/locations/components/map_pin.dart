@@ -20,7 +20,7 @@ class MapPin extends StatelessWidget {
       child: Align(
         alignment: Alignment.bottomCenter,
         child: Container(
-          margin: const EdgeInsets.all(10),
+          margin: const EdgeInsets.fromLTRB(8.0, 0.0, 5.0, 8.0),
           height: 70,
           decoration: BoxDecoration(
             color: Colors.white,
@@ -41,8 +41,9 @@ class MapPin extends StatelessWidget {
                 width: 50,
                 height: 50,
                 margin: const EdgeInsets.only(left: 10),
-                decoration:
-                    BoxDecoration(shape: BoxShape.circle, color: primaryColor),
+                padding: const EdgeInsets.all(10.0),
+                decoration: const BoxDecoration(
+                    shape: BoxShape.circle, color: Colors.blue),
                 child: Center(
                   child: Shimmer.fromColors(
                     enabled: true,
@@ -58,15 +59,28 @@ class MapPin extends StatelessWidget {
               ),
               Expanded(
                 child: Container(
-                  margin: const EdgeInsets.only(left: 20),
+                  margin: const EdgeInsets.only(left: 5),
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Ma position",
-                        style: GoogleFonts.lato(color: pinInfo.labelColor),
+                        "Ma position actuelle",
+                        style: GoogleFonts.lato(
+                          color: Colors.black87,
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.w700,
+                        ),
                       ),
+                      Text(
+                        "Veuillez atteindre la destination du point de vente",
+                        style: GoogleFonts.lato(
+                          color: Colors.blue,
+                          fontSize: 12.0,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      )
                     ],
                   ),
                 ),

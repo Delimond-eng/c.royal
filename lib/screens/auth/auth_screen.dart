@@ -1,12 +1,14 @@
-import 'dart:ui' as ui;
-
 import 'package:c_royal/screens/home/home_screens.dart';
+import 'package:c_royal/services/api/api_manager.dart';
 import 'package:c_royal/settings/style.dart';
+import 'package:c_royal/settings/utilities.dart';
+import 'package:c_royal/widgets/custom_input.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:lottie/lottie.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:pinput/pin_put/pin_put.dart';
@@ -21,7 +23,8 @@ class AuthenticateScreen extends StatefulWidget {
 class _AuthenticateScreenState extends State<AuthenticateScreen> {
   final PageController pageController = PageController(initialPage: 0);
   final TextEditingController textPhone = TextEditingController();
-  String countryCode = "";
+  final TextEditingController textCode = TextEditingController();
+
   int currentSteps = 0;
 
   @override
@@ -48,10 +51,7 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
         height: _size.height,
         width: _size.width,
         decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("assets/images/bg2.jpg"),
-            fit: BoxFit.cover,
-          ),
+          color: Colors.white,
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -75,35 +75,32 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      /*RichText(
-                        text: TextSpan(
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: 'Cercle ',
-                              style: GoogleFonts.lato(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w900,
-                                fontSize: 30.0,
-                              ),
-                            ),
-                            TextSpan(
-                              text: 'Royal',
-                              style: GoogleFonts.lato(
-                                fontWeight: FontWeight.w600,
-                                color: accentColor,
-                                letterSpacing: 1.0,
-                                fontSize: 18.0,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),*/
-
                       if (currentSteps == 0) ...[
-                        Lottie.asset(
-                          "assets/lottiesfiles/4430-phone-number-verification.json",
-                          height: 150.0,
-                          width: 150.0,
+                        Stack(
+                          overflow: Overflow.visible,
+                          children: [
+                            SvgPicture.asset(
+                              "assets/svg/circle-svgrepo-com.svg",
+                              height: 80.0,
+                              width: 80.0,
+                              color: primaryColor,
+                            ),
+                            Positioned(
+                              top: 0,
+                              bottom: 0,
+                              right: 0,
+                              left: 0,
+                              child: Align(
+                                alignment: Alignment.center,
+                                child: SvgPicture.asset(
+                                  "assets/svg/royal.svg",
+                                  height: 40.0,
+                                  width: 40.0,
+                                  color: secondaryColor,
+                                ),
+                              ),
+                            )
+                          ],
                         ),
                       ] else ...[
                         Lottie.asset(
@@ -121,8 +118,8 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
                           textAlign: TextAlign.center,
                           style: GoogleFonts.lato(
                             color: Colors.white,
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.w300,
+                            fontSize: 15.0,
+                            fontWeight: FontWeight.w800,
                           ),
                         ),
                       ),
@@ -134,27 +131,6 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
                 ),
               ),
             ),
-            /*Stack(
-              alignment: AlignmentDirectional.topEnd,
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(bottom: 35),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      for (int i = 0; i < steps.length; i++) ...[
-                        if (i == currentSteps) ...[
-                          Dot(true)
-                        ] else ...[
-                          Dot(false)
-                        ]
-                      ]
-                    ],
-                  ),
-                )
-              ],
-            ),*/
             Expanded(
               child: PageView(
                 controller: pageController,
@@ -181,51 +157,22 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5.0),
-                  border: Border.all(
-                    color: primaryColor.withAlpha(100),
-                  ),
-                  color: Colors.white,
-                ),
-                child: IntlPhoneField(
-                  controller: textPhone,
-                  keyboardType: TextInputType.phone,
-                  showCountryFlag: true,
-                  decoration: InputDecoration(
-                    hintMaxLines: 9,
-                    contentPadding: const EdgeInsets.only(top: 10, bottom: 10),
-                    hintText: "Entrez votre numéro de tél.",
-                    hintStyle: GoogleFonts.lato(
-                      color: Colors.black54,
-                      fontSize: 14.0,
-                    ),
-                    border: InputBorder.none,
-                    counterText: '',
-                  ),
-                  initialCountryCode: 'CD',
-                  countryCodeTextColor: Colors.grey[600],
-                  onChanged: (phone) {
-                    setState(() {
-                      countryCode = phone.countryCode;
-                    });
-                  },
-                  onCountryChanged: (phone) {
-                    setState(() {
-                      countryCode = phone.countryCode;
-                    });
-                  },
-                ),
+              CustomField(
+                prefix: "+243",
+                hintText: "Entrez votre n° de téléchone...",
+                icon: CupertinoIcons.phone,
+                keyType: TextInputType.phone,
+                maxLgt: 9,
+                controller: textPhone,
               ),
               const SizedBox(
                 height: 20.0,
               ),
               Container(
-                height: 50.0,
-                width: double.infinity,
+                height: 60.0,
+                width: 60.0,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5.0),
+                  borderRadius: BorderRadius.circular(50.0),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withOpacity(.2),
@@ -235,36 +182,57 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
                   ],
                   gradient: LinearGradient(
                     colors: [
-                      Colors.blue,
                       primaryColor,
+                      secondaryColor,
                     ],
                   ),
                 ),
                 child: Material(
-                  borderRadius: BorderRadius.circular(30.0),
+                  borderRadius: BorderRadius.circular(50.0),
                   color: Colors.transparent,
                   child: InkWell(
-                    onTap: () {
-                      /*Navigator.push(
-                        context,
-                        PageTransition(
-                          child: const HomeScreen(),
-                          type: PageTransitionType.rightToLeftWithFade,
-                        ),
-                      );*/
-                      setState(() {
-                        currentSteps++;
+                    onTap: () async {
+                      FocusScope.of(context).unfocus();
+                      if (textPhone.text.isEmpty) {
+                        Get.snackbar(
+                          "N° de Téléphone réquis !",
+                          "vous devez entrez votre numéro de téléphone pour recevoir un code par sms d'activation de l'application !",
+                          snackPosition: SnackPosition.BOTTOM,
+                          colorText: Colors.white,
+                          backgroundColor: Colors.black87,
+                          maxWidth: MediaQuery.of(context).size.width - 4,
+                          borderRadius: 10,
+                          duration: const Duration(seconds: 4),
+                        );
+                        return;
+                      }
+
+                      Xloading.showLottieLoading(context);
+                      await ApiManager.login(
+                              data: {"telephone": "+243" + textPhone.text})
+                          .then((res) {
+                        Xloading.dismiss();
+                        if (res != null) {
+                          print(res);
+                          if (res['reponse']['status'] == "success") {
+                            setState(() {
+                              currentSteps++;
+                            });
+                            pageController.animateToPage(
+                              currentSteps,
+                              duration: const Duration(milliseconds: 500),
+                              curve: Curves.easeIn,
+                            );
+                          } else {
+                            print("failed!");
+                          }
+                        }
                       });
-                      pageController.animateToPage(
-                        currentSteps,
-                        duration: const Duration(milliseconds: 500),
-                        curve: Curves.easeIn,
-                      );
                     },
-                    borderRadius: BorderRadius.circular(30.0),
+                    borderRadius: BorderRadius.circular(50.0),
                     child: Center(
                       child: Padding(
-                        padding: const EdgeInsets.all(15.0),
+                        padding: const EdgeInsets.all(20.0),
                         child: SvgPicture.asset(
                           "assets/svg/next-right-arrow-svgrepo-com.svg",
                           color: Colors.white,
@@ -281,6 +249,7 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
     );
   }
 
+  FocusNode focusNode = FocusNode();
   Widget secondStepAuth(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
@@ -293,95 +262,132 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
+              Container(
+                padding: const EdgeInsets.all(10.0),
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(5.0),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(.3),
+                      blurRadius: 12.0,
+                      offset: const Offset(0, 3),
+                    )
+                  ],
+                ),
                 child: PinPut(
-                  fieldsCount: 5,
-
-                  //onSubmit: (String pin) => _showSnackBar(pin, context),
-                  //focusNode: _pinPutFocusNode,
-                  //controller: _pinPutController,
+                  fieldsCount: 6,
+                  controller: textCode,
+                  focusNode: focusNode,
+                  textStyle: GoogleFonts.lato(
+                    fontSize: 18.0,
+                    color: Colors.black87,
+                    fontWeight: FontWeight.w700,
+                  ),
                   selectedFieldDecoration: BoxDecoration(
-                    border: Border.all(color: Colors.green[700]),
+                    border: Border.all(color: primaryColor, width: 2.0),
                     borderRadius: BorderRadius.circular(5.0),
                   ),
-                  eachFieldWidth: 55.0,
-                  eachFieldHeight: 70.0,
-                  onSubmit: (String pin) {
+                  eachFieldWidth: 46.0,
+                  eachFieldHeight: 60.0,
+                  onSubmit: (String pin) async {
                     if (pin.isNotEmpty) {
-                      Navigator.push(
-                        context,
-                        PageTransition(
-                          child: const HomeScreen(),
-                          type: PageTransitionType.rightToLeftWithFade,
-                        ),
-                      );
+                      FocusScope.of(context).unfocus();
+                      Xloading.showLottieLoading(context);
+                      await ApiManager.login(data: {
+                        "telephone": "+243" + textPhone.text,
+                        "otp": pin
+                      }).then((res) {
+                        Xloading.dismiss();
+                        if (res != null) {
+                          print(res);
+                          if (res['error'] != null) {
+                            Get.snackbar(
+                              "Echec !",
+                              "veuillez renvoyer le code au numéro +243${textPhone.text}",
+                              snackPosition: SnackPosition.BOTTOM,
+                              colorText: Colors.orange,
+                              backgroundColor: Colors.black87,
+                              maxWidth: MediaQuery.of(context).size.width - 4,
+                              borderRadius: 10,
+                              duration: const Duration(seconds: 4),
+                            );
+                            return;
+                          }
+                          if (res['reponse']['status'] == "success") {
+                            storage.write(
+                                "user_id", res["reponse"]["data"]["user_id"]);
+                            Navigator.push(
+                              context,
+                              PageTransition(
+                                child: const HomeScreen(),
+                                type: PageTransitionType.rightToLeftWithFade,
+                              ),
+                            );
+                          } else {
+                            setState(() {
+                              textCode.text = "";
+                            });
+                            Get.snackbar(
+                              "Echec !",
+                              "veuillez renvoyer le code au numéro +243${textPhone.text}",
+                              snackPosition: SnackPosition.BOTTOM,
+                              colorText: Colors.orange,
+                              backgroundColor: Colors.black87,
+                              maxWidth: MediaQuery.of(context).size.width - 4,
+                              borderRadius: 10,
+                              duration: const Duration(seconds: 4),
+                            );
+                            return;
+                          }
+                        }
+                      });
                     }
                   },
                   submittedFieldDecoration: BoxDecoration(
-                    border: Border.all(color: Colors.green[700]),
+                    color: Colors.grey[400],
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(.3),
+                        blurRadius: 10.0,
+                        offset: const Offset(0, 2),
+                      )
+                    ],
                     borderRadius: BorderRadius.circular(5.0),
                   ),
                   followingFieldDecoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5.0),
-                    border: Border.all(
-                      color: primaryColor,
-                    ),
+                    color: Colors.grey[400],
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(.3),
+                        blurRadius: 10.0,
+                        offset: const Offset(0, 2),
+                      )
+                    ],
                   ),
                 ),
               ),
               const SizedBox(
                 height: 65.0,
               ),
-              /*Container(
-                margin: const EdgeInsets.all(8.0),
-                height: 50.0,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5.0),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(.2),
-                      blurRadius: 12.0,
-                      offset: const Offset(0, 10.0),
-                    )
-                  ],
-                  gradient: LinearGradient(
-                    colors: [
-                      Colors.blue,
-                      Colors.green[700],
-                    ],
-                  ),
-                ),
-                child: Material(
-                  borderRadius: BorderRadius.circular(30.0),
-                  color: Colors.transparent,
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        PageTransition(
-                          child: const HomeScreen(),
-                          type: PageTransitionType.rightToLeftWithFade,
-                        ),
-                      );
-                    },
-                    borderRadius: BorderRadius.circular(30.0),
-                    child: Center(
-                      child: Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: SvgPicture.asset(
-                          "assets/svg/next-right-arrow-svgrepo-com.svg",
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),*/
-
               TextButton(
-                onPressed: () {},
+                onPressed: () async {
+                  Xloading.showLottieLoading(context);
+                  await ApiManager.login(
+                      data: {"telephone": "+243" + textPhone.text}).then((res) {
+                    Xloading.dismiss();
+                    if (res != null) {
+                      print(res);
+                      if (res['reponse']['status'] == "success") {
+                        setState(() {
+                          currentSteps++;
+                        });
+                      }
+                    }
+                  });
+                },
                 child: Text(
                   "Réenvoyer le code",
                   style: GoogleFonts.lato(
@@ -393,36 +399,6 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
           ),
         ),
       ),
-    );
-  }
-}
-
-// ignore: must_be_immutable
-class Dot extends StatelessWidget {
-  bool isActive;
-  Dot(this.isActive);
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedContainer(
-      height: 10.0,
-      width: 10.0,
-      margin: const EdgeInsets.symmetric(horizontal: 5),
-      padding: const EdgeInsets.all(6.0),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: isActive
-              ? [
-                  primaryColor,
-                  Colors.blue,
-                ]
-              : [
-                  Colors.grey[500],
-                  Colors.grey[500],
-                ],
-        ),
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      duration: const Duration(milliseconds: 500),
     );
   }
 }
