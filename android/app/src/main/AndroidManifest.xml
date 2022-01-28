@@ -4,7 +4,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <application android:label="Cercle royal" android:icon="@mipmap/ic_launcher">
+    <application android:label="Cercle royal" android:icon="@mipmap/launcher_icon">
 
         <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyB3zCnYsnKTsnN7uLJKWQ4SPWc0BZ50JkY"/>
 
