@@ -72,4 +72,40 @@ class ApiManager {
       return null;
     }
   }
+
+  static Future subscribe(
+      {String subscribeAmountId, String subscribeId}) async {
+    var userId = storage.read("user_id");
+    var response;
+    try {
+      if (subscribeId.isEmpty) {
+        response = await ApiService.request(
+          url: "users/abonnements/abonner",
+          body: <String, dynamic>{
+            "user_id": userId,
+            "abonnement_tarif_id": int.parse(subscribeAmountId),
+          },
+          method: "post",
+        );
+      } else {
+        response = await ApiService.request(
+          url: "users/abonnements/abonner",
+          body: <String, dynamic>{
+            "user_id": userId,
+            "abonnement_tarif_id": int.parse(subscribeAmountId),
+            "abonnement_id": int.parse(subscribeId)
+          },
+          method: "post",
+        );
+      }
+    } catch (error) {
+      print(error);
+    }
+    print(response);
+    if (response != null) {
+      return response;
+    } else {
+      return null;
+    }
+  }
 }

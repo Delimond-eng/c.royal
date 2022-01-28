@@ -49,7 +49,7 @@ class _AppBottomNavigationState extends State<AppBottomNavigation> {
           height: 1.5, fontSize: 12.0, fontWeight: FontWeight.w800),
       unselectedLabelStyle: GoogleFonts.lato(height: 1.5, fontSize: 12.0),
       selectedItemColor: accentColor,
-      elevation: 0,
+      elevation: 10,
       showSelectedLabels: true,
       items: [
         BottomNavigationBarItem(

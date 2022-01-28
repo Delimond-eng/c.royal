@@ -7,9 +7,11 @@ import 'package:page_transition/page_transition.dart';
 
 class ShopCard extends StatelessWidget {
   final Marchands data;
+  final bool hasProximited;
   const ShopCard({
     Key key,
     this.data,
+    this.hasProximited = false,
   }) : super(key: key);
 
   @override
@@ -107,9 +109,9 @@ class ShopCard extends StatelessWidget {
                         const SizedBox(
                           height: 8.0,
                         ),
-                        if (data.offres.length <= 1) ...[
+                        if (hasProximited) ...[
                           Text(
-                            "Remise de ${data.offres.first.remise}% ",
+                            "à ${data.distance} de votre position ",
                             style: GoogleFonts.lato(
                               color: Colors.red,
                               fontWeight: FontWeight.w700,
@@ -117,15 +119,26 @@ class ShopCard extends StatelessWidget {
                             ),
                           )
                         ] else ...[
-                          Text(
-                            "Remise de ${data.offres.first.remise}% à ${data.offres.last.remise}%",
-                            style: GoogleFonts.lato(
-                              color: Colors.red,
-                              fontWeight: FontWeight.w700,
-                              fontSize: 12.0,
-                            ),
-                          )
-                        ],
+                          if (data.offres.length <= 1) ...[
+                            Text(
+                              "Remise de ${data.offres.first.remise}% ",
+                              style: GoogleFonts.lato(
+                                color: Colors.red,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 12.0,
+                              ),
+                            )
+                          ] else ...[
+                            Text(
+                              "Remise de ${data.offres.first.remise}% à ${data.offres.last.remise}%",
+                              style: GoogleFonts.lato(
+                                color: Colors.red,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 12.0,
+                              ),
+                            )
+                          ],
+                        ]
                       ],
                     ),
                   ),

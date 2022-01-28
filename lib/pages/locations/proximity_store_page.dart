@@ -59,6 +59,7 @@ class _ProximityStorePageState extends State<ProximityStorePage> {
                                   children: homeController.marchands
                                       .map(
                                         (data) => ShopCard(
+                                          hasProximited: true,
                                           data: data,
                                         ),
                                       )

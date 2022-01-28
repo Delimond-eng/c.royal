@@ -10,6 +10,7 @@ import 'package:c_royal/widgets/shop_card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key key}) : super(key: key);
@@ -49,9 +50,14 @@ class _HomePageState extends State<HomePage> {
                 ),
                 Obx(
                   () => (homeController.isHomeLoading.value)
-                      ? const Expanded(
+                      ? Expanded(
                           child: Center(
-                            child: CircularProgressIndicator(),
+                            child: Lottie.asset(
+                              "assets/icons/90464-loading.json",
+                              animate: true,
+                              height: 150.0,
+                              width: 150.0,
+                            ),
                           ),
                         )
                       : costumBody(_size),

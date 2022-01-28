@@ -45,6 +45,7 @@ class MarchandCategories {
   String icon;
   String categorie;
   Abonnement abonnement;
+  bool hasSelected = false;
 
   MarchandCategories({marchandCategorieId, icon, categorie, abonnement});
 

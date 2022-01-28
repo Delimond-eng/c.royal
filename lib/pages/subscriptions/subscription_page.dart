@@ -1,6 +1,12 @@
+import 'dart:math';
+
 import 'package:c_royal/components/app_header.dart';
 import 'package:c_royal/components/notification_drawer.dart';
+import 'package:c_royal/models/configs.dart';
+import 'package:c_royal/services/api/api_manager.dart';
+import 'package:c_royal/settings/controllers.dart';
 import 'package:c_royal/settings/style.dart';
+import 'package:c_royal/settings/utilities.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -14,6 +20,21 @@ class SubscriptionsPage extends StatefulWidget {
 
 class _SubscriptionsPageState extends State<SubscriptionsPage> {
   var scaffoldKey = GlobalKey<ScaffoldState>();
+  int total = 0;
+  List<String> sendsData = [];
+
+  @override
+  void initState() {
+    super.initState();
+    initData();
+  }
+
+  initData() {
+    setState(() {
+      total = 0;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     var _size = MediaQuery.of(context).size;
@@ -61,14 +82,36 @@ class _SubscriptionsPageState extends State<SubscriptionsPage> {
                       ),
                       Container(
                         decoration: BoxDecoration(
-                          color: primaryColor,
+                          boxShadow: [
+                            BoxShadow(
+                              blurRadius: 20,
+                              offset: Offset.zero,
+                              color: Colors.grey.withOpacity(0.5),
+                            ),
+                          ],
+                          gradient: LinearGradient(
+                            colors: [
+                              secondaryColor,
+                              primaryColor,
+                            ],
+                          ),
                           borderRadius: BorderRadius.circular(30.0),
                         ),
-                        padding: const EdgeInsets.all(10.0),
-                        child: Text(
-                          "Mes abonnements",
-                          style: GoogleFonts.lato(
-                            color: Colors.white,
+                        child: Material(
+                          borderRadius: BorderRadius.circular(30.0),
+                          color: Colors.transparent,
+                          child: InkWell(
+                            borderRadius: BorderRadius.circular(30.0),
+                            onTap: () {},
+                            child: Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Text(
+                                "Mes abonnements",
+                                style: GoogleFonts.lato(
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
                           ),
                         ),
                       )
@@ -78,182 +121,314 @@ class _SubscriptionsPageState extends State<SubscriptionsPage> {
                 Expanded(
                   child: Container(
                     child: Scrollbar(
-                      radius: const Radius.circular(10.0),
-                      thickness: 4,
-                      child: GridView.builder(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 10.0,
-                          vertical: 5.0,
-                        ),
-                        physics: const BouncingScrollPhysics(),
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          childAspectRatio: 0.9,
-                          crossAxisSpacing: 5,
-                          mainAxisSpacing: 5,
-                          crossAxisCount: 3,
-                        ),
-                        itemCount: 8,
-                        itemBuilder: (context, index) {
-                          return Container(
-                            decoration: BoxDecoration(
-                              color: Colors.grey[100],
-                              borderRadius: BorderRadius.circular(10.0),
-                              boxShadow: [
-                                BoxShadow(
-                                  blurRadius: 20,
-                                  offset: Offset.zero,
-                                  color: Colors.grey.withOpacity(0.5),
-                                )
-                              ],
-                            ),
-                            padding: const EdgeInsets.all(10.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    SvgPicture.asset(
-                                      "assets/svg/clothing.svg",
-                                      height: 30.0,
-                                      width: 30.0,
-                                    ),
-                                    Container(
-                                      height: 25.0,
-                                      width: 25.0,
-                                      padding: const EdgeInsets.all(2.0),
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        shape: BoxShape.circle,
-                                        border: Border.all(
-                                            width: 2, color: primaryColor),
-                                      ),
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          gradient: LinearGradient(
-                                            colors: [
-                                              primaryColor,
-                                              Colors.blue,
-                                            ],
-                                          ),
-                                          shape: BoxShape.circle,
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 8.0,
-                                ),
-                                Text(
-                                  "Categorie",
-                                  style: GoogleFonts.lato(
-                                    color: Colors.black87,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 8.0,
-                                ),
-                                Text(
-                                  "Prix abonnement",
-                                  style: GoogleFonts.lato(
-                                    color: Colors.grey[500],
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 11.0,
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 2.0,
-                                ),
-                                Text(
-                                  "2500 FC",
-                                  style: GoogleFonts.lato(
-                                    color: primaryColor,
-                                    fontWeight: FontWeight.w900,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                      ),
-                    ),
+                        radius: const Radius.circular(10.0),
+                        thickness: 4,
+                        child: GridView.builder(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 10.0,
+                            vertical: 8.0,
+                          ),
+                          physics: const BouncingScrollPhysics(),
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            childAspectRatio: 0.9,
+                            crossAxisSpacing: 5,
+                            mainAxisSpacing: 5,
+                            crossAxisCount: 3,
+                          ),
+                          itemCount: homeController.categories.length,
+                          itemBuilder: (context, index) {
+                            var data = homeController.categories[index];
+                            return SubscriptionCard(
+                              data: data,
+                              onSelected: () {
+                                setState(() {
+                                  data.hasSelected = !data.hasSelected;
+                                });
+
+                                if (data.hasSelected) {
+                                  int subTot = total;
+                                  int currentTotal = subTot +
+                                      int.parse(data.abonnement.montant);
+                                  setState(() {
+                                    total = currentTotal;
+                                    sendsData
+                                        .add(data.abonnement.abonnementTarifId);
+                                  });
+                                } else {
+                                  int subTot = total;
+                                  int currentTot = subTot -
+                                      int.parse(data.abonnement.montant);
+                                  setState(() {
+                                    total = currentTot;
+                                    sendsData.removeWhere((String e) =>
+                                        e == data.abonnement.abonnementTarifId);
+                                  });
+                                }
+                                //
+                              },
+                            );
+                          },
+                        )),
                   ),
                 ),
-                Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 10.0, vertical: 10.0),
-                  color: Colors.white.withOpacity(.9),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Flexible(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Sous total de la sélection',
-                              style: GoogleFonts.lato(
-                                fontWeight: FontWeight.w900,
-                                color: secondaryColor,
+                if (sendsData.isNotEmpty) ...[
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10.0, vertical: 10.0),
+                    color: Colors.white.withOpacity(.9),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Flexible(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Sous total de la sélection',
+                                style: GoogleFonts.lato(
+                                  fontWeight: FontWeight.w900,
+                                  color: secondaryColor,
+                                ),
                               ),
-                            ),
-                            RichText(
-                              text: TextSpan(
-                                children: <TextSpan>[
-                                  TextSpan(
-                                    text: '25000 ',
-                                    style: GoogleFonts.bigShouldersStencilText(
-                                      color: Colors.black87,
-                                      fontWeight: FontWeight.w900,
-                                      letterSpacing: 1.0,
-                                      fontSize: 25.0,
+                              RichText(
+                                text: TextSpan(
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                      text: '$total ',
+                                      style:
+                                          GoogleFonts.bigShouldersStencilText(
+                                        color: Colors.black87,
+                                        fontWeight: FontWeight.w900,
+                                        letterSpacing: 1.0,
+                                        fontSize: 25.0,
+                                      ),
                                     ),
-                                  ),
-                                  TextSpan(
-                                    text: 'FC',
-                                    style: GoogleFonts.lato(
-                                      fontWeight: FontWeight.w900,
-                                      color: primaryColor,
-                                      fontSize: 15.0,
+                                    TextSpan(
+                                      text: 'FC',
+                                      style: GoogleFonts.lato(
+                                        fontWeight: FontWeight.w900,
+                                        color: primaryColor,
+                                        fontSize: 15.0,
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: Colors.green[700],
-                          borderRadius: BorderRadius.circular(30.0),
-                        ),
-                        padding: const EdgeInsets.all(10.0),
-                        child: Text(
-                          "Valider l'abonnement",
-                          style: GoogleFonts.lato(
-                            color: Colors.white,
+                            ],
                           ),
                         ),
-                      )
-                    ],
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.green[700],
+                            borderRadius: BorderRadius.circular(30.0),
+                            boxShadow: [
+                              BoxShadow(
+                                blurRadius: 20,
+                                offset: Offset.zero,
+                                color: Colors.grey.withOpacity(0.5),
+                              ),
+                            ],
+                          ),
+                          child: Material(
+                            borderRadius: BorderRadius.circular(30.0),
+                            color: Colors.transparent,
+                            child: InkWell(
+                              onTap: () => subscribe(context),
+                              borderRadius: BorderRadius.circular(30.0),
+                              child: Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Text(
+                                  "Valider l'abonnement",
+                                  style: GoogleFonts.lato(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
-                )
+                ],
               ],
             ),
           ),
         ),
       ),
       endDrawer: const NotificationDrawer(),
+    );
+  }
+
+  Future<void> subscribe(context) async {
+    String abonnementId = "";
+    Xloading.showLottieLoading(context);
+    for (var e in sendsData) {
+      print(e);
+      var res = await ApiManager.subscribe(
+          subscribeAmountId: e, subscribeId: abonnementId);
+      if (res != null) {
+        if (res["reponse"]["status"] == "success") {
+          abonnementId = res["reponse"]["abonnement_id"].toString();
+        }
+      }
+    }
+    Xloading.dismiss();
+    XDialog.showSuccessAnimation(context);
+    for (var selected in homeController.categories) {
+      if (selected.hasSelected) {
+        setState(() {
+          selected.hasSelected = false;
+          total = 0;
+          sendsData.clear();
+        });
+      }
+    }
+  }
+}
+
+class SubscriptionCard extends StatelessWidget {
+  final MarchandCategories data;
+  final Function onSelected;
+  const SubscriptionCard({
+    Key key,
+    this.data,
+    this.onSelected,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: data.hasSelected ? Colors.blue : Colors.white,
+        borderRadius: BorderRadius.circular(10.0),
+        boxShadow: [
+          BoxShadow(
+            blurRadius: 20,
+            offset: Offset.zero,
+            color: Colors.grey.withOpacity(0.5),
+          )
+        ],
+      ),
+      child: Material(
+        borderRadius: BorderRadius.circular(10.0),
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(10.0),
+          onTap: onSelected,
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SvgPicture.network(
+                        data.icon,
+                        height: 20.0,
+                        width: 20.0,
+                        color: Colors
+                            .primaries[
+                                Random().nextInt(Colors.primaries.length)]
+                            .shade900,
+                      ),
+                      Container(
+                        height: 20.0,
+                        width: 20.0,
+                        padding: const EdgeInsets.all(2.0),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                              width: 2,
+                              color: data.hasSelected
+                                  ? Colors.white
+                                  : primaryColor),
+                        ),
+                        child: (data.hasSelected)
+                            ? Container(
+                                decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                    colors: data.hasSelected
+                                        ? [
+                                            Colors.white,
+                                            Colors.blue[400],
+                                          ]
+                                        : [
+                                            primaryColor,
+                                            Colors.blue,
+                                          ],
+                                  ),
+                                  shape: BoxShape.circle,
+                                ),
+                              )
+                            : null,
+                      )
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 8.0,
+                  ),
+                  Text(
+                    data.categorie,
+                    style: GoogleFonts.lato(
+                      color: Colors.black87,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 8.0,
+                  ),
+                  Text(
+                    "Prix abonnement",
+                    style: GoogleFonts.lato(
+                      color:
+                          data.hasSelected ? Colors.grey[50] : Colors.grey[500],
+                      fontWeight: FontWeight.w400,
+                      fontSize: 11.0,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 2.0,
+                  ),
+                  RichText(
+                    text: TextSpan(
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: '${data.abonnement.montant} ',
+                          style: GoogleFonts.lato(
+                            color: data.hasSelected
+                                ? Colors.white
+                                : Colors.black87,
+                            fontWeight: FontWeight.w900,
+                          ),
+                        ),
+                        TextSpan(
+                          text: data.abonnement.devise,
+                          style: GoogleFonts.lato(
+                            fontWeight: FontWeight.w400,
+                            color:
+                                data.hasSelected ? Colors.white : primaryColor,
+                            fontSize: 10.0,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

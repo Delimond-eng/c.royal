@@ -3,6 +3,7 @@ import 'package:c_royal/pages/home/home_page.dart';
 import 'package:c_royal/pages/locations/proximity_store_page.dart';
 import 'package:c_royal/pages/privileges/privilege_page.dart';
 import 'package:c_royal/pages/subscriptions/subscription_page.dart';
+import 'package:c_royal/settings/controllers.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -34,7 +35,15 @@ class _HomeScreenState extends State<HomeScreen> {
     void _onItemTapped(int index) {
       setState(() {
         _selectedIndex = index;
+        if (_selectedIndex == 2) {
+          for (var s in homeController.categories) {
+            if (s.hasSelected) {
+              s.hasSelected = false;
+            }
+          }
+        }
       });
+
       pageController.jumpToPage(_selectedIndex);
     }
 

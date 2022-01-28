@@ -40,8 +40,8 @@ class Xloading {
                             color: Colors.transparent,
                             borderRadius: BorderRadius.circular(10.0),
                           ),
-                          child: SpinKitCubeGrid(
-                            color: primaryColor,
+                          child: const SpinKitWave(
+                            color: Colors.blue,
                             size: 50.0,
                           ),
                         ),
@@ -284,13 +284,15 @@ class XDialog {
               alignment: Alignment.center,
               width: 150.0,
               height: 200.0,
-              child: Lottie.asset("assets/lotties/17828-success.json",
-                  width: 150.0,
-                  height: 150.0,
-                  alignment: Alignment.center,
-                  animate: true,
-                  repeat: false,
-                  fit: BoxFit.cover),
+              child: Lottie.asset(
+                "assets/icons/84741-success.json",
+                width: 150.0,
+                height: 150.0,
+                alignment: Alignment.center,
+                animate: true,
+                repeat: false,
+                fit: BoxFit.cover,
+              ),
             ),
           ),
         );
