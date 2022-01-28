@@ -116,7 +116,7 @@ class AppHeader extends StatelessWidget {
             Row(
               children: [
                 Badge(
-                  position: BadgePosition.topStart(start: 1),
+                  position: BadgePosition.topStart(),
                   elevation: 0,
                   badgeContent: Text(
                     "0",
@@ -141,8 +141,8 @@ class AppHeader extends StatelessWidget {
                         ),
                       ],
                     ),
-                    height: 30.0,
-                    width: 30.0,
+                    height: 37.0,
+                    width: 37.0,
                     child: Material(
                       color: Colors.transparent,
                       borderRadius: BorderRadius.circular(30.0),
@@ -183,8 +183,8 @@ class AppHeader extends StatelessWidget {
                       ),
                     ],
                   ),
-                  height: 30.0,
-                  width: 30.0,
+                  height: 37.0,
+                  width: 37.0,
                   child: Material(
                     color: Colors.transparent,
                     borderRadius: BorderRadius.circular(30.0),
@@ -207,6 +207,7 @@ class AppHeader extends StatelessWidget {
                               ? CupertinoIcons.person
                               : CupertinoIcons.person_fill,
                           color: Colors.white,
+                          size: 16.0,
                         ),
                       ),
                     ),

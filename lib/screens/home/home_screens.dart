@@ -38,13 +38,14 @@ class _HomeScreenState extends State<HomeScreen> {
     void _onItemTapped(int index) {
       setState(() {
         _selectedIndex = index;
-        if (_selectedIndex == 2 && storage.read("user_id") != null) {
+        if (_selectedIndex == 2) {
           for (var s in homeController.categories) {
             if (s.hasSelected) {
               s.hasSelected = false;
             }
           }
-        } else {
+        }
+        if (storage.read("user_id") == null && index == 2) {
           Navigator.push(
             context,
             PageTransition(
@@ -52,6 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
               type: PageTransitionType.rightToLeftWithFade,
             ),
           );
+          return;
         }
       });
 
