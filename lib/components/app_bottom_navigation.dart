@@ -71,7 +71,7 @@ class _AppBottomNavigationState extends State<AppBottomNavigation> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Text("Nouveaux"),
+              const Text("Accueil"),
               if (widget.selectedIndex == 0) ...[
                 const SizedBox(
                   height: 2.0,
@@ -126,7 +126,7 @@ class _AppBottomNavigationState extends State<AppBottomNavigation> {
         ),
         BottomNavigationBarItem(
           activeIcon: SvgPicture.asset(
-            'assets/svg/scan-svgrepo-com.svg',
+            'assets/svg/subscription.svg',
             fit: BoxFit.scaleDown,
             color: accentColor,
             height: 20.0,
