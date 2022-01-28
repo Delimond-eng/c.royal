@@ -55,8 +55,6 @@ class _HomePageState extends State<HomePage> {
                             child: Lottie.asset(
                               "assets/icons/90464-loading.json",
                               animate: true,
-                              height: 150.0,
-                              width: 150.0,
                             ),
                           ),
                         )

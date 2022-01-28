@@ -34,15 +34,15 @@ class Xloading {
                         padding: const EdgeInsets.all(10.0),
                         alignment: Alignment.center,
                         child: Container(
-                          height: 80,
-                          width: 80,
+                          height: 200,
+                          width: 200,
                           decoration: BoxDecoration(
                             color: Colors.transparent,
                             borderRadius: BorderRadius.circular(10.0),
                           ),
-                          child: const SpinKitWave(
-                            color: Colors.blue,
-                            size: 50.0,
+                          child: Lottie.asset(
+                            "assets/icons/90464-loading.json",
+                            animate: true,
                           ),
                         ),
                       ),

@@ -318,13 +318,13 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
                           if (res['reponse']['status'] == "success") {
                             storage.write(
                                 "user_id", res["reponse"]["data"]["user_id"]);
-                            Navigator.push(
-                              context,
-                              PageTransition(
-                                child: const HomeScreen(),
-                                type: PageTransitionType.rightToLeftWithFade,
-                              ),
-                            );
+                            Navigator.pushAndRemoveUntil(
+                                context,
+                                PageTransition(
+                                  child: const HomeScreen(),
+                                  type: PageTransitionType.rightToLeftWithFade,
+                                ),
+                                (Route<dynamic> route) => false);
                           } else {
                             setState(() {
                               textCode.text = "";
