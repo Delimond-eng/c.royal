@@ -3,8 +3,11 @@ import 'package:c_royal/pages/home/home_page.dart';
 import 'package:c_royal/pages/locations/proximity_store_page.dart';
 import 'package:c_royal/pages/privileges/privilege_page.dart';
 import 'package:c_royal/pages/subscriptions/subscription_page.dart';
+import 'package:c_royal/screens/auth/auth_screen.dart';
+import 'package:c_royal/services/db/local_storage.dart';
 import 'package:c_royal/settings/controllers.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key key}) : super(key: key);
@@ -35,12 +38,20 @@ class _HomeScreenState extends State<HomeScreen> {
     void _onItemTapped(int index) {
       setState(() {
         _selectedIndex = index;
-        if (_selectedIndex == 2) {
+        if (_selectedIndex == 2 && storage.read("user_id") != null) {
           for (var s in homeController.categories) {
             if (s.hasSelected) {
               s.hasSelected = false;
             }
           }
+        } else {
+          Navigator.push(
+            context,
+            PageTransition(
+              child: const AuthenticateScreen(),
+              type: PageTransitionType.rightToLeftWithFade,
+            ),
+          );
         }
       });
 

@@ -37,9 +37,6 @@ class MyApp extends StatelessWidget {
       ),
       home: Builder(
         builder: (context) {
-          if (storage.read("user_id") == null) {
-            return const AuthenticateScreen();
-          }
           return const HomeScreen();
         },
       ), //AuthenticateScreen(),

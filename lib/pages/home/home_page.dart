@@ -4,9 +4,11 @@ import 'package:c_royal/components/app_header.dart';
 import 'package:c_royal/components/categries_component.dart';
 import 'package:c_royal/components/notification_drawer.dart';
 import 'package:c_royal/settings/controllers.dart';
+import 'package:c_royal/settings/style.dart';
 import 'package:c_royal/widgets/popular_card.dart';
 import 'package:c_royal/widgets/post_card.dart';
 import 'package:c_royal/widgets/shop_card.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -64,6 +66,13 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: primaryColor,
+        elevation: 10.0,
+        onPressed: () {},
+        child:
+            const Icon(CupertinoIcons.qrcode_viewfinder, color: Colors.white),
       ),
       endDrawer: const NotificationDrawer(),
     );

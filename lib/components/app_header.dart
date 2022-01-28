@@ -1,8 +1,12 @@
 import 'package:badges/badges.dart';
+import 'package:c_royal/screens/auth/auth_screen.dart';
 import 'package:c_royal/settings/style.dart';
+import 'package:c_royal/settings/utilities.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:page_transition/page_transition.dart';
 
 class AppHeader extends StatelessWidget {
   final String title;
@@ -109,51 +113,106 @@ class AppHeader extends StatelessWidget {
                 ]
               ],
             ),
-            Badge(
-              position: BadgePosition.topStart(start: 1),
-              elevation: 0,
-              badgeContent: Text(
-                "0",
-                style: GoogleFonts.lato(
-                  color: Colors.white,
-                ),
-              ),
-              child: Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      primaryColor,
-                      secondaryColor,
-                    ],
+            Row(
+              children: [
+                Badge(
+                  position: BadgePosition.topStart(start: 1),
+                  elevation: 0,
+                  badgeContent: Text(
+                    "0",
+                    style: GoogleFonts.lato(
+                      color: Colors.white,
+                    ),
                   ),
-                  borderRadius: BorderRadius.circular(30.0),
-                  boxShadow: [
-                    BoxShadow(
-                      blurRadius: 10.0,
-                      color: Colors.black.withOpacity(.1),
-                      offset: const Offset(0, 10.0),
-                    )
-                  ],
-                ),
-                height: 40.0,
-                width: 40.0,
-                child: Material(
-                  color: Colors.transparent,
-                  borderRadius: BorderRadius.circular(30.0),
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(30.0),
-                    onTap: onOpenNotificateDrawer,
-                    child: Center(
-                      child: SvgPicture.asset(
-                        "assets/svg/notification-svgrepo-com.svg",
-                        color: Colors.white,
-                        height: 20.0,
-                        width: 20.0,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          primaryColor,
+                          secondaryColor,
+                        ],
+                      ),
+                      borderRadius: BorderRadius.circular(30.0),
+                      boxShadow: [
+                        BoxShadow(
+                          blurRadius: 20,
+                          offset: Offset.zero,
+                          color: Colors.grey.withOpacity(0.5),
+                        ),
+                      ],
+                    ),
+                    height: 30.0,
+                    width: 30.0,
+                    child: Material(
+                      color: Colors.transparent,
+                      borderRadius: BorderRadius.circular(30.0),
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(30.0),
+                        onTap: onOpenNotificateDrawer,
+                        child: Center(
+                          child: SvgPicture.asset(
+                            "assets/svg/notification-svgrepo-com.svg",
+                            color: Colors.white,
+                            height: 20.0,
+                            width: 20.0,
+                          ),
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
+                const SizedBox(
+                  width: 10.0,
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: storage.read("user_id") == null
+                          ? [Colors.black87, Colors.grey[700]]
+                          : [
+                              Colors.green,
+                              Colors.blue,
+                            ],
+                    ),
+                    borderRadius: BorderRadius.circular(30.0),
+                    boxShadow: [
+                      BoxShadow(
+                        blurRadius: 20,
+                        offset: Offset.zero,
+                        color: Colors.grey.withOpacity(0.5),
+                      ),
+                    ],
+                  ),
+                  height: 30.0,
+                  width: 30.0,
+                  child: Material(
+                    color: Colors.transparent,
+                    borderRadius: BorderRadius.circular(30.0),
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(30.0),
+                      onTap: storage.read("user_id") == null
+                          ? () {
+                              Navigator.push(
+                                context,
+                                PageTransition(
+                                  child: const AuthenticateScreen(),
+                                  type: PageTransitionType.rightToLeftWithFade,
+                                ),
+                              );
+                            }
+                          : null,
+                      child: Center(
+                        child: Icon(
+                          storage.read("user_id") == null
+                              ? CupertinoIcons.person
+                              : CupertinoIcons.person_fill,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                )
+              ],
             )
           ],
         ),
