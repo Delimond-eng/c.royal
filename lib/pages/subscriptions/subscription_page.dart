@@ -139,35 +139,39 @@ class _SubscriptionsPageState extends State<SubscriptionsPage> {
                           itemCount: homeController.categories.length,
                           itemBuilder: (context, index) {
                             var data = homeController.categories[index];
-                            return SubscriptionCard(
-                              data: data,
-                              onSelected: () {
-                                setState(() {
-                                  data.hasSelected = !data.hasSelected;
-                                });
+                            if (data.abonnement != null) {
+                              return SubscriptionCard(
+                                data: data,
+                                onSelected: () {
+                                  setState(() {
+                                    data.hasSelected = !data.hasSelected;
+                                  });
 
-                                if (data.hasSelected) {
-                                  int subTot = total;
-                                  int currentTotal = subTot +
-                                      int.parse(data.abonnement.montant);
-                                  setState(() {
-                                    total = currentTotal;
-                                    sendsData
-                                        .add(data.abonnement.abonnementTarifId);
-                                  });
-                                } else {
-                                  int subTot = total;
-                                  int currentTot = subTot -
-                                      int.parse(data.abonnement.montant);
-                                  setState(() {
-                                    total = currentTot;
-                                    sendsData.removeWhere((String e) =>
-                                        e == data.abonnement.abonnementTarifId);
-                                  });
-                                }
-                                //
-                              },
-                            );
+                                  if (data.hasSelected) {
+                                    int subTot = total;
+                                    int currentTotal = subTot +
+                                        int.parse(data.abonnement.montant);
+                                    setState(() {
+                                      total = currentTotal;
+                                      sendsData.add(
+                                          data.abonnement.abonnementTarifId);
+                                    });
+                                  } else {
+                                    int subTot = total;
+                                    int currentTot = subTot -
+                                        int.parse(data.abonnement.montant);
+                                    setState(() {
+                                      total = currentTot;
+                                      sendsData.removeWhere((String e) =>
+                                          e ==
+                                          data.abonnement.abonnementTarifId);
+                                    });
+                                  }
+                                  //
+                                },
+                              );
+                            }
+                            return const SizedBox();
                           },
                         )),
                   ),

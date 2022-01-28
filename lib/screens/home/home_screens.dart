@@ -45,19 +45,19 @@ class _HomeScreenState extends State<HomeScreen> {
             }
           }
         }
-        if (storage.read("user_id") == null && index == 2) {
-          Navigator.push(
-            context,
-            PageTransition(
-              child: const AuthenticateScreen(),
-              type: PageTransitionType.rightToLeftWithFade,
-            ),
-          );
-          return;
-        }
       });
-
-      pageController.jumpToPage(_selectedIndex);
+      if (storage.read("user_id") == null && index == 2) {
+        Navigator.push(
+          context,
+          PageTransition(
+            child: const AuthenticateScreen(),
+            type: PageTransitionType.rightToLeftWithFade,
+          ),
+        );
+        return;
+      } else {
+        pageController.jumpToPage(_selectedIndex);
+      }
     }
 
     return Scaffold(
