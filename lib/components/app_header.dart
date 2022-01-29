@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:popover/popover.dart';
 
 class AppHeader extends StatelessWidget {
   final String title;
@@ -164,58 +165,213 @@ class AppHeader extends StatelessWidget {
                 const SizedBox(
                   width: 10.0,
                 ),
-                Container(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: storage.read("user_id") == null
-                          ? [Colors.black87, Colors.grey[700]]
-                          : [
-                              Colors.green,
-                              Colors.blue,
-                            ],
-                    ),
-                    borderRadius: BorderRadius.circular(30.0),
-                    boxShadow: [
-                      BoxShadow(
-                        blurRadius: 20,
-                        offset: Offset.zero,
-                        color: Colors.grey.withOpacity(0.5),
+                if (storage.read("user_id") == null) ...[
+                  Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          Colors.black87,
+                          Colors.grey[700],
+                        ],
                       ),
-                    ],
-                  ),
-                  height: 37.0,
-                  width: 37.0,
-                  child: Material(
-                    color: Colors.transparent,
-                    borderRadius: BorderRadius.circular(30.0),
-                    child: InkWell(
                       borderRadius: BorderRadius.circular(30.0),
-                      onTap: storage.read("user_id") == null
-                          ? () {
-                              Navigator.push(
-                                context,
-                                PageTransition(
-                                  child: const AuthenticateScreen(),
-                                  type: PageTransitionType.rightToLeftWithFade,
-                                ),
-                              );
-                            }
-                          : null,
-                      child: Center(
-                        child: Icon(
-                          storage.read("user_id") == null
-                              ? CupertinoIcons.person
-                              : CupertinoIcons.person_fill,
-                          color: Colors.white,
-                          size: 16.0,
+                      boxShadow: [
+                        BoxShadow(
+                          blurRadius: 20,
+                          offset: Offset.zero,
+                          color: Colors.grey.withOpacity(0.5),
+                        ),
+                      ],
+                    ),
+                    height: 37.0,
+                    width: 37.0,
+                    child: Material(
+                      color: Colors.transparent,
+                      borderRadius: BorderRadius.circular(30.0),
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(30.0),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            PageTransition(
+                              child: const AuthenticateScreen(),
+                              type: PageTransitionType.rightToLeftWithFade,
+                            ),
+                          );
+                        },
+                        child: const Center(
+                          child: Icon(
+                            CupertinoIcons.person,
+                            color: Colors.white,
+                            size: 16.0,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                )
+                  )
+                ] else ...[
+                  Container(
+                    decoration: BoxDecoration(
+                      gradient: const LinearGradient(
+                        colors: [
+                          Colors.green,
+                          Colors.blue,
+                        ],
+                      ),
+                      borderRadius: BorderRadius.circular(30.0),
+                      boxShadow: [
+                        BoxShadow(
+                          blurRadius: 20,
+                          offset: Offset.zero,
+                          color: Colors.grey.withOpacity(0.5),
+                        ),
+                      ],
+                    ),
+                    height: 37.0,
+                    width: 37.0,
+                    child: Material(
+                      color: Colors.transparent,
+                      borderRadius: BorderRadius.circular(30.0),
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(30.0),
+                        onTap: () {
+                          showPopover(
+                            barrierColor: Colors.black12,
+                            context: context,
+                            arrowDxOffset: 135,
+                            arrowDyOffset: 0,
+                            radius: 20,
+                            isParentAlive: () => true,
+                            backgroundColor: Colors.black87,
+                            transitionDuration:
+                                const Duration(milliseconds: 150),
+                            bodyBuilder: (context) => const ListItems(),
+                            onPop: () => print('Popover was popped!'),
+                            direction: PopoverDirection.top,
+                            width: 330.0,
+                            height: 160.0,
+                            arrowHeight: 15,
+                            arrowWidth: 20,
+                          );
+                        },
+                        child: const Center(
+                          child: Icon(
+                            CupertinoIcons.person_fill,
+                            color: Colors.white,
+                            size: 16.0,
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                ]
               ],
             )
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class ListItems extends StatelessWidget {
+  const ListItems({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scrollbar(
+      child: GridView(
+        padding: const EdgeInsets.all(5),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          childAspectRatio: 1.5,
+          crossAxisCount: 3,
+          crossAxisSpacing: 10,
+          mainAxisSpacing: 10,
+        ),
+        children: [
+          ContextMenuBtn(
+            icon: CupertinoIcons.person_fill,
+            title: "Mon compte",
+            onPressed: () {},
+          ),
+          ContextMenuBtn(
+            icon: CupertinoIcons.collections_solid,
+            title: "Mon abonnement",
+            onPressed: () {},
+          ),
+          ContextMenuBtn(
+            icon: CupertinoIcons.bell_circle_fill,
+            title: "Nouveautés",
+            onPressed: () {},
+          ),
+          ContextMenuBtn(
+            icon: CupertinoIcons.heart_circle_fill,
+            title: "Mes préfèrences",
+            onPressed: () {},
+          ),
+          ContextMenuBtn(
+            icon: CupertinoIcons.question_circle_fill,
+            title: "Aide",
+            onPressed: () {},
+          ),
+          ContextMenuBtn(
+            icon: Icons.logout,
+            title: "Deconnexion",
+            onPressed: () {},
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class ContextMenuBtn extends StatelessWidget {
+  final IconData icon;
+  final String title;
+  final Function onPressed;
+  const ContextMenuBtn({
+    Key key,
+    this.icon,
+    this.title,
+    this.onPressed,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.transparent,
+        borderRadius: BorderRadius.circular(15.0),
+      ),
+      child: Material(
+        borderRadius: BorderRadius.circular(15.0),
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onPressed,
+          borderRadius: BorderRadius.circular(15.0),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Icon(
+                  icon,
+                  color: secondaryColor,
+                ),
+                const SizedBox(
+                  height: 8.0,
+                ),
+                Text(
+                  title,
+                  style: GoogleFonts.lato(
+                    color: Colors.grey[100],
+                    fontWeight: FontWeight.w300,
+                    fontSize: 12.0,
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );

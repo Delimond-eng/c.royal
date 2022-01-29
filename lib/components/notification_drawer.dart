@@ -79,7 +79,10 @@ class NotificationDrawer extends StatelessWidget {
             Expanded(
               child: Container(
                 child: SingleChildScrollView(
-                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10.0,
+                    vertical: 8.0,
+                  ),
                   physics: const BouncingScrollPhysics(),
                   child: Column(
                     children: [
