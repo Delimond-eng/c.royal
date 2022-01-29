@@ -62,12 +62,18 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      body: PageView(
-        controller: pageController,
-        physics: const NeverScrollableScrollPhysics(),
-        onPageChanged: _onItemTapped,
-        children: pages,
-        scrollDirection: Axis.vertical,
+      body: AnimatedSwitcher(
+        duration: const Duration(microseconds: 500),
+        transitionBuilder: (Widget child, Animation<double> animation) {
+          return ScaleTransition(scale: animation, child: child);
+        },
+        child: PageView(
+          controller: pageController,
+          physics: const NeverScrollableScrollPhysics(),
+          onPageChanged: _onItemTapped,
+          children: pages,
+          scrollDirection: Axis.vertical,
+        ),
       ),
       bottomNavigationBar: AppBottomNavigation(
         selectedIndex: _selectedIndex,
