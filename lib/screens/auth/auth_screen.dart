@@ -53,21 +53,22 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
         decoration: const BoxDecoration(
           color: Colors.white,
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
+        child: Stack(
           children: [
             ClipPath(
-              clipper: WaveClipperTwo(),
+              clipper: OvalBottomBorderClipper(),
               child: Container(
                 height: _size.height * .5,
                 width: _size.width,
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
-                      primaryColor.withOpacity(.8),
-                      Colors.blue.withOpacity(.8),
+                      primaryColor,
+                      primaryColor,
+                      secondaryColor,
                     ],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomRight,
                   ),
                 ),
                 child: Center(
@@ -83,7 +84,7 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
                               "assets/svg/circle-svgrepo-com.svg",
                               height: 80.0,
                               width: 80.0,
-                              color: primaryColor,
+                              color: Colors.white,
                             ),
                             Positioned(
                               top: 0,
@@ -105,21 +106,21 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
                       ] else ...[
                         Lottie.asset(
                           "assets/lottiesfiles/81148-new-message-notification.json",
-                          height: 150.0,
-                          width: 150.0,
+                          height: 100.0,
+                          width: 100.0,
                         ),
                       ],
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 50.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 30.0),
                         child: Text(
                           currentSteps == 0
                               ? "Entrez votre numéro de téléphone pour activer votre compte !"
                               : "Veuillez entrer le code de validation envoyée par sms à votre numéro de téléphone !",
                           textAlign: TextAlign.center,
-                          style: GoogleFonts.lato(
+                          style: GoogleFonts.courgette(
                             color: Colors.white,
-                            fontSize: 15.0,
-                            fontWeight: FontWeight.w800,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
                       ),
@@ -131,13 +132,11 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
                 ),
               ),
             ),
-            Expanded(
-              child: PageView(
-                controller: pageController,
-                onPageChanged: onPageChanged,
-                children: steps,
-                physics: const NeverScrollableScrollPhysics(),
-              ),
+            PageView(
+              controller: pageController,
+              onPageChanged: onPageChanged,
+              children: steps,
+              physics: const NeverScrollableScrollPhysics(),
             ),
           ],
         ),
@@ -146,67 +145,267 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
   }
 
   Widget firstStepAuth(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white.withOpacity(.5),
-      ),
-      child: Center(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 15.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              CustomField(
-                prefix: "+243",
-                hintText: "Entrez votre n° de téléchone...",
-                icon: CupertinoIcons.phone,
-                keyType: TextInputType.phone,
-                maxLgt: 9,
-                controller: textPhone,
-              ),
-              const SizedBox(
-                height: 20.0,
-              ),
-              Container(
-                height: 60.0,
-                width: 60.0,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(50.0),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(.2),
-                      blurRadius: 12.0,
-                      offset: const Offset(0, 10.0),
-                    )
-                  ],
-                  gradient: LinearGradient(
-                    colors: [
-                      primaryColor,
-                      secondaryColor,
-                    ],
+    return SingleChildScrollView(
+      padding: const EdgeInsets.fromLTRB(10.0, 250.0, 10.0, 100.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            padding:
+                const EdgeInsets.symmetric(horizontal: 20.0, vertical: 40.0),
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(30.0),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(.3),
+                  blurRadius: 12.0,
+                  offset: const Offset(0, 10),
+                )
+              ],
+            ),
+            child: Center(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CustomField(
+                    prefix: "+243",
+                    hintText: "Entrez votre n° de téléchone...",
+                    icon: CupertinoIcons.phone,
+                    keyType: TextInputType.phone,
+                    maxLgt: 9,
+                    controller: textPhone,
                   ),
-                ),
-                child: Material(
-                  borderRadius: BorderRadius.circular(50.0),
-                  color: Colors.transparent,
-                  child: InkWell(
-                    onTap: () async {
-                      FocusScope.of(context).unfocus();
-                      if (textPhone.text.isEmpty) {
-                        Get.snackbar(
-                          "N° de Téléphone réquis !",
-                          "vous devez entrez votre numéro de téléphone pour recevoir un code par sms d'activation de l'application !",
-                          snackPosition: SnackPosition.BOTTOM,
-                          colorText: Colors.white,
-                          backgroundColor: Colors.black87,
-                          maxWidth: MediaQuery.of(context).size.width - 4,
-                          borderRadius: 10,
-                          duration: const Duration(seconds: 4),
-                        );
-                        return;
-                      }
+                  const SizedBox(
+                    height: 20.0,
+                  ),
+                  Container(
+                    height: 60.0,
+                    width: 60.0,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(50.0),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(.2),
+                          blurRadius: 12.0,
+                          offset: const Offset(0, 10.0),
+                        )
+                      ],
+                      gradient: LinearGradient(
+                        colors: [
+                          primaryColor,
+                          secondaryColor,
+                        ],
+                      ),
+                    ),
+                    child: Material(
+                      borderRadius: BorderRadius.circular(50.0),
+                      color: Colors.transparent,
+                      child: InkWell(
+                        onTap: () async {
+                          FocusScope.of(context).unfocus();
+                          if (textPhone.text.isEmpty) {
+                            Get.snackbar(
+                              "N° de Téléphone réquis !",
+                              "vous devez entrez votre numéro de téléphone pour recevoir un code par sms d'activation de l'application !",
+                              snackPosition: SnackPosition.BOTTOM,
+                              colorText: Colors.white,
+                              backgroundColor: Colors.black87,
+                              maxWidth: MediaQuery.of(context).size.width - 4,
+                              borderRadius: 30.0,
+                              duration: const Duration(seconds: 4),
+                            );
+                            return;
+                          }
 
+                          Xloading.showLottieLoading(context);
+                          await ApiManager.login(
+                                  data: {"telephone": "+243" + textPhone.text})
+                              .then((res) {
+                            Xloading.dismiss();
+                            if (res != null) {
+                              print(res);
+                              if (res['reponse']['status'] == "success") {
+                                setState(() {
+                                  currentSteps++;
+                                });
+                                pageController.animateToPage(
+                                  currentSteps,
+                                  duration: const Duration(milliseconds: 500),
+                                  curve: Curves.easeIn,
+                                );
+                              } else {
+                                print("failed!");
+                              }
+                            }
+                          });
+                        },
+                        borderRadius: BorderRadius.circular(50.0),
+                        child: Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: SvgPicture.asset(
+                              "assets/svg/next-right-arrow-svgrepo-com.svg",
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  FocusNode focusNode = FocusNode();
+  Widget secondStepAuth(BuildContext context) {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.fromLTRB(10.0, 250.0, 10.0, 100.0),
+      child: Column(
+        children: [
+          Container(
+            padding:
+                const EdgeInsets.symmetric(horizontal: 20.0, vertical: 40.0),
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(30.0),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(.3),
+                  blurRadius: 12.0,
+                  offset: const Offset(0, 10),
+                )
+              ],
+            ),
+            child: Center(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(10.0),
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(30.0),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(.3),
+                          blurRadius: 12.0,
+                          offset: const Offset(0, 3),
+                        )
+                      ],
+                    ),
+                    child: PinPut(
+                      fieldsCount: 6,
+                      controller: textCode,
+                      focusNode: focusNode,
+                      textStyle: GoogleFonts.lato(
+                        fontSize: 18.0,
+                        color: Colors.black87,
+                        fontWeight: FontWeight.w700,
+                      ),
+                      selectedFieldDecoration: BoxDecoration(
+                        border: Border.all(color: primaryColor, width: 2.0),
+                        borderRadius: BorderRadius.circular(30.0),
+                      ),
+                      eachFieldWidth: 40.0,
+                      eachFieldHeight: 60.0,
+                      onSubmit: (String pin) async {
+                        if (pin.isNotEmpty) {
+                          FocusScope.of(context).unfocus();
+                          Xloading.showLottieLoading(context);
+                          await ApiManager.login(data: {
+                            "telephone": "+243" + textPhone.text,
+                            "otp": pin
+                          }).then((res) {
+                            Xloading.dismiss();
+                            if (res != null) {
+                              print(res);
+                              if (res['error'] != null) {
+                                Get.snackbar(
+                                  "Echec !",
+                                  "veuillez renvoyer le code au numéro +243${textPhone.text}",
+                                  snackPosition: SnackPosition.BOTTOM,
+                                  colorText: Colors.orange,
+                                  backgroundColor: Colors.black87,
+                                  maxWidth:
+                                      MediaQuery.of(context).size.width - 4,
+                                  borderRadius: 30,
+                                  duration: const Duration(seconds: 4),
+                                );
+                                return;
+                              }
+                              if (res['reponse']['status'] == "success") {
+                                storage.write("user_id",
+                                    res["reponse"]["data"]["user_id"]);
+                                Navigator.pushAndRemoveUntil(
+                                    context,
+                                    PageTransition(
+                                      child: const HomeScreen(),
+                                      type: PageTransitionType
+                                          .rightToLeftWithFade,
+                                    ),
+                                    (Route<dynamic> route) => false);
+                              } else {
+                                setState(() {
+                                  textCode.text = "";
+                                });
+                                Get.snackbar(
+                                  "Echec !",
+                                  "veuillez renvoyer le code au numéro +243${textPhone.text}",
+                                  snackPosition: SnackPosition.BOTTOM,
+                                  colorText: Colors.orange,
+                                  backgroundColor: Colors.black87,
+                                  maxWidth:
+                                      MediaQuery.of(context).size.width - 4,
+                                  borderRadius: 30,
+                                  duration: const Duration(seconds: 4),
+                                );
+                                return;
+                              }
+                            }
+                          });
+                        }
+                      },
+                      submittedFieldDecoration: BoxDecoration(
+                        color: Colors.grey[400],
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(.3),
+                            blurRadius: 10.0,
+                            offset: const Offset(0, 2),
+                          )
+                        ],
+                        borderRadius: BorderRadius.circular(30.0),
+                      ),
+                      followingFieldDecoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30.0),
+                        color: Colors.grey[400],
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(.3),
+                            blurRadius: 10.0,
+                            offset: const Offset(0, 2),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 30.0,
+                  ),
+                  TextButton(
+                    onPressed: () async {
                       Xloading.showLottieLoading(context);
                       await ApiManager.login(
                               data: {"telephone": "+243" + textPhone.text})
@@ -218,186 +417,23 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
                             setState(() {
                               currentSteps++;
                             });
-                            pageController.animateToPage(
-                              currentSteps,
-                              duration: const Duration(milliseconds: 500),
-                              curve: Curves.easeIn,
-                            );
-                          } else {
-                            print("failed!");
                           }
                         }
                       });
                     },
-                    borderRadius: BorderRadius.circular(50.0),
-                    child: Center(
-                      child: Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: SvgPicture.asset(
-                          "assets/svg/next-right-arrow-svgrepo-com.svg",
-                          color: Colors.white,
-                        ),
+                    child: Text(
+                      "Réenvoyer le code",
+                      style: GoogleFonts.lato(
+                        color: Colors.blue,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
-                  ),
-                ),
+                  )
+                ],
               ),
-            ],
+            ),
           ),
-        ),
-      ),
-    );
-  }
-
-  FocusNode focusNode = FocusNode();
-  Widget secondStepAuth(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white.withOpacity(.5),
-      ),
-      child: Center(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 15.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                padding: const EdgeInsets.all(10.0),
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(5.0),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(.3),
-                      blurRadius: 12.0,
-                      offset: const Offset(0, 3),
-                    )
-                  ],
-                ),
-                child: PinPut(
-                  fieldsCount: 6,
-                  controller: textCode,
-                  focusNode: focusNode,
-                  textStyle: GoogleFonts.lato(
-                    fontSize: 18.0,
-                    color: Colors.black87,
-                    fontWeight: FontWeight.w700,
-                  ),
-                  selectedFieldDecoration: BoxDecoration(
-                    border: Border.all(color: primaryColor, width: 2.0),
-                    borderRadius: BorderRadius.circular(5.0),
-                  ),
-                  eachFieldWidth: 46.0,
-                  eachFieldHeight: 60.0,
-                  onSubmit: (String pin) async {
-                    if (pin.isNotEmpty) {
-                      FocusScope.of(context).unfocus();
-                      Xloading.showLottieLoading(context);
-                      await ApiManager.login(data: {
-                        "telephone": "+243" + textPhone.text,
-                        "otp": pin
-                      }).then((res) {
-                        Xloading.dismiss();
-                        if (res != null) {
-                          print(res);
-                          if (res['error'] != null) {
-                            Get.snackbar(
-                              "Echec !",
-                              "veuillez renvoyer le code au numéro +243${textPhone.text}",
-                              snackPosition: SnackPosition.BOTTOM,
-                              colorText: Colors.orange,
-                              backgroundColor: Colors.black87,
-                              maxWidth: MediaQuery.of(context).size.width - 4,
-                              borderRadius: 10,
-                              duration: const Duration(seconds: 4),
-                            );
-                            return;
-                          }
-                          if (res['reponse']['status'] == "success") {
-                            storage.write(
-                                "user_id", res["reponse"]["data"]["user_id"]);
-                            Navigator.pushAndRemoveUntil(
-                                context,
-                                PageTransition(
-                                  child: const HomeScreen(),
-                                  type: PageTransitionType.rightToLeftWithFade,
-                                ),
-                                (Route<dynamic> route) => false);
-                          } else {
-                            setState(() {
-                              textCode.text = "";
-                            });
-                            Get.snackbar(
-                              "Echec !",
-                              "veuillez renvoyer le code au numéro +243${textPhone.text}",
-                              snackPosition: SnackPosition.BOTTOM,
-                              colorText: Colors.orange,
-                              backgroundColor: Colors.black87,
-                              maxWidth: MediaQuery.of(context).size.width - 4,
-                              borderRadius: 10,
-                              duration: const Duration(seconds: 4),
-                            );
-                            return;
-                          }
-                        }
-                      });
-                    }
-                  },
-                  submittedFieldDecoration: BoxDecoration(
-                    color: Colors.grey[400],
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(.3),
-                        blurRadius: 10.0,
-                        offset: const Offset(0, 2),
-                      )
-                    ],
-                    borderRadius: BorderRadius.circular(5.0),
-                  ),
-                  followingFieldDecoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5.0),
-                    color: Colors.grey[400],
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(.3),
-                        blurRadius: 10.0,
-                        offset: const Offset(0, 2),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 65.0,
-              ),
-              TextButton(
-                onPressed: () async {
-                  Xloading.showLottieLoading(context);
-                  await ApiManager.login(
-                      data: {"telephone": "+243" + textPhone.text}).then((res) {
-                    Xloading.dismiss();
-                    if (res != null) {
-                      print(res);
-                      if (res['reponse']['status'] == "success") {
-                        setState(() {
-                          currentSteps++;
-                        });
-                      }
-                    }
-                  });
-                },
-                child: Text(
-                  "Réenvoyer le code",
-                  style: GoogleFonts.lato(
-                    color: Colors.black87,
-                  ),
-                ),
-              )
-            ],
-          ),
-        ),
+        ],
       ),
     );
   }

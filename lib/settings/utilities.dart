@@ -27,25 +27,12 @@ class Xloading {
               child: Dialog(
                   backgroundColor: Colors.transparent,
                   elevation: 0,
-                  child: Container(
-                    width: 100,
-                    child: Center(
-                      child: Container(
-                        padding: const EdgeInsets.all(10.0),
-                        alignment: Alignment.center,
-                        child: Container(
-                          height: 200,
-                          width: 200,
-                          decoration: BoxDecoration(
-                            color: Colors.transparent,
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          child: Lottie.asset(
-                            "assets/icons/90464-loading.json",
-                            animate: true,
-                          ),
-                        ),
-                      ),
+                  child: Center(
+                    child: Lottie.asset(
+                      "assets/icons/90464-loading.json",
+                      height: 300.0,
+                      width: 300.0,
+                      animate: true,
                     ),
                   )),
             ),

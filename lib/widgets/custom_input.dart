@@ -38,7 +38,7 @@ class CustomField extends StatelessWidget {
       ),
       child: TextField(
         controller: controller,
-        style: const TextStyle(fontSize: 14.0),
+        style: GoogleFonts.lato(fontSize: 16.0, fontWeight: FontWeight.w800),
         keyboardType: keyType ?? TextInputType.text,
         maxLength: (maxLgt != null) ? maxLgt : null,
         decoration: InputDecoration(
@@ -56,7 +56,11 @@ class CustomField extends StatelessWidget {
                   ),
                 )
               : const Text(""),
-          hintStyle: const TextStyle(color: Colors.black54),
+          hintStyle: GoogleFonts.lato(
+            color: Colors.black54,
+            fontWeight: FontWeight.w400,
+            fontSize: 15.0,
+          ),
           icon: prefix == null
               ? Container(
                   width: 50.0,

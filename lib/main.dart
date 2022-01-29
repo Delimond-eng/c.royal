@@ -3,7 +3,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
-//import 'screens/auth/auth_screen.dart';
+import 'screens/auth/auth_screen.dart';
 import 'controllers/home_controller.dart';
 import 'screens/auth/auth_screen.dart';
 import 'screens/home/home_screens.dart';
@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
       ),
       home: Builder(
         builder: (context) {
-          return const HomeScreen();
+          return const AuthenticateScreen();
         },
       ), //AuthenticateScreen(),
     );

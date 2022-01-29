@@ -162,9 +162,7 @@ class _SubscriptionsPageState extends State<SubscriptionsPage> {
                                         int.parse(data.abonnement.montant);
                                     setState(() {
                                       total = currentTot;
-                                      sendsData.removeWhere((String e) =>
-                                          e ==
-                                          data.abonnement.abonnementTarifId);
+                                      sendsData.removeWhere((String e) =>e ==data.abonnement.abonnementTarifId);
                                     });
                                   }
                                   //
