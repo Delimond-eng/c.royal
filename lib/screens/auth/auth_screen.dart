@@ -117,7 +117,7 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
                               ? "Entrez votre numéro de téléphone pour activer votre compte !"
                               : "Veuillez entrer le code de validation envoyée par sms à votre numéro de téléphone !",
                           textAlign: TextAlign.center,
-                          style: GoogleFonts.courgette(
+                          style: GoogleFonts.lato(
                             color: Colors.white,
                             fontSize: 16.0,
                             fontWeight: FontWeight.w600,
