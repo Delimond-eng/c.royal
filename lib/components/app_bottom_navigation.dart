@@ -19,25 +19,6 @@ class AppBottomNavigation extends StatefulWidget {
 }
 
 class _AppBottomNavigationState extends State<AppBottomNavigation> {
-  List<dynamic> items = [
-    {
-      'icon': 'assets/svg/home-simple-svgrepo-com.svg',
-      'label': 'Nouveaux',
-    },
-    {
-      'icon': 'assets/svg/privileged.svg',
-      'label': 'Privilèges',
-    },
-    {
-      'icon': 'assets/svg/scan-svgrepo-com.svg',
-      'label': 'Scanner le code',
-    },
-    {
-      'icon': 'assets/svg/location-position-svgrepo-com.svg',
-      'label': 'Près de moi',
-    },
-  ];
-
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
@@ -49,7 +30,7 @@ class _AppBottomNavigationState extends State<AppBottomNavigation> {
           height: 1.5, fontSize: 12.0, fontWeight: FontWeight.w800),
       unselectedLabelStyle: GoogleFonts.lato(height: 1.5, fontSize: 12.0),
       selectedItemColor: accentColor,
-      elevation: 10,
+      elevation: 0,
       showSelectedLabels: true,
       items: [
         BottomNavigationBarItem(

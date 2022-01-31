@@ -23,7 +23,7 @@ class HomeController extends GetxController {
     try {
       isHomeLoading.value = true;
       var configs = await ApiManager.getHomeCategories();
-      isHomeLoading.value = false;
+
       if (configs != null) {
         categories.value = configs.config.marchandCategories;
       }
@@ -40,6 +40,10 @@ class HomeController extends GetxController {
           populaires.value = homeData.content.populaires;
         }
       }
-    } catch (err) {}
+    } catch (err) {
+      print("error from home load data $err");
+    } finally {
+      isHomeLoading.value = false;
+    }
   }
 }

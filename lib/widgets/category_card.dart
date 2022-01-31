@@ -7,8 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'cat_icon.dart';
-
 class CategoryCard extends StatelessWidget {
   final Category data;
   final MarchandCategories category;
@@ -72,16 +70,12 @@ class CategoryCard extends StatelessWidget {
                       ],
                     ),
                   ),
-                  child: (category.icon != null && category.icon.isNotEmpty)
-                      ? SvgPicture.network(
-                          category.icon,
-                          color: Colors.white,
-                          height: 25.0,
-                          width: 25.0,
-                        )
-                      : CatIcon(
-                          iconKey: category.categorie,
-                        ),
+                  child: SvgPicture.network(
+                    category.icon,
+                    color: Colors.white,
+                    height: 25.0,
+                    width: 25.0,
+                  ),
                 ),
                 const SizedBox(
                   height: 5.0,
