@@ -3,13 +3,16 @@ import 'dart:math';
 import 'package:c_royal/components/app_header.dart';
 import 'package:c_royal/components/notification_drawer.dart';
 import 'package:c_royal/models/configs.dart';
+import 'package:c_royal/models/subscriptions.dart';
 import 'package:c_royal/services/api/api_manager.dart';
 import 'package:c_royal/settings/controllers.dart';
+import 'package:c_royal/settings/convertor.dart';
 import 'package:c_royal/settings/style.dart';
 import 'package:c_royal/settings/utilities.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class SubscriptionsPage extends StatefulWidget {
@@ -23,6 +26,7 @@ class _SubscriptionsPageState extends State<SubscriptionsPage> {
   var scaffoldKey = GlobalKey<ScaffoldState>();
   int total = 0;
   List<String> sendsData = [];
+  bool hasUserSubscrited = false;
 
   @override
   void initState() {
@@ -34,6 +38,12 @@ class _SubscriptionsPageState extends State<SubscriptionsPage> {
     setState(() {
       total = 0;
     });
+    if (userController
+        .userSubscription.value.abonnement.souscriptions.isNotEmpty) {
+      setState(() {
+        hasUserSubscrited = true;
+      });
+    }
   }
 
   @override
@@ -81,92 +91,167 @@ class _SubscriptionsPageState extends State<SubscriptionsPage> {
                       const SizedBox(
                         width: 8,
                       ),
-                      SubscriptionBtn(
-                        onPressed: () async {
-                          Xloading.showLottieLoading(context);
-                          await ApiManager.viewSubscriptions().then((res) {
-                            Xloading.dismiss();
-                            print(res.abonnement.abonnementId);
-                          });
-                        },
-                      )
+                      if (!hasUserSubscrited) ...[
+                        SubscriptionBtn(
+                          onPressed: () async {
+                            setState(() {
+                              hasUserSubscrited = true;
+                            });
+                          },
+                        )
+                      ]
                     ],
                   ),
                 ),
-                Expanded(
-                  child: Container(
-                    child: Column(
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.symmetric(
-                              horizontal: 15.0, vertical: 10.0),
-                          height: 60.0,
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [
-                                primaryColor,
-                                secondaryColor,
-                              ],
-                            ),
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          child: Column(
-                            children: [
-                              Row(
-                                children: [
-                                  const Icon(
-                                    CupertinoIcons.calendar,
-                                    color: Colors.white,
-                                    size: 12.0,
-                                  ),
-                                  const SizedBox(
-                                    width: 5.0,
-                                  ),
-                                  Text(
-                                    "Date d'expiration de votre abonnement",
-                                    style: GoogleFonts.lato(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w300,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 4.0,
-                              ),
-                              Text(
-                                "20th 2022",
-                                style: GoogleFonts.lato(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w800,
-                                  fontSize: 18.0,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Expanded(
-                          child: Column(
-                            children: const [
-                              Text("subscriptions"),
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                )
-                //subscriptionBox(),
-                /*if (sendsData.isNotEmpty) ...[
-                  buildSubscriptionInfo(context),
-                ],*/
+                if (hasUserSubscrited) ...[
+                  userSubscrites(),
+                ] else ...[
+                  subscriptionBox(),
+                  if (sendsData.isNotEmpty) ...[
+                    buildSubscriptionInfo(context),
+                  ],
+                ]
               ],
             ),
           ),
         ),
       ),
       endDrawer: const NotificationDrawer(),
+    );
+  }
+
+  Widget userSubscrites() {
+    return Expanded(
+      child: Container(
+        child: Obx(
+          () => Column(
+            children: [
+              Stack(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.symmetric(
+                        horizontal: 15.0, vertical: 10.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                    height: 60.0,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          primaryColor,
+                          secondaryColor,
+                        ],
+                      ),
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Icon(
+                              CupertinoIcons.calendar,
+                              color: secondaryColor,
+                              size: 12.0,
+                            ),
+                            const SizedBox(
+                              width: 5.0,
+                            ),
+                            Text(
+                              "Date d'expiration",
+                              style: GoogleFonts.lato(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w300,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 5.0,
+                        ),
+                        Text(
+                          strDateLongFr(
+                            userController
+                                .userSubscription.value.abonnement.expiration
+                                .trim(),
+                          ),
+                          style: GoogleFonts.lato(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w800,
+                            fontSize: 18.0,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Positioned(
+                    right: 25,
+                    top: 20.0,
+                    child: Container(
+                      height: 40.0,
+                      width: 40.0,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(50.0),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(.2),
+                            blurRadius: 12.0,
+                            offset: Offset.zero,
+                          )
+                        ],
+                        gradient: LinearGradient(
+                          colors: [
+                            primaryColor,
+                            Colors.blue,
+                          ],
+                        ),
+                      ),
+                      child: Material(
+                        borderRadius: BorderRadius.circular(50.0),
+                        color: Colors.transparent,
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(50.0),
+                          onTap: () {
+                            setState(() {
+                              hasUserSubscrited = !hasUserSubscrited;
+                            });
+                          },
+                          child: const Center(
+                            child: Icon(
+                              Icons.edit,
+                              color: Colors.white,
+                              size: 16.0,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+              Expanded(
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 15.0,
+                    vertical: 5.0,
+                  ),
+                  child: Column(
+                    children: userController
+                        .userSubscription.value.abonnement.souscriptions
+                        .map(
+                          (data) => UserSubscriptionCard(
+                            data: data,
+                          ),
+                        )
+                        .toList(),
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
     );
   }
 
@@ -325,15 +410,156 @@ class _SubscriptionsPageState extends State<SubscriptionsPage> {
     }
     Xloading.dismiss();
     XDialog.showSuccessAnimation(context);
+    await userController.loadData();
     for (var selected in homeController.categories) {
       if (selected.hasSelected) {
         setState(() {
           selected.hasSelected = false;
           total = 0;
           sendsData.clear();
+          hasUserSubscrited = true;
         });
       }
     }
+  }
+}
+
+class UserSubscriptionCard extends StatelessWidget {
+  final Souscriptions data;
+  const UserSubscriptionCard({
+    Key key,
+    this.data,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        Container(
+          height: 100.0,
+          width: double.infinity,
+          decoration: BoxDecoration(
+            color: Colors.white.withOpacity(.8),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(.3),
+                blurRadius: 12.0,
+                offset: Offset.zero,
+              )
+            ],
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          margin: const EdgeInsets.only(bottom: 10.0),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Catégorie",
+                  style: GoogleFonts.lato(
+                    color: secondaryColor,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 12.0,
+                  ),
+                ),
+                const SizedBox(
+                  height: 3.0,
+                ),
+                Text(
+                  data.categorie,
+                  style: GoogleFonts.lato(
+                      color: primaryColor,
+                      fontWeight: FontWeight.w900,
+                      fontSize: 18.0),
+                ),
+                const SizedBox(
+                  height: 8.0,
+                ),
+                Text(
+                  "Frais de l'abonnement",
+                  style: GoogleFonts.lato(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 12.0,
+                  ),
+                ),
+                RichText(
+                  text: TextSpan(
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: '${data.montant} ',
+                        style: GoogleFonts.lato(
+                          color: Colors.black87,
+                          fontWeight: FontWeight.w900,
+                          letterSpacing: 1.0,
+                          fontSize: 18.0,
+                        ),
+                      ),
+                      TextSpan(
+                        text: data.devise,
+                        style: GoogleFonts.lato(
+                          fontWeight: FontWeight.w900,
+                          color: primaryColor,
+                          fontSize: 12.0,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        Positioned(
+          top: 0.0,
+          right: 0.0,
+          child: Container(
+            height: 40.0,
+            width: 80.0,
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.only(
+                topRight: Radius.circular(10.0),
+                bottomLeft: Radius.circular(50.0),
+              ),
+              gradient: LinearGradient(
+                colors: [
+                  secondaryColor,
+                  primaryColor,
+                ],
+              ),
+            ),
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    "usage",
+                    style: GoogleFonts.lato(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w400,
+                      fontSize: 10.0,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 3.0,
+                  ),
+                  Text(
+                    "${data.usage} %",
+                    style: GoogleFonts.lato(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w900,
+                      fontSize: 15.0,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        )
+      ],
+    );
   }
 }
 
@@ -440,10 +666,10 @@ class SubscriptionCard extends StatelessWidget {
                         data.icon,
                         height: 20.0,
                         width: 20.0,
-                        color: Colors
-                            .primaries[
-                                Random().nextInt(Colors.primaries.length)]
-                            .shade900,
+                        color: data.hasSelected ? Colors.white : Colors
+                                .primaries[
+                                    Random().nextInt(Colors.primaries.length)]
+                                .shade900,
                       ),
                       Container(
                         height: 20.0,
@@ -485,7 +711,7 @@ class SubscriptionCard extends StatelessWidget {
                   Text(
                     data.categorie,
                     style: GoogleFonts.lato(
-                      color: Colors.black87,
+                      color: data.hasSelected ? Colors.white : Colors.black87,
                       fontWeight: FontWeight.w700,
                     ),
                   ),

@@ -1,5 +1,6 @@
 import 'package:c_royal/screens/home/home_screens.dart';
 import 'package:c_royal/services/api/api_manager.dart';
+import 'package:c_royal/settings/controllers.dart';
 import 'package:c_royal/settings/style.dart';
 import 'package:c_royal/settings/utilities.dart';
 import 'package:c_royal/widgets/custom_input.dart';
@@ -327,7 +328,7 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
                           await ApiManager.login(data: {
                             "telephone": "+243" + textPhone.text,
                             "otp": pin
-                          }).then((res) {
+                          }).then((res) async {
                             Xloading.dismiss();
                             if (res != null) {
                               print(res);
@@ -346,9 +347,10 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
                                 return;
                               }
                               if (res['reponse']['status'] == "success") {
+                                await userController.loadData();
                                 storage.write("user_id",
                                     res["reponse"]["data"]["user_id"]);
-                                Navigator.pushAndRemoveUntil(
+                                await Navigator.pushAndRemoveUntil(
                                     context,
                                     PageTransition(
                                       child: const HomeScreen(),
