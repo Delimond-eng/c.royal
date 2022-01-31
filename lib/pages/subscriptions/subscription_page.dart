@@ -27,6 +27,7 @@ class _SubscriptionsPageState extends State<SubscriptionsPage> {
   int total = 0;
   List<String> sendsData = [];
   bool hasUserSubscrited = false;
+  String abonnementId = "";
 
   @override
   void initState() {
@@ -96,6 +97,8 @@ class _SubscriptionsPageState extends State<SubscriptionsPage> {
                           onPressed: () async {
                             setState(() {
                               hasUserSubscrited = true;
+                              abonnementId = userController.userSubscription
+                                  .value.abonnement.abonnementId;
                             });
                           },
                         )
@@ -396,7 +399,6 @@ class _SubscriptionsPageState extends State<SubscriptionsPage> {
   }
 
   Future<void> subscribe(context) async {
-    String abonnementId = "";
     Xloading.showLottieLoading(context);
     for (var e in sendsData) {
       print(e);
@@ -404,7 +406,9 @@ class _SubscriptionsPageState extends State<SubscriptionsPage> {
           subscribeAmountId: e, subscribeId: abonnementId);
       if (res != null) {
         if (res["reponse"]["status"] == "success") {
-          abonnementId = res["reponse"]["abonnement_id"].toString();
+          setState(() {
+            abonnementId = res["reponse"]["abonnement_id"].toString();
+          });
         }
       }
     }
@@ -666,7 +670,9 @@ class SubscriptionCard extends StatelessWidget {
                         data.icon,
                         height: 20.0,
                         width: 20.0,
-                        color: data.hasSelected ? Colors.white : Colors
+                        color: data.hasSelected
+                            ? Colors.white
+                            : Colors
                                 .primaries[
                                     Random().nextInt(Colors.primaries.length)]
                                 .shade900,

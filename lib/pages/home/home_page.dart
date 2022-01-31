@@ -27,6 +27,13 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   var scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  void initState() {
+    super.initState();
+    userController.loadData();
+  }
+
   @override
   Widget build(BuildContext context) {
     var _size = MediaQuery.of(context).size;

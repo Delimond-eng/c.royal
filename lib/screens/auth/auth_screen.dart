@@ -347,10 +347,9 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
                                 return;
                               }
                               if (res['reponse']['status'] == "success") {
-                                await userController.loadData();
                                 storage.write("user_id",
                                     res["reponse"]["data"]["user_id"]);
-                                await Navigator.pushAndRemoveUntil(
+                                Navigator.pushAndRemoveUntil(
                                     context,
                                     PageTransition(
                                       child: const HomeScreen(),
