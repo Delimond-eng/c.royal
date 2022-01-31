@@ -12,16 +12,200 @@ import 'package:popover/popover.dart';
 class AppHeader extends StatelessWidget {
   final String title;
   final bool isHome;
+  final bool isSecondaryPage;
+  final IconData icon;
   final Function onOpenNotificateDrawer;
-  const AppHeader({
-    Key key,
-    this.title,
-    this.isHome = false,
-    this.onOpenNotificateDrawer,
-  }) : super(key: key);
+  const AppHeader(
+      {Key key,
+      this.title,
+      this.isHome = false,
+      this.onOpenNotificateDrawer,
+      this.isSecondaryPage = false,
+      this.icon})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    if (isSecondaryPage) {
+      return Container(
+        height: 60.0,
+        width: MediaQuery.of(context).size.width,
+        margin: const EdgeInsets.only(
+          bottom: 15.0,
+          right: 10.0,
+          left: 10.0,
+          top: 10.0,
+        ),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(30.0),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(.3),
+              blurRadius: 10.0,
+              offset: const Offset(0, 10.0),
+            )
+          ],
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 10.0,
+            vertical: 8.0,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Row(
+                children: [
+                  Container(
+                    height: 40.0,
+                    width: 60.0,
+                    child: Material(
+                      borderRadius: BorderRadius.circular(20.0),
+                      color: Colors.transparent,
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(20.0),
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Center(
+                            child: SvgPicture.asset(
+                                "assets/svg/back-svgrepo-com.svg",
+                                color: primaryColor),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  
+                  if (icon != null) ...[
+                    Icon(
+                      icon,
+                      size: 18.0,
+                      color: primaryColor,
+                    ),
+                    const SizedBox(
+                    width: 5.0,
+                  ),
+                  ],
+                  Text(
+                    title,
+                    style: GoogleFonts.lato(
+                      color: primaryColor,
+                      fontWeight: FontWeight.w800,
+                      fontSize: 16.0,
+                    ),
+                  ),
+                ],
+              ),
+              if (storage.read("user_id") == null) ...[
+                  Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          Colors.black87,
+                          Colors.grey[700],
+                        ],
+                      ),
+                      borderRadius: BorderRadius.circular(30.0),
+                      boxShadow: [
+                        BoxShadow(
+                          blurRadius: 20,
+                          offset: Offset.zero,
+                          color: Colors.grey.withOpacity(0.5),
+                        ),
+                      ],
+                    ),
+                    height: 37.0,
+                    width: 37.0,
+                    child: Material(
+                      color: Colors.transparent,
+                      borderRadius: BorderRadius.circular(30.0),
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(30.0),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            PageTransition(
+                              child: const AuthenticateScreen(),
+                              type: PageTransitionType.rightToLeftWithFade,
+                            ),
+                          );
+                        },
+                        child: const Center(
+                          child: Icon(
+                            CupertinoIcons.person,
+                            color: Colors.white,
+                            size: 16.0,
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                ] else ...[
+                  Container(
+                    decoration: BoxDecoration(
+                      gradient: const LinearGradient(
+                        colors: [
+                          Colors.green,
+                          Colors.blue,
+                        ],
+                      ),
+                      borderRadius: BorderRadius.circular(30.0),
+                      boxShadow: [
+                        BoxShadow(
+                          blurRadius: 20,
+                          offset: Offset.zero,
+                          color: Colors.grey.withOpacity(0.5),
+                        ),
+                      ],
+                    ),
+                    height: 37.0,
+                    width: 37.0,
+                    child: Material(
+                      color: Colors.transparent,
+                      borderRadius: BorderRadius.circular(30.0),
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(30.0),
+                        onTap: () {
+                          showPopover(
+                            barrierColor: Colors.black12,
+                            context: context,
+                            arrowDxOffset: 135,
+                            arrowDyOffset: 0,
+                            radius: 20,
+                            isParentAlive: () => true,
+                            backgroundColor: Colors.black87,
+                            transitionDuration:
+                                const Duration(milliseconds: 150),
+                            bodyBuilder: (context) => const ListItems(),
+                            onPop: () => print('Popover was popped!'),
+                            direction: PopoverDirection.top,
+                            width: 330.0,
+                            height: 160.0,
+                            arrowHeight: 15,
+                            arrowWidth: 20,
+                          );
+                        },
+                        child: const Center(
+                          child: Icon(
+                            CupertinoIcons.person_fill,
+                            color: Colors.white,
+                            size: 16.0,
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                ]
+            ],
+          ),
+        ),
+      );
+    }
     return Container(
       height: 60.0,
       width: MediaQuery.of(context).size.width,

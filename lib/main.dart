@@ -4,11 +4,13 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
 import 'controllers/home_controller.dart';
+import 'controllers/user_controller.dart';
 import 'screens/home/home_screens.dart';
 
 void main() async {
   await GetStorage.init();
   Get.put(HomeController());
+  Get.put(UserController());
   runApp(const MyApp());
 }
 

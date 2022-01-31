@@ -1,4 +1,5 @@
 import 'package:c_royal/models/configs.dart';
+import 'package:c_royal/models/subscriptions.dart';
 import 'package:c_royal/models/user_home_data.dart';
 import 'package:c_royal/services/db/local_storage.dart';
 
@@ -104,6 +105,27 @@ class ApiManager {
     print(response);
     if (response != null) {
       return response;
+    } else {
+      return null;
+    }
+  }
+
+  static Future<Subscriptions> viewSubscriptions() async {
+    var userId = storage.read("user_id");
+    var response;
+    try {
+      response = await ApiService.request(
+        url: "users/abonnements/voir",
+        body: <String, dynamic>{
+          "user_id": userId,
+        },
+        method: "post",
+      );
+    } catch (error) {
+      print(error);
+    }
+    if (response != null) {
+      return Subscriptions.fromJson(response);
     } else {
       return null;
     }

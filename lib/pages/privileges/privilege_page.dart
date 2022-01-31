@@ -34,7 +34,7 @@ class _PrivilegePageState extends State<PrivilegePage> {
           ),
           child: Container(
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(.5),
+              color: Colors.white.withOpacity(.8),
             ),
             child: Column(
               children: [

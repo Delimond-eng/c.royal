@@ -10,7 +10,6 @@ class HomeController extends GetxController {
   var recommandations = <Recommandations>[].obs;
   var marchands = <Marchands>[].obs;
   var populaires = <Populaires>[].obs;
-
   var isHomeLoading = false.obs;
 
   @override

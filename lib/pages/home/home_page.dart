@@ -13,8 +13,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lottie/lottie.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:shimmer/shimmer.dart';
+
+import 'pages/scanner_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key key}) : super(key: key);
@@ -63,7 +65,15 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: secondaryColor,
         elevation: 10.0,
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            PageTransition(
+              type: PageTransitionType.bottomToTop,
+              child: const ScannerPage(),
+            ),
+          );
+        },
         child:
             const Icon(CupertinoIcons.qrcode_viewfinder, color: Colors.white),
       ),
@@ -76,117 +86,118 @@ class _HomePageState extends State<HomePage> {
       child: Container(
         width: _size.width,
         child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              if (homeController.isHomeLoading.value) ...[
-                const CategoryShimmer(),
-              ] else ...[
-                CategoriesComponent(
-                  data: homeController.categories,
-                ),
-              ],
-              Expanded(
-                child: Container(
-                  child: SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        if (homeController.isHomeLoading.value) ...[
-                          const TitleShimmer(),
-                          const RecommandationShimmer(),
-                          const TitleShimmer(),
-                          const PopularShimmer(),
-                        ] else ...[
-                          if (homeController.recommandations.isNotEmpty) ...[
-                            Padding(
-                              padding: const EdgeInsets.all(15.0),
-                              child: Text(
-                                "Recommandations",
-                                style: GoogleFonts.lato(
-                                  color: Colors.black87,
-                                  fontSize: 20.0,
-                                  fontWeight: FontWeight.w800,
-                                ),
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            if (homeController.isHomeLoading.value) ...[
+              const CategoryShimmer(),
+            ] else ...[
+              CategoriesComponent(
+                data: homeController.categories,
+              ),
+            ],
+            Expanded(
+              child: Container(
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      if (homeController.isHomeLoading.value) ...[
+                        const TitleShimmer(),
+                        const RecommandationShimmer(),
+                        const TitleShimmer(),
+                        const PopularShimmer(),
+                      ] else ...[
+                        if (homeController.recommandations.isNotEmpty) ...[
+                          Padding(
+                            padding: const EdgeInsets.all(15.0),
+                            child: Text(
+                              "Recommandations",
+                              style: GoogleFonts.lato(
+                                color: Colors.black87,
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.w800,
                               ),
                             ),
-                            SingleChildScrollView(
-                              padding: const EdgeInsets.only(
-                                left: 15.0,
-                                right: 15.0,
-                                bottom: 18.0,
-                              ),
-                              scrollDirection: Axis.horizontal,
-                              physics: const BouncingScrollPhysics(),
-                              child: Row(
-                                children: homeController.recommandations
-                                    .map(
-                                      (e) => PostNewCard(
-                                        data: e,
-                                      ),
-                                    )
-                                    .toList(),
+                          ),
+                          SingleChildScrollView(
+                            padding: const EdgeInsets.only(
+                              left: 15.0,
+                              right: 15.0,
+                              bottom: 18.0,
+                            ),
+                            scrollDirection: Axis.horizontal,
+                            physics: const BouncingScrollPhysics(),
+                            child: Row(
+                              children: homeController.recommandations
+                                  .map(
+                                    (e) => PostNewCard(
+                                      data: e,
+                                    ),
+                                  )
+                                  .toList(),
+                            ),
+                          ),
+                        ],
+                        if (homeController.populaires.isNotEmpty) ...[
+                          Padding(
+                            padding: const EdgeInsets.all(15.0),
+                            child: Text(
+                              "Les plus populaires",
+                              style: GoogleFonts.lato(
+                                color: Colors.black87,
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.w800,
                               ),
                             ),
-                          ],
-                          if (homeController.populaires.isNotEmpty) ...[
-                            Padding(
-                              padding: const EdgeInsets.all(15.0),
-                              child: Text(
-                                "Les plus populaires",
-                                style: GoogleFonts.lato(
-                                  color: Colors.black87,
-                                  fontSize: 20.0,
-                                  fontWeight: FontWeight.w800,
-                                ),
+                          ),
+                          SingleChildScrollView(
+                            padding: const EdgeInsets.only(
+                              left: 15.0,
+                              right: 15.0,
+                              bottom: 18.0,
+                            ),
+                            scrollDirection: Axis.horizontal,
+                            physics: const BouncingScrollPhysics(),
+                            child: Row(
+                              children: homeController.populaires
+                                  .map(
+                                    (e) => PopularCard(
+                                      data: e,
+                                    ),
+                                  )
+                                  .toList(),
+                            ),
+                          ),
+                        ],
+                        if (homeController.marchands.isNotEmpty) ...[
+                          Padding(
+                            padding: const EdgeInsets.all(15.0),
+                            child: Text(
+                              "Nos marchands",
+                              style: GoogleFonts.lato(
+                                color: Colors.black87,
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.w800,
                               ),
                             ),
-                            SingleChildScrollView(
-                              padding: const EdgeInsets.only(
-                                left: 15.0,
-                                right: 15.0,
-                                bottom: 18.0,
-                              ),
-                              scrollDirection: Axis.horizontal,
-                              physics: const BouncingScrollPhysics(),
-                              child: Row(
-                                children: homeController.populaires
-                                    .map(
-                                      (e) => PopularCard(
-                                        data: e,
-                                      ),
-                                    )
-                                    .toList(),
-                              ),
+                          ),
+                          for (var data in homeController.marchands) ...[
+                            ShopCard(
+                              data: data,
                             ),
-                          ],
-                          if (homeController.marchands.isNotEmpty) ...[
-                            Padding(
-                              padding: const EdgeInsets.all(15.0),
-                              child: Text(
-                                "Nos marchands",
-                                style: GoogleFonts.lato(
-                                  color: Colors.black87,
-                                  fontSize: 20.0,
-                                  fontWeight: FontWeight.w800,
-                                ),
-                              ),
-                            ),
-                            for (var data in homeController.marchands) ...[
-                              ShopCard(
-                                data: data,
-                              ),
-                            ]
-                          ],
+                          ]
                         ],
                       ],
-                    ),
+                    ],
                   ),
                 ),
-              )
-            ]),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
