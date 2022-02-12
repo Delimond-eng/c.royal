@@ -233,15 +233,29 @@ class _EntityDetailsState extends State<EntityDetails> {
       children: [
         if (widget.data.imageCover != null &&
             widget.data.imageCover.isNotEmpty) ...[
-          Container(
-            height: _size.height * .4,
-            width: _size.width,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: NetworkImage(widget.data.imageCover),
-                fit: BoxFit.cover,
+          Stack(
+            children: [
+              Container(
+                height: _size.height * .4,
+                width: _size.width,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: NetworkImage(widget.data.imageCover),
+                    fit: BoxFit.cover,
+                  ),
+                ),
               ),
-            ),
+              const Positioned(
+                top: 110,
+                left: 10.0,
+                child: GalleryIndicatorBtn(icon: CupertinoIcons.chevron_left),
+              ),
+              const Positioned(
+                top: 110,
+                right: 10.0,
+                child: GalleryIndicatorBtn(icon: CupertinoIcons.chevron_right),
+              ),
+            ],
           )
         ] else ...[
           Container(
@@ -268,7 +282,7 @@ class _EntityDetailsState extends State<EntityDetails> {
                   primaryColor.withOpacity(.7),
                   primaryColor.withOpacity(.5),
                   primaryColor.withOpacity(.3),
-                  Colors.transparent,
+                  primaryColor.withOpacity(.0),
                 ],
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
@@ -345,6 +359,33 @@ class _EntityDetailsState extends State<EntityDetails> {
           ),
         )
       ],
+    );
+  }
+}
+
+class GalleryIndicatorBtn extends StatelessWidget {
+  final IconData icon;
+  const GalleryIndicatorBtn({Key key, this.icon}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 50.0,
+      width: 50.0,
+      decoration: BoxDecoration(
+        color: primaryColor.withOpacity(.3),
+        borderRadius: BorderRadius.circular(50.0),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(.1),
+            blurRadius: 10.0,
+            offset: Offset.zero,
+          )
+        ],
+      ),
+      child: Center(
+        child: Icon(icon, color: Colors.white),
+      ),
     );
   }
 }
