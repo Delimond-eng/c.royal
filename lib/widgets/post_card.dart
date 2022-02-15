@@ -1,5 +1,7 @@
 import 'package:c_royal/models/user_home_data.dart';
 import 'package:c_royal/pages/home/pages/entity_details.dart';
+import 'package:c_royal/services/api/api_manager.dart';
+import 'package:c_royal/settings/utilities.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
@@ -33,16 +35,23 @@ class PostNewCard extends StatelessWidget {
         color: Colors.transparent,
         child: InkWell(
           borderRadius: BorderRadius.circular(20.0),
-          onTap: () {
-            Navigator.push(
-              context,
-              PageTransition(
-                child: EntityDetails(
-                  data: data,
+          onTap: () async {
+            Xloading.showLottieLoading(context);
+            var galleriesData =
+                await ApiManager.viewGalleries(marchandId: data.marchandId);
+            if (galleriesData != null) {
+              Xloading.dismiss();
+              Navigator.push(
+                context,
+                PageTransition(
+                  child: EntityDetails(
+                    data: data,
+                    galleries: galleriesData.reponse.galleries,
+                  ),
+                  type: PageTransitionType.rightToLeftWithFade,
                 ),
-                type: PageTransitionType.rightToLeftWithFade,
-              ),
-            );
+              );
+            }
           },
           child: Row(
             children: [

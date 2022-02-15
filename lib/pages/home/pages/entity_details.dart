@@ -2,6 +2,8 @@
 
 import 'dart:math';
 
+import 'package:c_royal/components/gallery_photo_viewer.dart';
+import 'package:c_royal/models/gallery.dart';
 import 'package:c_royal/models/user_home_data.dart';
 import 'package:c_royal/pages/locations/pages/map_page.dart';
 import 'package:c_royal/pages/locations/utils/check_location_permission.dart';
@@ -17,7 +19,8 @@ import 'package:shimmer/shimmer.dart';
 
 class EntityDetails extends StatefulWidget {
   final data;
-  const EntityDetails({Key key, this.data}) : super(key: key);
+  final List<Galleries> galleries;
+  const EntityDetails({Key key, this.data, this.galleries}) : super(key: key);
 
   @override
   _EntityDetailsState createState() => _EntityDetailsState();
@@ -25,10 +28,17 @@ class EntityDetails extends StatefulWidget {
 
 class _EntityDetailsState extends State<EntityDetails> {
   List<Offres> offers = [];
+  final PageController pageController = PageController(initialPage: 0);
   @override
   void initState() {
     super.initState();
     initData();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    pageController.dispose();
   }
 
   initData() {
@@ -244,17 +254,10 @@ class _EntityDetailsState extends State<EntityDetails> {
                     fit: BoxFit.cover,
                   ),
                 ),
-              ),
-              const Positioned(
-                top: 110,
-                left: 10.0,
-                child: GalleryIndicatorBtn(icon: CupertinoIcons.chevron_left),
-              ),
-              const Positioned(
-                top: 110,
-                right: 10.0,
-                child: GalleryIndicatorBtn(icon: CupertinoIcons.chevron_right),
-              ),
+                child: GalleryViewer(
+                  galleries: widget.galleries,
+                ),
+              )
             ],
           )
         ] else ...[
@@ -344,7 +347,8 @@ class _EntityDetailsState extends State<EntityDetails> {
                           widget.data.categorie,
                           style: GoogleFonts.mulish(
                             color: Colors.grey[100],
-                            fontWeight: FontWeight.w600,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 12.0,
                           ),
                         ),
                         const SizedBox(
@@ -363,6 +367,121 @@ class _EntityDetailsState extends State<EntityDetails> {
   }
 }
 
+class GalleryViewer extends StatelessWidget {
+  final List<Galleries> galleries;
+  const GalleryViewer({
+    Key key,
+    this.galleries,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 15.0,
+          vertical: 8.0,
+        ),
+        physics: const BouncingScrollPhysics(),
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: [
+            for (var data in galleries) ...[
+              Stack(
+                children: [
+                  Container(
+                    height: 120.0,
+                    width: 100.0,
+                    margin: const EdgeInsets.only(right: 10.0),
+                    decoration: BoxDecoration(
+                      color: primaryColor.withOpacity(.3),
+                      image: DecorationImage(
+                        image: NetworkImage(data.medias[0].media),
+                        fit: BoxFit.cover,
+                        alignment: Alignment.topCenter,
+                      ),
+                      borderRadius: BorderRadius.circular(15.0),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(.2),
+                          blurRadius: 12.0,
+                          offset: Offset.zero,
+                        )
+                      ],
+                    ),
+                    child: Material(
+                      color: Colors.transparent,
+                      borderRadius: BorderRadius.circular(15.0),
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(15.0),
+                        onTap: () {
+                          if (data.medias.isNotEmpty) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => GalleryPhotoViewWrapper(
+                                  galleryItems: data.medias,
+                                  galleryTitle: data.titre,
+                                  backgroundDecoration: const BoxDecoration(
+                                    color: Colors.black,
+                                  ),
+                                  scrollDirection: Axis.horizontal,
+                                ),
+                              ),
+                            );
+                          }
+                        },
+                        child: const Center(),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 0,
+                    right: 10,
+                    left: 0,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8.0,
+                        vertical: 10.0,
+                      ),
+                      decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            Colors.transparent,
+                            Colors.black45,
+                            Colors.black54,
+                            Colors.black87,
+                          ],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                        ),
+                        borderRadius: BorderRadius.vertical(
+                          bottom: Radius.circular(15.0),
+                        ),
+                      ),
+                      child: Center(
+                        child: Text(
+                          data.titre,
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.lato(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w900,
+                            fontSize: 12.0,
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              )
+            ]
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 class GalleryIndicatorBtn extends StatelessWidget {
   final IconData icon;
   const GalleryIndicatorBtn({Key key, this.icon}) : super(key: key);
@@ -373,7 +492,7 @@ class GalleryIndicatorBtn extends StatelessWidget {
       height: 50.0,
       width: 50.0,
       decoration: BoxDecoration(
-        color: primaryColor.withOpacity(.3),
+        color: primaryColor.withOpacity(.4),
         borderRadius: BorderRadius.circular(50.0),
         boxShadow: [
           BoxShadow(
@@ -383,8 +502,16 @@ class GalleryIndicatorBtn extends StatelessWidget {
           )
         ],
       ),
-      child: Center(
-        child: Icon(icon, color: Colors.white),
+      child: Material(
+        borderRadius: BorderRadius.circular(50.0),
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(50.0),
+          onTap: () {},
+          child: Center(
+            child: Icon(icon, color: Colors.white),
+          ),
+        ),
       ),
     );
   }

@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:c_royal/models/category.dart';
 import 'package:c_royal/models/configs.dart';
-import 'package:c_royal/settings/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -23,12 +22,21 @@ class CategoryCard extends StatelessWidget {
       height: 100.0,
       width: 80.0,
       decoration: BoxDecoration(
-        color: Colors.white,
+        gradient: LinearGradient(
+          colors: [
+            Colors
+                .primaries[Random().nextInt(Colors.primaries.length)].shade900,
+            Colors
+                .primaries[Random().nextInt(Colors.primaries.length)].shade900,
+          ],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+        ),
         borderRadius: BorderRadius.circular(15.0),
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(.2),
-            offset: const Offset(0, 3),
+            offset: Offset.zero,
             blurRadius: 12.0,
           ),
         ],
@@ -59,20 +67,16 @@ class CategoryCard extends StatelessWidget {
                     shape: BoxShape.circle,
                     gradient: LinearGradient(
                       colors: [
-                        Colors
-                            .primaries[
-                                Random().nextInt(Colors.primaries.length)]
-                            .shade900,
-                        Colors
-                            .primaries[
-                                Random().nextInt(Colors.primaries.length)]
-                            .shade900,
+                        Colors.white,
+                        Colors.grey[100],
                       ],
                     ),
                   ),
                   child: SvgPicture.network(
                     category.icon,
-                    color: Colors.white,
+                    color: Colors
+                        .primaries[Random().nextInt(Colors.primaries.length)]
+                        .shade900,
                     height: 25.0,
                     width: 25.0,
                   ),
@@ -85,7 +89,7 @@ class CategoryCard extends StatelessWidget {
                     category.categorie,
                     textAlign: TextAlign.center,
                     style: GoogleFonts.lato(
-                      color: primaryColor,
+                      color: Colors.white,
                       fontWeight: FontWeight.w800,
                       fontSize: 12.0,
                     ),

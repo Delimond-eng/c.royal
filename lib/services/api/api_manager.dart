@@ -1,4 +1,5 @@
 import 'package:c_royal/models/configs.dart';
+import 'package:c_royal/models/gallery.dart';
 import 'package:c_royal/models/subscriptions.dart';
 import 'package:c_royal/models/user_home_data.dart';
 import 'package:c_royal/services/db/local_storage.dart';
@@ -126,6 +127,26 @@ class ApiManager {
     }
     if (response != null) {
       return Subscriptions.fromJson(response);
+    } else {
+      return null;
+    }
+  }
+
+  static Future<MarchandsGallery> viewGalleries({marchandId}) async {
+    var response;
+    try {
+      response = await ApiService.request(
+        url: "content/marchand",
+        body: <String, dynamic>{
+          "marchand_id": marchandId,
+        },
+        method: "post",
+      );
+    } catch (error) {
+      print(error);
+    }
+    if (response != null) {
+      return MarchandsGallery.fromJson(response);
     } else {
       return null;
     }

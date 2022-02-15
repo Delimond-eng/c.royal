@@ -95,23 +95,23 @@ class StoreCard extends StatelessWidget {
             ],
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 8.0),
+            padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 4.0),
             child: Text(
               data.nom,
               style: GoogleFonts.mulish(
                 color: primaryColor,
-                fontSize: 14.0,
-                fontWeight: FontWeight.w800,
+                fontSize: 12.0,
+                fontWeight: FontWeight.w900,
               ),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 8.0),
+            padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0),
             child: Text(
               "à ${data.distance} de votre position",
               style: GoogleFonts.lato(
                 color: Colors.redAccent,
-                fontSize: 12.0,
+                fontSize: 10.0,
                 fontWeight: FontWeight.w700,
               ),
             ),
