@@ -6,6 +6,7 @@ import 'package:get_storage/get_storage.dart';
 import 'controllers/home_controller.dart';
 import 'controllers/user_controller.dart';
 import 'screens/home/home_screens.dart';
+import 'screens/starting_page.dart';
 
 void main() async {
   await GetStorage.init();
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
       ),
       home: Builder(
         builder: (context) {
-          return const HomeScreen();
+          return const StartingPage();
         },
       ), //AuthenticateScreen(),
     );
