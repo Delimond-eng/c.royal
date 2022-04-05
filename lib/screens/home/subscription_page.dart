@@ -219,7 +219,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                 crossAxisSpacing: 8.0,
                 mainAxisSpacing: 8.0,
               ),
-              itemCount: 12,
+              itemCount: 21,
               itemBuilder: (BuildContext context, int index) {
                 return Container(
                   decoration: BoxDecoration(
