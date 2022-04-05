@@ -2,6 +2,7 @@ import 'package:c_royal/settings/style.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
 import 'package:page_transition/page_transition.dart';
 
 import 'home/mon_royaume_page.dart';
@@ -16,6 +17,10 @@ class StartingPage extends StatefulWidget {
 class _StartingPageState extends State<StartingPage> {
   int currentImageIndex = 0;
   final PageController pageController = PageController(initialPage: 0);
+  List<String> images = [
+    "assets/lottiesfiles/king_2.json",
+    "assets/lottiesfiles/king_1.json",
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,20 +55,52 @@ class _StartingPageState extends State<StartingPage> {
                   },
                   itemBuilder: (context, index) {
                     return Container(
-                      margin: const EdgeInsets.fromLTRB(
-                        15.0,
-                        40.0,
-                        15.0,
-                        20.0,
-                      ),
+                      margin: const EdgeInsets.fromLTRB(15.0, 40.0, 15.0, 20.0),
+                      padding: const EdgeInsets.all(20.0),
                       decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(.5),
-                        borderRadius: BorderRadius.circular(20.0),
+                        color: Colors.white.withOpacity(.2),
+                        borderRadius: BorderRadius.circular(10.0),
                       ),
                       width: double.infinity,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Expanded(
+                            child: Lottie.asset(
+                              images[index],
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 5.0,
+                          ),
+                          if (index == 0) ...[
+                            Text(
+                              "Bienvenue cher Roi , chère Reine !",
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.dancingScript(
+                                fontSize: 35.0,
+                                letterSpacing: 2.0,
+                                fontWeight: FontWeight.w900,
+                                color: Colors.white,
+                              ),
+                            )
+                          ] else ...[
+                            Text(
+                              "Devenir un Roi(Reine) pour beneficier de plus de reduction !",
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.dancingScript(
+                                  fontSize: 20.0,
+                                  letterSpacing: 2.0,
+                                  fontWeight: FontWeight.w900,
+                                  color: Colors.white),
+                            )
+                          ]
+                        ],
+                      ),
                     );
                   },
-                  itemCount: 2,
+                  itemCount: images.length,
                 ),
               ),
               Stack(
@@ -74,8 +111,11 @@ class _StartingPageState extends State<StartingPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        SliderIndicator(true),
-                        SliderIndicator(false),
+                        for (int i = 0; i < images.length; i++)
+                          if (i == currentImageIndex)
+                            SliderIndicator(true)
+                          else
+                            SliderIndicator(false),
                       ],
                     ),
                   )
@@ -97,7 +137,7 @@ class _StartingPageState extends State<StartingPage> {
                     begin: Alignment.topCenter,
                     end: Alignment.bottomRight,
                   ),
-                  borderRadius: BorderRadius.circular(20.0),
+                  borderRadius: BorderRadius.circular(8.0),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withOpacity(.3),
@@ -107,7 +147,7 @@ class _StartingPageState extends State<StartingPage> {
                   ],
                 ),
                 child: Material(
-                  borderRadius: BorderRadius.circular(20.0),
+                  borderRadius: BorderRadius.circular(8.0),
                   color: Colors.transparent,
                   child: InkWell(
                     onTap: () {
@@ -119,7 +159,7 @@ class _StartingPageState extends State<StartingPage> {
                         ),
                       );
                     },
-                    borderRadius: BorderRadius.circular(20.0),
+                    borderRadius: BorderRadius.circular(8.0),
                     child: Column(
                       children: [
                         Container(
@@ -168,7 +208,7 @@ class _StartingPageState extends State<StartingPage> {
                     begin: Alignment.topCenter,
                     end: Alignment.bottomRight,
                   ),
-                  borderRadius: BorderRadius.circular(20.0),
+                  borderRadius: BorderRadius.circular(8.0),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withOpacity(.3),
@@ -178,10 +218,10 @@ class _StartingPageState extends State<StartingPage> {
                   ],
                 ),
                 child: Material(
-                  borderRadius: BorderRadius.circular(20.0),
+                  borderRadius: BorderRadius.circular(8.0),
                   color: Colors.transparent,
                   child: InkWell(
-                    borderRadius: BorderRadius.circular(20.0),
+                    borderRadius: BorderRadius.circular(8.0),
                     onTap: () {},
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -209,7 +249,7 @@ class _StartingPageState extends State<StartingPage> {
                                 height: 20.0,
                                 width: 20.0,
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5.0),
+                                  borderRadius: BorderRadius.circular(20.0),
                                   boxShadow: [
                                     BoxShadow(
                                       color: Colors.black.withOpacity(.3),

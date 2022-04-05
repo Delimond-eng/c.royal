@@ -3,6 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:page_transition/page_transition.dart';
+
+import 'subscription_page.dart';
 
 class MonRoyaumePage extends StatefulWidget {
   const MonRoyaumePage({Key key}) : super(key: key);
@@ -138,10 +141,10 @@ class _MonRoyaumePageState extends State<MonRoyaumePage> {
                         children: [
                           Text(
                             "Catégories souscrites",
-                            style: GoogleFonts.lato(
+                            style: GoogleFonts.dancingScript(
                               color: Colors.black,
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.w400,
+                              fontSize: 22.0,
+                              fontWeight: FontWeight.w700,
                             ),
                           ),
                           Container(
@@ -163,7 +166,16 @@ class _MonRoyaumePageState extends State<MonRoyaumePage> {
                               color: Colors.transparent,
                               child: InkWell(
                                 borderRadius: BorderRadius.circular(40.0),
-                                onTap: () {},
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    PageTransition(
+                                      child: const SubscriptionPage(),
+                                      type: PageTransitionType
+                                          .rightToLeftWithFade,
+                                    ),
+                                  );
+                                },
                                 child: Center(
                                   child: Icon(
                                     Icons.add,
@@ -246,9 +258,9 @@ class _MonRoyaumePageState extends State<MonRoyaumePage> {
                                         ),
                                         Text(
                                           "Beauté",
-                                          style: GoogleFonts.lato(
+                                          style: GoogleFonts.dancingScript(
                                             color: Colors.white,
-                                            fontWeight: FontWeight.w600,
+                                            fontWeight: FontWeight.w800,
                                           ),
                                         )
                                       ],
@@ -287,7 +299,9 @@ class _MonRoyaumePageState extends State<MonRoyaumePage> {
                   ),
                   Container(
                     margin: const EdgeInsets.symmetric(
-                        vertical: 15.0, horizontal: 15.0),
+                      vertical: 15.0,
+                      horizontal: 15.0,
+                    ),
                     height: 35.0,
                     width: double.infinity,
                     decoration: const BoxDecoration(
@@ -298,10 +312,10 @@ class _MonRoyaumePageState extends State<MonRoyaumePage> {
                     ),
                     child: Text(
                       "Les plus populaires",
-                      style: GoogleFonts.lato(
-                        color: Colors.black54,
-                        fontSize: 18.0,
-                        letterSpacing: .5,
+                      style: GoogleFonts.dancingScript(
+                        color: primaryColor,
+                        fontSize: 25.0,
+                        letterSpacing: 1,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -315,91 +329,45 @@ class _MonRoyaumePageState extends State<MonRoyaumePage> {
                     child: Row(
                       children: [
                         for (int i = 0; i < 5; i++) ...[
-                          Container(
-                            height: 120.0,
-                            width: 200.0,
-                            margin: const EdgeInsets.only(right: 8.0),
-                            decoration: BoxDecoration(
-                              image: const DecorationImage(
-                                fit: BoxFit.cover,
-                                image:
-                                    AssetImage("assets/shapes/features-bg.png"),
-                              ),
-                              borderRadius: BorderRadius.circular(8.0),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(.1),
-                                  offset: const Offset(0, 3),
-                                  blurRadius: 10.0,
-                                )
-                              ],
-                              gradient: LinearGradient(
-                                colors: [
-                                  primaryColor,
-                                  golden900,
-                                ],
-                              ),
-                            ),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8.0),
-                                color: Colors.blue.withOpacity(.5),
-                              ),
-                              child: Material(
-                                borderRadius: BorderRadius.circular(8.0),
-                                color: Colors.transparent,
-                                child: InkWell(
-                                  borderRadius: BorderRadius.circular(8.0),
-                                  onTap: () async {},
+                          Column(
+                            children: [
+                              Container(
+                                height: 150.0,
+                                width: 150.0,
+                                margin: const EdgeInsets.only(right: 10.0),
+                                decoration: BoxDecoration(
+                                  image: const DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: AssetImage(
+                                        "assets/shapes/features-bg.png"),
+                                  ),
+                                  borderRadius: BorderRadius.circular(200.0),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(.1),
+                                      offset: const Offset(0, 3),
+                                      blurRadius: 10.0,
+                                    )
+                                  ],
+                                  gradient: LinearGradient(
+                                    colors: [
+                                      primaryColor,
+                                      golden900,
+                                    ],
+                                  ),
+                                ),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(200.0),
+                                    color: Colors.blue.withOpacity(.5),
+                                  ),
                                   child: Stack(
                                     clipBehavior: Clip.none,
                                     children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            Expanded(
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.end,
-                                                children: [
-                                                  Text(
-                                                    "Beatrice hôtel",
-                                                    style: GoogleFonts.lato(
-                                                      color: Colors.white,
-                                                      fontWeight:
-                                                          FontWeight.w700,
-                                                      fontSize: 18.0,
-                                                    ),
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 5.0,
-                                                  ),
-                                                  Text(
-                                                    "Remise de 8% pour tout achat !",
-                                                    style: GoogleFonts.lato(
-                                                      color: golden100,
-                                                      letterSpacing: 1.0,
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      fontSize: 12.0,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      ),
+                                      Container(),
                                       Positioned(
-                                        top: 8.0,
-                                        right: 8.0,
+                                        top: 10.0,
+                                        right: 0,
                                         child: Container(
                                           height: 50.0,
                                           width: 50.0,
@@ -414,7 +382,7 @@ class _MonRoyaumePageState extends State<MonRoyaumePage> {
                                             boxShadow: [
                                               BoxShadow(
                                                 color: Colors.black
-                                                    .withOpacity(.1),
+                                                    .withOpacity(.3),
                                                 blurRadius: 12.0,
                                                 offset: const Offset(0, 10),
                                               )
@@ -427,7 +395,40 @@ class _MonRoyaumePageState extends State<MonRoyaumePage> {
                                   ),
                                 ),
                               ),
-                            ),
+                              const SizedBox(
+                                height: 5.0,
+                              ),
+                              Container(
+                                width: 150,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "Beatrice hôtel",
+                                      textAlign: TextAlign.center,
+                                      style: GoogleFonts.dancingScript(
+                                        color: primaryColor,
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 20.0,
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      height: 5.0,
+                                    ),
+                                    Text(
+                                      "Remise de 8% !",
+                                      textAlign: TextAlign.center,
+                                      style: GoogleFonts.dancingScript(
+                                        color: Colors.pink,
+                                        letterSpacing: 1.0,
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 15.0,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              )
+                            ],
                           )
                         ],
                       ],
@@ -445,11 +446,11 @@ class _MonRoyaumePageState extends State<MonRoyaumePage> {
                       ),
                     ),
                     child: Text(
-                      "Nos Marchand",
-                      style: GoogleFonts.lato(
-                        color: Colors.black54,
-                        fontSize: 18.0,
-                        letterSpacing: .5,
+                      "Nos Marchands",
+                      style: GoogleFonts.dancingScript(
+                        color: primaryColor,
+                        fontSize: 25.0,
+                        letterSpacing: 1,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -522,10 +523,11 @@ class _MonRoyaumePageState extends State<MonRoyaumePage> {
                                             children: [
                                               Text(
                                                 "Beatrice hôtel",
-                                                style: GoogleFonts.lato(
+                                                style:
+                                                    GoogleFonts.dancingScript(
                                                   color: primaryColor,
                                                   fontWeight: FontWeight.w700,
-                                                  fontSize: 18.0,
+                                                  fontSize: 20.0,
                                                 ),
                                               ),
                                               const SizedBox(
@@ -533,11 +535,12 @@ class _MonRoyaumePageState extends State<MonRoyaumePage> {
                                               ),
                                               Text(
                                                 "Remise de 8% pour tout achat !",
-                                                style: GoogleFonts.lato(
+                                                style:
+                                                    GoogleFonts.dancingScript(
                                                   color: Colors.pink,
                                                   letterSpacing: 1.0,
                                                   fontWeight: FontWeight.w400,
-                                                  fontSize: 12.0,
+                                                  fontSize: 15.0,
                                                 ),
                                               ),
                                             ],
