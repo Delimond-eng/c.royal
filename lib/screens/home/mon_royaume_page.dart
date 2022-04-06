@@ -125,73 +125,86 @@ class _MonRoyaumePageState extends State<MonRoyaumePage> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  Container(
-                    height: 50.0,
-                    margin: const EdgeInsets.fromLTRB(15.0, 17.0, 15.0, 0),
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                      color: Colors.grey[400],
-                      borderRadius: BorderRadius.circular(30.0),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(15.0, 6, 6, 6),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Catégories souscrites",
-                            style: GoogleFonts.dancingScript(
-                              color: Colors.black,
-                              fontSize: 22.0,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                          Container(
-                            height: 40.0,
-                            width: 60.0,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(40.0),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(.2),
-                                  blurRadius: 10.0,
-                                  offset: const Offset(0, 3),
-                                )
-                              ],
-                              color: Colors.blue,
-                            ),
-                            child: Material(
-                              borderRadius: BorderRadius.circular(40.0),
-                              color: Colors.transparent,
-                              child: InkWell(
-                                borderRadius: BorderRadius.circular(40.0),
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    PageTransition(
-                                      child: const SubscriptionPage(),
-                                      type: PageTransitionType
-                                          .rightToLeftWithFade,
+                  Stack(
+                    alignment: Alignment.bottomCenter,
+                    clipBehavior: Clip.none,
+                    children: [
+                      Container(
+                        height: 50.0,
+                        margin: const EdgeInsets.fromLTRB(15.0, 17.0, 15.0, 0),
+                        width: MediaQuery.of(context).size.width,
+                        decoration: BoxDecoration(
+                          color: Colors.grey[400],
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(15.0, 6, 6, 6),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Mes Royaumes souscrits",
+                                style: GoogleFonts.dancingScript(
+                                  color: Colors.black,
+                                  fontSize: 22.0,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                              Container(
+                                height: 40.0,
+                                width: 60.0,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(40.0),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(.2),
+                                      blurRadius: 10.0,
+                                      offset: const Offset(0, 3),
+                                    )
+                                  ],
+                                  color: Colors.blue,
+                                ),
+                                child: Material(
+                                  borderRadius: BorderRadius.circular(40.0),
+                                  color: Colors.transparent,
+                                  child: InkWell(
+                                    borderRadius: BorderRadius.circular(40.0),
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        PageTransition(
+                                          child: const SubscriptionPage(),
+                                          type: PageTransitionType
+                                              .rightToLeftWithFade,
+                                        ),
+                                      );
+                                    },
+                                    child: Center(
+                                      child: Icon(
+                                        Icons.add,
+                                        color: Colors.grey[200],
+                                        size: 15.0,
+                                      ),
                                     ),
-                                  );
-                                },
-                                child: Center(
-                                  child: Icon(
-                                    Icons.add,
-                                    color: Colors.grey[200],
-                                    size: 15.0,
                                   ),
                                 ),
                               ),
-                            ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
-                    ),
+                      Positioned(
+                        bottom: -14,
+                        child: Icon(
+                          Icons.arrow_drop_down,
+                          color: Colors.grey[400],
+                        ),
+                      )
+                    ],
                   ),
                   const SizedBox(
-                    height: 20.0,
+                    height: 10.0,
                   ),
                   GridView.builder(
                     padding: const EdgeInsets.symmetric(

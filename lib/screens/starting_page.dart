@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:page_transition/page_transition.dart';
 
+import 'home/home_screens.dart';
 import 'home/mon_royaume_page.dart';
 
 class StartingPage extends StatefulWidget {
@@ -154,7 +155,7 @@ class _StartingPageState extends State<StartingPage> {
                       Navigator.push(
                         context,
                         PageTransition(
-                          child: const MonRoyaumePage(),
+                          child: const HomeScreen(),
                           type: PageTransitionType.rightToLeftWithFade,
                         ),
                       );

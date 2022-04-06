@@ -1,6 +1,5 @@
 import 'package:c_royal/screens/home/home_screens.dart';
 import 'package:c_royal/services/api/api_manager.dart';
-import 'package:c_royal/settings/controllers.dart';
 import 'package:c_royal/settings/style.dart';
 import 'package:c_royal/settings/utilities.dart';
 import 'package:c_royal/widgets/custom_input.dart';
@@ -85,7 +84,7 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
                               "assets/svg/circle-svgrepo-com.svg",
                               height: 80.0,
                               width: 80.0,
-                              color: Colors.white,
+                              color: golden800,
                             ),
                             Positioned(
                               top: 0,
@@ -94,11 +93,8 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
                               left: 0,
                               child: Align(
                                 alignment: Alignment.center,
-                                child: SvgPicture.asset(
-                                  "assets/svg/royal.svg",
-                                  height: 40.0,
-                                  width: 40.0,
-                                  color: secondaryColor,
+                                child: Image.asset(
+                                  "assets/vectors/vector_1.png",
                                 ),
                               ),
                             )
@@ -118,9 +114,9 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
                               ? "Entrez votre numéro de téléphone pour activer votre compte !"
                               : "Veuillez entrer le code de validation envoyée par sms à votre numéro de téléphone !",
                           textAlign: TextAlign.center,
-                          style: GoogleFonts.lato(
+                          style: GoogleFonts.dancingScript(
                             color: Colors.white,
-                            fontSize: 16.0,
+                            fontSize: 25.0,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
